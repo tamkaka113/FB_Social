@@ -5,6 +5,8 @@ import morgan from "morgan";
 import fileUpload from 'express-fileupload'
 import { v2 as cloudinary } from "cloudinary";
 import connectDB from './db/connectDB.js'
+import { notFound,errorHandler } from "./middleware/errorMiddleware.js";
+import userRouter from './routes/userRouter.js'
 dotenv.config()
 
 const app =express()
@@ -23,6 +25,10 @@ app.get('/',(req,res,next)=> {
     res.send('this is home page')
 })
 
+app.use('/api/v1/users',userRouter)
+
+app.use(notFound)
+app.use(errorHandler)
 const PORT =process.env.PORT || 5000
 
 const start =()=> {
