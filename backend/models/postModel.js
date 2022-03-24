@@ -17,7 +17,8 @@ const PostSchema =mongoose.Schema({
    likes: {
        type:Array,
        default:[]
-   }
+   },
+   comments:[{type:mongoose.Schema.Types.ObjectId, ref:'comment'}]
 
 
 })

@@ -7,6 +7,8 @@ import { v2 as cloudinary } from "cloudinary";
 import connectDB from './db/connectDB.js'
 import { notFound,errorHandler } from "./middleware/errorMiddleware.js";
 import userRouter from './routes/userRouter.js'
+import postRouter from './routes/postRouter.js'
+import commentRouter from './routes/commentRouter.js'
 dotenv.config()
 
 const app =express()
@@ -26,6 +28,8 @@ app.get('/',(req,res,next)=> {
 })
 
 app.use('/api/v1/users',userRouter)
+app.use('/api/v1/posts',postRouter)
+app.use('/api/v1/comments',commentRouter)
 
 app.use(notFound)
 app.use(errorHandler)
