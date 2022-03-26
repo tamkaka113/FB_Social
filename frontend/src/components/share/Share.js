@@ -1,12 +1,13 @@
 import "./share.css";
 import {PermMedia, Label,Room, EmojiEmotions} from "@material-ui/icons"
-
+import { useSelector } from "react-redux";
 export default function Share() {
+  const {user} = useSelector((state) => state.userDetail);
   return (
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
-          <img className="shareProfileImg" src="/assets/person/1.jpeg" alt="" />
+          <img className="shareProfileImg" src={user?.profilePicture || "../../assets/person/noUser.jpg"} alt="" />
           <input
             placeholder="What's in your mind Safak?"
             className="shareInput"

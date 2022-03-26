@@ -1,12 +1,16 @@
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
-
+import { useSelector } from "react-redux";
+import { Link, useHistory } from "react-router-dom";
 export default function Topbar() {
+  const history = useHistory();
+  const { userInfo } = useSelector((state) => state.userLogin);
+  const { user } = useSelector((state) => state.userDetail);
   return (
     <div className="topbarContainer">
-      <div className="topbarLeft">
+      <Link to='/'className="topbarLeft">
         <span className="logo">FB Social</span>
-      </div>
+      </Link>
       <div className="topbarCenter">
         <div className="searchbar">
           <Search className="searchIcon" />
@@ -35,7 +39,13 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <img src="/assets/person/1.jpeg" alt="" className="topbarImg"/>
+        <Link to={`/profile/${userInfo._id}`}>
+        <img
+          src={user?.profilePicture || "../../assets/person/noUser.jpg"}
+          alt=""
+          className="topbarImg"
+        />
+        </Link>
       </div>
     </div>
   );

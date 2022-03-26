@@ -29,6 +29,7 @@ export const register = asyncHandler(async (req, res) => {
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
+
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -61,7 +62,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
 });
 
 export const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).select('-password');
 
   if (!user) {
     throw new Error("User does not exist");
@@ -70,12 +71,37 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
+export const getFriendList = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+
+  if (!user) {
+    throw new Error("User does not exist");
+  }
+
+  const friends = await Promise.all(user.following.map(friendId => {
+    
+    return User.findById(friendId)
+  }))
+  
+  let friendList =[]
+  friends.map(friend =>  {
+    const { _id, username, profilePicture } = friend;
+    friendList.push({ _id, username, profilePicture });
+  })
+  
+
+  res.status(200).json(friendList);
+});
+
+
 export const followUser = asyncHandler(async (req, res) => {
 
-  if (req.user._id!== req.params.id) {
-    const user = await User.findById(req.params.id);
 
-    const currentUser = await User.findById(req.user.userId);
+
+  if (req.user._id !== req.params.id) {
+    const user = await User.findById(req.params.id);
+     
+    const currentUser = await User.findById(req.user._id);
 
     if (!user.followers.includes(req.user.userId)) {
       await user.updateOne({ $push: { followers: req.user._id} });
