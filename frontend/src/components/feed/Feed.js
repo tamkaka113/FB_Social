@@ -9,7 +9,11 @@ export default function Feed() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const getPosts = useSelector((state) => state.getAllPosts);
+
+  const {success:commentSuccess} = useSelector((state) => state.createComment);
+console.log(commentSuccess)
   const { posts } = getPosts;
+
 
   useEffect(() => {
     if (id) {
@@ -17,7 +21,7 @@ export default function Feed() {
     } else {
       dispatch(getAllPosts("all"));
     }
-  }, [dispatch,id]);
+  }, [dispatch,id,commentSuccess]); 
   return (
     <div className="feed">
       <div className="feedWrapper">

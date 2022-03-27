@@ -47,7 +47,7 @@ export const likePost = asyncHandler(async (req, res) => {
 
 export const getPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({ user: req.params.id }).populate(
-    "user",
+    "user comments",
     "username profilePicture"
   );
 
@@ -60,17 +60,47 @@ export const getPosts = asyncHandler(async (req, res) => {
 
 export const getTimelinePosts = asyncHandler(async (req, res) => {
   const currentUser = await User.findById(req.user.id);
-  const userPosts = await Post.find({ user: currentUser._id }).populate(
-    "user",
-    "username profilePicture"
-  );
+  const userPosts = await Post.find({ user: currentUser._id })
+    .populate("user", "username profilePicture")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "user likes reply",
+        select: "-password -followers -following -isAdmin",
+      },
+    })
+    .populate({
+      path: "comments",
+      populate: {
+        path: "reply",
+        populate: {
+          path: "user",
+          select: "-password -followers -following -isAdmin",
+        },
+      },
+    });
 
   const friendPosts = await Promise.all(
     currentUser.following.map((friendId) => {
-      return Post.find({ user: friendId }).populate(
-        "user",
-        "username profilePicture"
-      );
+      return Post.find({ user: friendId })
+        .populate("user", "username profilePicture")
+        .populate({
+          path: "comments",
+          populate: {
+            path: "user likes reply",
+            select: "username _id profilePicture",
+          },
+        })
+        .populate({
+          path: "comments",
+          populate: {
+            path: "reply",
+            populate: {
+              path: "user",
+              select: "username _id profilePicture",
+            },
+          },
+        });
     })
   );
 

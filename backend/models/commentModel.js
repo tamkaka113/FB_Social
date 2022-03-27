@@ -5,20 +5,22 @@ const CommentSchema = mongoose.Schema({
     type: String,
     require: true,
   },
-  name: {
-    type: String,
-    require: true,
-  },
-  like: {
-    type: Array,
-    default: [],
-  },
+  likes: [{ type: mongoose.Types.ObjectId, ref: "User" }],
+  reply: [{
+    type: mongoose.Types.ObjectId, ref: "Comment" 
+}
+],
+
   user: {
     type: mongoose.Schema.Types.ObjectId,
     require: true,
+    ref: "User",
   },
-  postId: mongoose.Types.ObjectId,
-  postUserId: mongoose.Types.ObjectId
+  postId: {
+    type: mongoose.Types.ObjectId,
+    require: true,
+    ref: "Post",
+  },
 });
 
-export default mongoose.model('Comment',CommentSchema)
+export default mongoose.model("Comment", CommentSchema);

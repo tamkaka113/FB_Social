@@ -8,6 +8,8 @@ import {
 } from "./reducers/userReducers";
 
 import {getAllPostsReducer,likePostsReducer} from './reducers/postReducers'
+
+import {createCommentReducer,editCommentReducer,deleteCommentReducer} from './reducers/commentReducers'
 const middleware = [thunk];
 
 const reducer = combineReducers({
@@ -16,6 +18,9 @@ const reducer = combineReducers({
   userDetail: userDetailsReducer,
   getAllPosts:getAllPostsReducer,
   likePost:likePostsReducer,
+  createComment:createCommentReducer,
+  editComment:editCommentReducer,
+  deleteComment:deleteCommentReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
