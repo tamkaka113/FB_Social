@@ -17,6 +17,6 @@ const PostSchema = mongoose.Schema({
     default: [],
   },
   comments: [{ type: mongoose.Schema.Types.ObjectId, ref: "Comment" }],
-});
+}, { timestamps: true });
 
 export default mongoose.model("Post", PostSchema);

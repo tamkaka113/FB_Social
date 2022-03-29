@@ -83,12 +83,12 @@ export const getTimelinePosts = asyncHandler(async (req, res) => {
   const friendPosts = await Promise.all(
     currentUser.following.map((friendId) => {
       return Post.find({ user: friendId })
-        .populate("user", "username profilePicture")
+        .populate("user", "username profilePicture createdAt")
         .populate({
           path: "comments",
           populate: {
             path: "user likes reply",
-            select: "username _id profilePicture",
+            select: "username _id profilePicture createdAt",
           },
         })
         .populate({
@@ -97,7 +97,7 @@ export const getTimelinePosts = asyncHandler(async (req, res) => {
             path: "reply",
             populate: {
               path: "user",
-              select: "username _id profilePicture",
+              select: "username _id profilePicture createdAt",
             },
           },
         });

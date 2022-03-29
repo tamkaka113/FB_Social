@@ -11,23 +11,24 @@ export default function Feed() {
   const getPosts = useSelector((state) => state.getAllPosts);
 
   const {success:commentSuccess} = useSelector((state) => state.createComment);
-console.log(commentSuccess)
+
+  const {success:deleteSuccess} = useSelector((state) => state.deleteComment);
+  const {success:editSuccess} = useSelector((state) => state.editComment);
+  const {success:likeCommentSuccess} = useSelector((state) => state.likeComment);
   const { posts } = getPosts;
-
-
   useEffect(() => {
     if (id) {
       dispatch(getAllPosts(id));
     } else {
       dispatch(getAllPosts("all"));
     }
-  }, [dispatch,id,commentSuccess]); 
+  }, [dispatch,id,commentSuccess,deleteSuccess,editSuccess,likeCommentSuccess]); 
   return (
     <div className="feed">
       <div className="feedWrapper">
         <Share />
         {posts?.map((p) => (
-          <Post key={p.id} post={p} />
+          <Post key={p.id} post={p}  editSuccess ={editSuccess} likeSuccess ={likeCommentSuccess}/>
         ))}
       </div>
     </div>
