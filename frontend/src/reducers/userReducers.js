@@ -3,10 +3,6 @@ import {
   USER_DETAILS_REQUEST,
   USER_DETAILS_RESET,
   USER_DETAILS_SUCCESS,
-  USER_LIST_REQUEST,
-  USER_LIST_SUCCESS,
-  USER_LIST_FAIL,
-  USER_LIST_RESET,
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
   USER_LOGIN_SUCCESS,
@@ -18,6 +14,18 @@ import {
   USER_UPDATE_PROFILE_FAIL,
   USER_UPDATE_PROFILE_REQUEST,
   USER_UPDATE_PROFILE_SUCCESS,
+  RECOMMENDED_FRIENDS_REQUEST,
+  RECOMMENDED_FRIENDS_SUCCESS,
+  RECOMMENDED_FRIENDS_FAIL,
+  RECOMMENDED_FRIENDS_RESET,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAIL,
+  FOLLOW_USER_RESET,
+  UNFOLLOW_USER_REQUEST,
+  UNFOLLOW_USER_SUCCESS,
+  UNFOLLOW_USER_FAIL,
+  UNFOLLOW_USER_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -92,5 +100,57 @@ export const userFriendsReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
+
+
+export const recommendedFriendsReducer = (state = { users: [] }, action) => {
+  switch (action.type) {
+    case RECOMMENDED_FRIENDS_REQUEST:
+      return { ...state, loading: true };
+    case RECOMMENDED_FRIENDS_SUCCESS:
+      return { loading: false,success:true, users: action.payload };
+    case RECOMMENDED_FRIENDS_FAIL:
+      return { loading: false, error: action.payload };
+    case RECOMMENDED_FRIENDS_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+
+export const followUserReducer = (state = { message:''}, action) => {
+  switch (action.type) {
+    case FOLLOW_USER_REQUEST:
+      return { ...state, loading: true };
+    case FOLLOW_USER_SUCCESS:
+      return { loading: false,success:true, message: action.payload };
+    case FOLLOW_USER_FAIL:
+      return { loading: false, error: action.payload };
+    case FOLLOW_USER_RESET:
+      return { };
+    default:
+      return state;
+  }
+};
+
+
+
+
+export const unfollowUserReducer = (state = { message:''}, action) => {
+  switch (action.type) {
+    case UNFOLLOW_USER_REQUEST:
+      return { ...state, loading: true };
+    case UNFOLLOW_USER_SUCCESS:
+      return { loading: false,success:true, message: action.payload };
+    case UNFOLLOW_USER_FAIL:
+      return { loading: false, error: action.payload };
+    case UNFOLLOW_USER_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+
 
 

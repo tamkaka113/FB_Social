@@ -2,7 +2,11 @@ import "./post.css";
 import { MoreVert, ThumbUpAltRounded } from "@material-ui/icons";
 import { useEffect, useState, useRef } from "react";
 import { likePost } from "../../actions/postActions";
-import { editComment, deleteComment,likeComment } from "../../actions/commentActions";
+import {
+  editComment,
+  deleteComment,
+  likeComment,
+} from "../../actions/commentActions";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "../../actions/commentActions";
 import {
@@ -11,19 +15,17 @@ import {
   EDIT_COMMENT_RESET,
   LIKE_COMMENT_RESET,
 } from "../../constants/commentContants";
-import moment from "moment";
-export default function Post({ post, editSuccess,likeSuccess }) {
+import Comment from "../comment/Comment";
+
+export default function Post({ post, editSuccess, likeSuccess }) {
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [content, setContent] = useState("");
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
-  const [isLikedComment, setIsLikedComment] = useState(false);
+
   const [display, setDisplay] = useState(false);
   const [update, setUpdate] = useState(false);
-  const [value, setValue] = useState("");
-  const [edit, setEdit] = useState(null);
-  const [displayEdit, setDisplayEdit] = useState(false);
   const { user, comments } = post;
 
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -50,57 +52,18 @@ export default function Post({ post, editSuccess,likeSuccess }) {
     setContent("");
   };
 
-  const handleEdit = (index) => {
-    setEdit(index);
-
-    setDisplayEdit(!displayEdit);
-  };
-
-  const handleDeleteComment = (id) => {
-    if (window.confirm("Are you sure")) {
-      dispatch(deleteComment(id));
-
-      dispatch({ type: DELETE_COMMENT_RESET });
-    }
-  };
-
-  const handleUpdateComment = (id) => {
-    dispatch(editComment(id, value));
-  };
-
   useEffect(() => {
-    if (update) {
-      inputRef.current.focus();
-    }
-
+ 
     if (editSuccess) {
       dispatch({ type: EDIT_COMMENT_RESET });
       setUpdate(false);
     }
 
-    if(likeSuccess) {
+    if (likeSuccess) {
       dispatch({ type: LIKE_COMMENT_RESET });
     }
-  }, [update, editSuccess,likeSuccess]);
-  const handlUpdate = (content) => {
-    setUpdate(true);
-    setValue(content);
-    setDisplayEdit(false);
-  };
+  }, [ editSuccess, likeSuccess]);
 
-  const handleLike =(id,likes) => {
-
-  dispatch(likeComment(id))
-
-
-  const userLiked = likes.find(like => like._id === userInfo._id)
-
-  if(userLiked) {
-    setIsLikedComment(true)
-  }
-
-   
-  }
   return (
     <div className="post">
       <div className="postWrapper">
@@ -169,100 +132,12 @@ export default function Post({ post, editSuccess,likeSuccess }) {
             {comments.map((comment, index) => {
               const { user: commentUser } = comment;
               return (
-                <div key={comment._id}>
-                  {update ? (
-                    <div className="commentContainer">
-                      <input
-                        ref={inputRef}
-                        value={value}
-                        className="commentInput"
-                        onChange={(e) => {
-                          setValue(e.target.value);
-                        }}
-                      />
-                      <button
-                        onClick={() => {
-                          handleUpdateComment(comment._id);
-                        }}
-                        className="commentBtn"
-                      >
-                        Update
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="commentMain">
-                      <div className="commentWrapper">
-                       {comment.likes.length > 0 &&<div className="commentLikeIcon">
-                          <ThumbUpAltRounded
-                            style={{ color: "#1877f2", fontSize: "20px" }}
-                          />
-                          <span style={{ fontSize: "14px", marginLeft: "5px" }}>
-                            {comment.likes.length}
-                          </span>
-                        </div>} 
-                        <div className="commentProfile">
-                          <img
-                            style={{ width: "40px", height: "40px" }}
-                            className="postProfileImg"
-                            src={
-                              user.profilePicture ||
-                              "../../assets/person/noUser.jpg"
-                            }
-                            alt=""
-                          />
-                          <span className="postUsername">
-                            {commentUser.username}
-                          </span>
-                        </div>
-
-                        <div className="likeWrapper">
-                          <span className="postComment">{comment.content}</span>
-                          <div className="commentLike">
-                            <span onClick={()=> {handleLike(comment._id,comment.likes)}} className={isLikedComment ? "likeComment active":"likeComment" }>Like</span>
-                            <span className="replyComment">Reply</span>
-                            <span className="timeComment">
-                              {moment(comment.createdAt).fromNow()}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="editWrapper">
-                        <div
-                          className="editIcon"
-                          onClick={() => handleEdit(index)}
-                        >
-                          <MoreVert style={{ fontSize: "medium" }} />
-                        </div>
-                        <div
-                          className={
-                            edit === index && displayEdit
-                              ? "adjustComment active"
-                              : "adjustComment"
-                          }
-                        >
-                          <span
-                            onClick={() => {
-                              handlUpdate(comment.content);
-                            }}
-                            className="adjustEdit"
-                          >
-                            Edit
-                          </span>
-
-                          <span
-                            onClick={() => {
-                              handleDeleteComment(comment._id);
-                            }}
-                            className="adjustEdit"
-                          >
-                            Remove
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
+                <Comment
+                  comment={comment}
+                  commentUser={commentUser}
+                  user={user}
+                  index={index}
+                />
               );
             })}
           </div>

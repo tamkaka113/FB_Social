@@ -16,6 +16,15 @@ import {
   USER_FRIENDS_REQUEST,
   USER_FRIENDS_SUCCESS,
   USER_FRIENDS_FAIL,
+  RECOMMENDED_FRIENDS_REQUEST,
+  RECOMMENDED_FRIENDS_SUCCESS,
+  RECOMMENDED_FRIENDS_FAIL,
+  FOLLOW_USER_REQUEST,
+  FOLLOW_USER_SUCCESS,
+  FOLLOW_USER_FAIL,
+  UNFOLLOW_USER_RESET,
+  UNFOLLOW_USER_SUCCESS,
+  UNFOLLOW_USER_FAIL,
 
 } from "../constants/userConstants";
 
@@ -159,4 +168,110 @@ export const getUserFriends = (id) => async (dispatch, getState) => {
     })
   }
 }
+
+
+
+export const getRecommendedFriends = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: RECOMMENDED_FRIENDS_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.get(`/api/v1/users`, config)
+
+    dispatch({
+      type: RECOMMENDED_FRIENDS_SUCCESS,
+      payload: data,
+    })
+ 
+
+  } catch (error) {
+    dispatch({
+      type: RECOMMENDED_FRIENDS_FAIL,
+      payload: error.response.data.message || error.message,
+    })
+  }
+}
+
+
+
+export const followUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type:FOLLOW_USER_REQUEST,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(`/api/v1/users/${id}/follow`,{}, config)
+
+    dispatch({
+      type: FOLLOW_USER_SUCCESS,
+      payload: data,
+    })
+ 
+
+  } catch (error) {
+    dispatch({
+      type: FOLLOW_USER_FAIL,
+      payload: error.response.data.message || error.message,
+    })
+  }
+}
+
+
+
+export const unFollowUser = (id) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type:UNFOLLOW_USER_RESET,
+    })
+
+    const {
+      userLogin: { userInfo },
+    } = getState()
+
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    }
+
+    const { data } = await axios.put(`/api/v1/users/${id}/unfollow`,{}, config)
+
+    dispatch({
+      type: UNFOLLOW_USER_SUCCESS,
+      payload: data,
+    })
+ 
+
+  } catch (error) {
+    dispatch({
+      type: UNFOLLOW_USER_FAIL,
+      payload: error.response.data.message || error.message,
+    })
+  }
+}
+
 

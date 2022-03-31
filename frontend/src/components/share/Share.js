@@ -7,18 +7,30 @@ export default function Share() {
     <div className="share">
       <div className="shareWrapper">
         <div className="shareTop">
+         <div className="shareShowWrapper">
           <img className="shareProfileImg" src={user?.profilePicture || "../../assets/person/noUser.jpg"} alt="" />
+
           <input
             placeholder="What's in your mind Safak?"
             className="shareInput"
-          />
+            />
+            </div>
+            <div className="shareImageWrapper" >
+         <img src="assets/post/1.jpeg" className="shareShowImage" /> 
+
+            </div>
+
         </div>
         <hr className="shareHr"/>
         <div className="shareBottom">
             <div className="shareOptions">
                 <div className="shareOption">
                     <PermMedia htmlColor="tomato" className="shareIcon"/>
+                    <div className="shareOptionWrapper">
+                    <input className="shareOptionInput" type='file' poin/> 
                     <span className="shareOptionText">Photo or Video</span>
+
+                    </div>
                 </div>
                 <div className="shareOption">
                     <Label htmlColor="blue" className="shareIcon"/>

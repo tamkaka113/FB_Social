@@ -5,16 +5,25 @@ import {
   userLoginReducer,
   userRegisterReducer,
   userDetailsReducer,
+  recommendedFriendsReducer,
+  followUserReducer,
+  unfollowUserReducer,
 } from "./reducers/userReducers";
 
-import { getAllPostsReducer, likePostsReducer } from "./reducers/postReducers";
+import {
+  getAllPostsReducer,
+  likePostsReducer,
+  createPostReducer,
+  updatePostReducer,
+  deletePostReducer,
+} from "./reducers/postReducers";
 
 import {
   createCommentReducer,
   editCommentReducer,
   deleteCommentReducer,
   likeCommentReducer,
-  replyCommentReducer
+  replyCommentReducer,
 } from "./reducers/commentReducers";
 const middleware = [thunk];
 
@@ -27,8 +36,14 @@ const reducer = combineReducers({
   createComment: createCommentReducer,
   editComment: editCommentReducer,
   deleteComment: deleteCommentReducer,
-  likeComment:likeCommentReducer,
-  replyComment:replyCommentReducer,
+  likeComment: likeCommentReducer,
+  replyComment: replyCommentReducer,
+  createPosts: createPostReducer,
+  updatePost: updatePostReducer,
+  deletePost: deletePostReducer,
+  recommendedFriends: recommendedFriendsReducer,
+  followUser: followUserReducer,
+  unfollowUser: unfollowUserReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

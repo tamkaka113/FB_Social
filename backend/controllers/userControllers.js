@@ -71,6 +71,18 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
+
+
+export const getRecommendedFriends = asyncHandler(async (req, res) => {
+  const users = await User.find({})
+
+  if (!users) {
+    throw new Error("User does not exist");
+  }
+
+  res.status(200).json(users);
+});
+
 export const getFriendList = asyncHandler(async (req, res) => {
   const user = await User.findById(req.params.id)
 
@@ -95,8 +107,6 @@ export const getFriendList = asyncHandler(async (req, res) => {
 
 
 export const followUser = asyncHandler(async (req, res) => {
-
-
 
   if (req.user._id !== req.params.id) {
     const user = await User.findById(req.params.id);
