@@ -15,6 +15,10 @@ import {
   LIKE_COMMENT_SUCCESS,
   LIKE_COMMENT_FAIL,
   LIKE_COMMENT_RESET,
+  REPLY_COMMENT_REQUEST,
+  REPLY_COMMENT_SUCCESS,
+  REPLY_COMMENT_FAIL,
+  REPLY_COMMENT_RESET,
 } from "../constants/commentContants";
 
 export const createCommentReducer = (state = { comment: {} }, action) => {
@@ -83,7 +87,7 @@ export const likeCommentReducer = (state = { message: '' }, action) => {
       return { ...state, loading: false, error: action.payload };
 
     case LIKE_COMMENT_RESET:
-        return { ...state,loading: false,success:false, error: action.payload };
+       return { ...state,loading: false,success:false,message:''};;
   
 
     default:
@@ -94,15 +98,15 @@ export const likeCommentReducer = (state = { message: '' }, action) => {
 
 export const replyCommentReducer = (state = { comments:[] }, action) => {
   switch (action.type) {
-    case LIKE_COMMENT_REQUEST:
+    case REPLY_COMMENT_REQUEST:
       return { ...state, loading: true };
-    case LIKE_COMMENT_SUCCESS:
+    case REPLY_COMMENT_SUCCESS:
       return { ...state, loading: false,success:true, comments: action.payload };
-    case LIKE_COMMENT_FAIL:
+    case REPLY_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-    case LIKE_COMMENT_RESET:
-        return { ...state,loading: false,success:false, error: action.payload };
+    case REPLY_COMMENT_RESET:
+        return {};
   
 
     default:

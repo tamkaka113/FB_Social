@@ -17,12 +17,12 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAIL,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAIL,
 } from "../constants/postConstants";
 
 import axios from "axios";
-import { CREATE_COMMENT_FAIL } from "../constants/commentContants";
-
-
 
 export const createPost = (content) => async (dispatch, getState) => {
   try {

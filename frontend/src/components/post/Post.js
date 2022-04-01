@@ -1,31 +1,21 @@
 import "./post.css";
-import { MoreVert, ThumbUpAltRounded } from "@material-ui/icons";
+import { MoreVert } from "@material-ui/icons";
 import { useEffect, useState, useRef } from "react";
-import { likePost } from "../../actions/postActions";
-import {
-  editComment,
-  deleteComment,
-  likeComment,
-} from "../../actions/commentActions";
+import { likePost,deletePost } from "../../actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "../../actions/commentActions";
-import {
-  CREATE_COMMENT_RESET,
-  DELETE_COMMENT_RESET,
-  EDIT_COMMENT_RESET,
-  LIKE_COMMENT_RESET,
-} from "../../constants/commentContants";
+import { CREATE_COMMENT_RESET } from "../../constants/commentContants";
+import moment from "moment";
 import Comment from "../comment/Comment";
-
-export default function Post({ post, editSuccess, likeSuccess }) {
+export default function Post({ post,idx }) {
   const dispatch = useDispatch();
-  const inputRef = useRef();
   const [content, setContent] = useState("");
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false);
 
+  const [edit, setEdit] = useState(false);
+  const [editDisplay, setEditDisplay] = useState(false);
   const [display, setDisplay] = useState(false);
-  const [update, setUpdate] = useState(false);
   const { user, comments } = post;
 
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -52,17 +42,16 @@ export default function Post({ post, editSuccess, likeSuccess }) {
     setContent("");
   };
 
-  useEffect(() => {
- 
-    if (editSuccess) {
-      dispatch({ type: EDIT_COMMENT_RESET });
-      setUpdate(false);
-    }
+  const handleShowEdit =(idx) => {
+    setEdit(idx)
+    setEditDisplay(!editDisplay)
+  }
 
-    if (likeSuccess) {
-      dispatch({ type: LIKE_COMMENT_RESET });
-    }
-  }, [ editSuccess, likeSuccess]);
+  const handleRemove =(id) => {
+  if(window.confirm('Are you sure')) {
+    dispatch(deletePost(id))
+  }
+  }
 
   return (
     <div className="post">
@@ -75,16 +64,26 @@ export default function Post({ post, editSuccess, likeSuccess }) {
               src={user.profilePicture || "../../assets/person/noUser.jpg"}
               alt=""
             />
+            <div className="postTopWWrapper" >
+
             <span className="postUsername">{user.username}</span>
-            <span className="postDate">{post.date}</span>
+            <span className="postDate">  {moment(post.createdAt).fromNow()}</span>
+            </div>
           </div>
           <div className="postTopRight">
-            <MoreVert />
+            <div onClick={()=> {handleShowEdit(idx)}} className="editPost">
+              <MoreVert />
+            </div>
+            <div className={idx === edit &&editDisplay ?'adjustPost active':'adjustPost'}>
+              <span className="adjustEditPost">Edit</span>
+
+              <span onClick={()=> handleRemove(post._id)} className="adjustEditPost">Remove</span>
+            </div>
           </div>
         </div>
         <div className="postCenter">
           <span className="postText">{post?.desc}</span>
-          <img className="postImg" src={post.image} alt="" />
+          <img className="postImg" src={post.image[0]} alt="" />
         </div>
         <div className="postBottom">
           <div className="postBottomLeft">

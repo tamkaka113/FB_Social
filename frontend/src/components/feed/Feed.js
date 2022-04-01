@@ -10,11 +10,28 @@ export default function Feed() {
   const { id } = useParams();
   const getPosts = useSelector((state) => state.getAllPosts);
 
-  const {success:commentSuccess} = useSelector((state) => state.createComment);
+  const { success: commentSuccess } = useSelector(
+    (state) => state.createComment
+  );
 
-  const {success:deleteSuccess} = useSelector((state) => state.deleteComment);
-  const {success:editSuccess} = useSelector((state) => state.editComment);
-  const {success:likeCommentSuccess} = useSelector((state) => state.likeComment);
+  const { success: deleteSuccess } = useSelector(
+    (state) => state.deleteComment
+  );
+  const { success: editSuccess } = useSelector((state) => state.editComment);
+  const { success: likeSuccess, message } = useSelector(
+    (state) => state.likeComment
+  );
+  const { success: createPostSuccess } = useSelector(
+    (state) => state.createPost
+  );
+
+
+  const { success: deletePostSuccess } = useSelector(
+    (state) => state.deletePost
+  );
+
+
+  console.log(message)
   const { posts } = getPosts;
   useEffect(() => {
     if (id) {
@@ -22,13 +39,27 @@ export default function Feed() {
     } else {
       dispatch(getAllPosts("all"));
     }
-  }, [dispatch,id,commentSuccess,deleteSuccess,editSuccess,likeCommentSuccess]); 
+  }, [
+    dispatch,
+    id,
+    commentSuccess,
+    deleteSuccess,
+    editSuccess,
+    message,
+    createPostSuccess,
+    deletePostSuccess
+  ]);
   return (
     <div className="feed">
       <div className="feedWrapper">
         <Share />
-        {posts?.map((p) => (
-          <Post key={p.id} post={p}  editSuccess ={editSuccess} likeSuccess ={likeCommentSuccess}/>
+        {posts?.map((p,idx) => (
+          <Post
+            key={p.id}
+            post={p}
+            editSuccess={editSuccess}
+            idx={idx}
+          />
         ))}
       </div>
     </div>

@@ -16,6 +16,7 @@ import {
   createPostReducer,
   updatePostReducer,
   deletePostReducer,
+  uploadImageReducer,
 } from "./reducers/postReducers";
 
 import {
@@ -38,7 +39,7 @@ const reducer = combineReducers({
   deleteComment: deleteCommentReducer,
   likeComment: likeCommentReducer,
   replyComment: replyCommentReducer,
-  createPosts: createPostReducer,
+  createPost: createPostReducer,
   updatePost: updatePostReducer,
   deletePost: deletePostReducer,
   recommendedFriends: recommendedFriendsReducer,

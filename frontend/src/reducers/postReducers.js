@@ -17,6 +17,10 @@ import {
   CREATE_POST_RESET,
   UPDATE_POST_RESET,
   DELETE_POST_RESET,
+  UPLOAD_IMAGE_SUCCESS,
+  UPLOAD_IMAGE_FAIL,
+  UPLOAD_IMAGE_REQUEST,
+  UPLOAD_IMAGE_RESET,
 } from "../constants/postConstants";
 
 export const createPostReducer = (state = { post: {} }, action) => {
@@ -29,7 +33,7 @@ export const createPostReducer = (state = { post: {} }, action) => {
       return { ...state, loading: false, error: action.payload };
 
      case CREATE_POST_RESET:
-        return {};
+        return { ...state, loading: false,success:false};
   
     default:
       return state;

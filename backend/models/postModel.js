@@ -7,7 +7,7 @@ const PostSchema = mongoose.Schema({
     ref: "User",
   },
   image: {
-    type: String,
+    type: Array,
   },
   desc: {
     type: String,

@@ -2,8 +2,8 @@ import { useState, useRef, useEffect } from "react";
 import moment from "moment";
 import { MoreVert, ThumbUpAltRounded } from "@material-ui/icons";
 import { useDispatch,useSelector } from "react-redux";
+import './comment.css'
 import {
-    CREATE_COMMENT_RESET,
     DELETE_COMMENT_RESET,
     EDIT_COMMENT_RESET,
     LIKE_COMMENT_RESET,
@@ -22,8 +22,11 @@ const Comment = ({ comment, user, commentUser, index }) => {
   const [replyDisplay, setReplyDisplay] = useState(false);
   const {success:deleteSuccess} = useSelector((state) => state.deleteComment);
   const {success:editSuccess} = useSelector((state) => state.editComment);
-  const {success:likeSuccess} = useSelector((state) => state.likeComment);
+  const {success:likeSuccess,message} = useSelector((state) => state.likeComment);
+
   const dispatch = useDispatch();
+
+
   useEffect(() => {
     if (update) {
       inputRef.current.focus();
@@ -33,11 +36,11 @@ const Comment = ({ comment, user, commentUser, index }) => {
         setUpdate(false);
       }
 
-      if (likeSuccess) {
+      if (message) {
         dispatch({ type: LIKE_COMMENT_RESET });
       }
     }
-  }, [update, editSuccess, likeSuccess]);
+  }, [update, editSuccess, likeSuccess,message]);
   const handleEdit = (index) => {
     setEdit(index);
 
