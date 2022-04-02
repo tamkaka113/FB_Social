@@ -20,7 +20,6 @@ const Comment = ({ comment, user, commentUser, index }) => {
   const [edit, setEdit] = useState(null);
   const [update, setUpdate] = useState(false);
   const [replyDisplay, setReplyDisplay] = useState(false);
-  const {success:deleteSuccess} = useSelector((state) => state.deleteComment);
   const {success:editSuccess} = useSelector((state) => state.editComment);
   const {success:likeSuccess,message} = useSelector((state) => state.likeComment);
 

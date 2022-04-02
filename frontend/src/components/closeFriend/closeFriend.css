@@ -3,11 +3,36 @@
     align-items: center;
     margin-bottom: 15px;
   }
+
+.sidebarFriendWrapper {
+  display: flex;
+  align-items: center;
+}
   
-  .sidebarFriendImg {
+.sidebarFriendImg {
     width: 32px;
     height: 32px;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 10px;
   }
+
+.sidebarFriend {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+.sidebarFriendBtn {
+ background-color: #1877f2;
+ border-radius: 10px;
+ color: white;
+ border: none;
+ padding: 5px;
+ cursor: pointer;
+ width: 90px;
+}
+
+.sidebarFriendBtn:hover {
+  background-color: #1876f2d5;
+}

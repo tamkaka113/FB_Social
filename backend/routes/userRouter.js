@@ -5,11 +5,14 @@ import {
   updateProfile,
   followUser,
   unFollowUser,
-  getFriendList
+  getFriendList,
+  getRecommendedFriends
 } from "../controllers/userControllers.js";
 import { protect } from "../middleware/authMiddleware.js";
 import express from "express";
 const router = express.Router();
+
+router.get("/",protect, getRecommendedFriends);
 router.post("/register", register);
 router.post("/login", login);
 router.route("/:id").get(protect, getUserProfile).patch(protect,updateProfile);

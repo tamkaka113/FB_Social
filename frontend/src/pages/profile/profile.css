@@ -16,7 +16,24 @@
     height: 250px;
     object-fit: cover;
 }
+.profileCoverWrapper {
+    width: 20px;
+    height: 30px;
+    position: relative;
+    top: -250px;
+    z-index: 999;
+}
+.profileCoverIcon {
+    color: rgb(79, 77, 77);
+    position: absolute;
+    margin: 0 auto;
+    cursor: pointer;
+    
+}
+.profileCoverInput {
+    position: absolute;
 
+}
 .profileUserImg{
     width: 150px;
     height: 150px;
@@ -29,6 +46,32 @@
     top: 150px;
     border: 3px solid white;
 }
+.profileUserInput {
+   position: absolute;
+
+  
+}
+.profileUserWrapper{
+    width: 20px;
+    height: 30px;
+    position: relative;
+    margin: 0 auto;
+    top: -30px;
+
+}
+.profileUserIcon {
+    color: rgb(79, 77, 77);
+    position: absolute;
+   
+
+    margin: 0 auto;
+    cursor: pointer;
+    
+}
+.profileUserIcon:hover {
+    color: rgba(79, 77, 77, 0.781);
+ 
+}
 
 .profileInfo{
     display: flex;
@@ -39,6 +82,8 @@
 
 .profileInfoName{
     font-size: 24px;
+    z-index: 1000;
+    color: black;
 }
 
 .profileInfoDesc{

@@ -4,6 +4,7 @@
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   margin: 30px 0;
+  position: relative;
 }
 
 .postWrapper {
@@ -249,6 +250,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  
 }
 
 .adjustPost {
@@ -264,14 +266,16 @@
   display: none;
 }
 
+.postEditMore {
+  cursor: pointer;
+
+}
 .adjustPost.active {
   display: flex;
 }
-.editPost {
-  cursor: pointer;
-}
  
 .adjustEditPost {
+
   padding: 5px 7px;
     cursor: pointer;
 }

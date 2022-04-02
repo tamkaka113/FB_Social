@@ -5,17 +5,21 @@ import { useEffect } from "react";
 import { getAllPosts } from "../../actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { SpinnerDotted } from 'spinners-react';
 export default function Feed() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const getPosts = useSelector((state) => state.getAllPosts);
-
   const { success: commentSuccess } = useSelector(
     (state) => state.createComment
   );
 
   const { success: deleteSuccess } = useSelector(
     (state) => state.deleteComment
+  );
+
+  const { success: updateProfileSuccess } = useSelector(
+    (state) => state.userUpdateProfile
   );
   const { success: editSuccess } = useSelector((state) => state.editComment);
   const { success: likeSuccess, message } = useSelector(
@@ -30,9 +34,10 @@ export default function Feed() {
     (state) => state.deletePost
   );
 
+  const { success: updatePostSuccess } = useSelector((state) => state.updatePost);
 
-  console.log(message)
-  const { posts } = getPosts;
+
+  const { posts,loading:postLoading } = getPosts;
   useEffect(() => {
     if (id) {
       dispatch(getAllPosts(id));
@@ -47,21 +52,29 @@ export default function Feed() {
     editSuccess,
     message,
     createPostSuccess,
-    deletePostSuccess
+    deletePostSuccess,
+    updatePostSuccess,
+    updateProfileSuccess,
   ]);
   return (
     <div className="feed">
-      <div className="feedWrapper">
-        <Share />
-        {posts?.map((p,idx) => (
-          <Post
-            key={p.id}
-            post={p}
-            editSuccess={editSuccess}
-            idx={idx}
-          />
-        ))}
-      </div>
+      
+     <div className="feedWrapper">
+     {postLoading? <SpinnerDotted className="spinnerPost" style={{color:'#1877f2'}}/>:
+     <div>
+     <Share />
+     {posts?.map((p,idx) => (
+       <Post
+         key={p.id}
+         post={p}
+         updatePostSuccess={updatePostSuccess}
+         idx={idx}
+       />
+     ))}
+     </div> }
+   </div>
+       
+      
     </div>
   );
 }

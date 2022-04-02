@@ -47,9 +47,8 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-  const { id: _id} = req.params;
 
-  const updateUser = await User.findOneAndUpdate({ _id: _id}, req.body, {
+  const updateUser = await User.findOneAndUpdate({ _id: req.params.id}, req.body, {
     new: true,
     runValidators: true,
   });
@@ -58,7 +57,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
     throw new Error("User Not Updated");
   }
 
-  res.status(200).json({ updateUser });
+  res.status(200).json(updateUser);
 });
 
 export const getUserProfile = asyncHandler(async (req, res) => {
@@ -74,13 +73,18 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 
 
 export const getRecommendedFriends = asyncHandler(async (req, res) => {
+
+  const currentUser = await User.findById(req.user._id)
+
   const users = await User.find({})
+  
+  const newUsers =users.filter(user => !currentUser.following.includes(user._id))
 
-  if (!users) {
-    throw new Error("User does not exist");
-  }
 
-  res.status(200).json(users);
+  
+  res.status(200).json(newUsers);
+
+
 });
 
 export const getFriendList = asyncHandler(async (req, res) => {

@@ -4,4 +4,12 @@
 
 .feedWrapper{
     padding: 20px;
+    position: relative;
+}
+.spinnerPost {
+ position: absolute;
+ margin: 50px auto 0  auto;
+ left: 0;
+ right: 0;
+ text-align: center;
 }

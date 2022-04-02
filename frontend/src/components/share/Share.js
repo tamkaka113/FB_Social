@@ -14,7 +14,6 @@ export default function Share() {
     (state) => state.createPost
   );
 
-  console.log(createPostSuccess)
   useEffect(()=> {
   if(createPostSuccess) {
     setDesc('')

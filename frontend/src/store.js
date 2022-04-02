@@ -8,6 +8,8 @@ import {
   recommendedFriendsReducer,
   followUserReducer,
   unfollowUserReducer,
+  userFriendsReducer,
+  userUpdateProfileReducer
 } from "./reducers/userReducers";
 
 import {
@@ -16,7 +18,7 @@ import {
   createPostReducer,
   updatePostReducer,
   deletePostReducer,
-  uploadImageReducer,
+
 } from "./reducers/postReducers";
 
 import {
@@ -32,6 +34,7 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetail: userDetailsReducer,
+  userFriends:userFriendsReducer,
   getAllPosts: getAllPostsReducer,
   likePost: likePostsReducer,
   createComment: createCommentReducer,
@@ -45,6 +48,7 @@ const reducer = combineReducers({
   recommendedFriends: recommendedFriendsReducer,
   followUser: followUserReducer,
   unfollowUser: unfollowUserReducer,
+  userUpdateProfile:userUpdateProfileReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
