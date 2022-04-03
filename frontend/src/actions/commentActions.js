@@ -135,7 +135,7 @@ export const likeComment = (id) => async (dispatch, getState) => {
           Authorization: `Bearer ${userInfo.token}`,
         },
       };
-      const { data } = await axios.post(`/api/v1/comments/${id}`,{},config);
+      const { data } = await axios.post(`/api/v1/comments/${id}/reply`,comment,config);
       dispatch({
         type: REPLY_COMMENT_SUCCESS,
         payload: data,

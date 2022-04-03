@@ -1,14 +1,33 @@
+import { useEffect } from "react";
 import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import { logout,getUserDetails } from "../../actions/userActions";
+
 export default function Topbar() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
   const { user } = useSelector((state) => state.userDetail);
+
+
+  useEffect(()=> {
+  if(userInfo?.username) {
+    dispatch(getUserDetails(userInfo?._id))
+  }
+  },[userInfo?.username])
+
+  const handleLogout = () => {
+  
+    if(userInfo?.username) {
+      dispatch(logout());
+      history.push('/login')
+    } 
+  };
   return (
     <div className="topbarContainer">
-      <Link to='/'className="topbarLeft">
+      <Link to="/" className="topbarLeft">
         <span className="logo">FB Social</span>
       </Link>
       <div className="topbarCenter">
@@ -21,10 +40,6 @@ export default function Topbar() {
         </div>
       </div>
       <div className="topbarRight">
-        <div className="topbarLinks">
-          <span className="topbarLink">Homepage</span>
-          <span className="topbarLink">Timeline</span>
-        </div>
         <div className="topbarIcons">
           <div className="topbarIconItem">
             <Person />
@@ -39,13 +54,18 @@ export default function Topbar() {
             <span className="topbarIconBadge">1</span>
           </div>
         </div>
-        <Link to={`/profile/${userInfo._id}`}>
-        <img
-          src={user?.profilePicture || "../../assets/person/noUser.jpg"}
-          alt=""
-          className="topbarImg"
-        />
-        </Link>
+        <div className="topbarProfile">
+          <Link to={`/profile/${userInfo?._id}`}>
+            <img
+              src={user?.profilePicture || "../../assets/person/noUser.jpg"}
+              alt=""
+              className="topbarImg"
+            />
+          </Link>
+          <button onClick={()=> {handleLogout()}} className="logoutBtn">
+            Log out
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -96,12 +96,12 @@ export const likeCommentReducer = (state = { message: '' }, action) => {
 };
 
 
-export const replyCommentReducer = (state = { comments:[] }, action) => {
+export const replyCommentReducer = (state = { reply:[] }, action) => {
   switch (action.type) {
     case REPLY_COMMENT_REQUEST:
       return { ...state, loading: true };
     case REPLY_COMMENT_SUCCESS:
-      return { ...state, loading: false,success:true, comments: action.payload };
+      return { ...state, loading: false,success:true, reply: action.payload };
     case REPLY_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 

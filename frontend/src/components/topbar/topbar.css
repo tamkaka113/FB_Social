@@ -73,6 +73,20 @@
   position: relative;
 }
 
+.topbarProfile {
+  display: flex;
+  align-items: center;
+  
+}
+
+.logoutBtn {
+  background-color: #1877f2;
+  border: none;
+  color: white;
+  cursor: pointer;
+  margin-left: 4px;
+  font-size: 15px;
+}
 .topbarIconBadge {
   width: 15px;
   height: 15px;

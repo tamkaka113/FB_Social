@@ -15,16 +15,15 @@ export default function Post({ post,idx,updatePostSuccess }) {
   const [like, setLike] = useState(post.likes.length);
   const [isLiked, setIsLiked] = useState(false)
   const [edit, setEdit] = useState(null)
-
   const [editPost, setEditPost] = useState(false)
   const [editDisplay, setEditDisplay] = useState(false);
   const [display, setDisplay] = useState(false);
   const { user, comments } = post;
-
   const { userInfo } = useSelector((state) => state.userLogin);
+  
   useEffect(() => {
-    setIsLiked(post.likes.includes(userInfo._id));
-  }, [userInfo._id, post.likes]);
+    setIsLiked(post.likes.includes(userInfo?._id));
+  }, [userInfo?._id, post.likes]);
   const likeHandler = (id) => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -102,7 +101,7 @@ export default function Post({ post,idx,updatePostSuccess }) {
          <div className="postBottomLeft">
            <img
              className="likeIcon"
-             src="assets/like.png"
+             src="../assets/like.png"
              onClick={() => {
                likeHandler(post._id);
              }}
@@ -110,7 +109,7 @@ export default function Post({ post,idx,updatePostSuccess }) {
            />
            <img
              className="likeIcon"
-             src="assets/heart.png"
+             src="../assets/heart.png"
              onClick={() => {
                likeHandler(post._id);
              }}
@@ -149,6 +148,7 @@ export default function Post({ post,idx,updatePostSuccess }) {
                  commentUser={commentUser}
                  user={user}
                  index={index}
+                 post ={post}
                />
              );
            })}

@@ -29,15 +29,20 @@ export default function Feed() {
     (state) => state.createPost
   );
 
-
   const { success: deletePostSuccess } = useSelector(
     (state) => state.deletePost
   );
 
+  const { success: followSuccess } = useSelector(
+    (state) => state.followUser
+  );
+  const { success: replySuccess } = useSelector(
+    (state) => state.replyComment
+  );
   const { success: updatePostSuccess } = useSelector((state) => state.updatePost);
+  const { userInfo } = useSelector((state) => state.userLogin);
 
-
-  const { posts,loading:postLoading } = getPosts;
+  const { posts } = getPosts;
   useEffect(() => {
     if (id) {
       dispatch(getAllPosts(id));
@@ -55,13 +60,15 @@ export default function Feed() {
     deletePostSuccess,
     updatePostSuccess,
     updateProfileSuccess,
+    followSuccess,
+    replySuccess,
+    userInfo?.username,
   ]);
   return (
     <div className="feed">
       
      <div className="feedWrapper">
-     {postLoading? <SpinnerDotted className="spinnerPost" style={{color:'#1877f2'}}/>:
-     <div>
+
      <Share />
      {posts?.map((p,idx) => (
        <Post
@@ -71,10 +78,8 @@ export default function Feed() {
          idx={idx}
        />
      ))}
-     </div> }
+     </div> 
    </div>
-       
       
-    </div>
   );
 }

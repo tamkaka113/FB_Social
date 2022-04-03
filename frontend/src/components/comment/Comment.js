@@ -1,30 +1,42 @@
 import { useState, useRef, useEffect } from "react";
 import moment from "moment";
 import { MoreVert, ThumbUpAltRounded } from "@material-ui/icons";
-import { useDispatch,useSelector } from "react-redux";
-import './comment.css'
+import { useDispatch, useSelector } from "react-redux";
+import "./comment.css";
 import {
-    DELETE_COMMENT_RESET,
-    EDIT_COMMENT_RESET,
-    LIKE_COMMENT_RESET,
-  } from "../../constants/commentContants";
+  DELETE_COMMENT_RESET,
+  EDIT_COMMENT_RESET,
+  LIKE_COMMENT_RESET,
+  REPLY_COMMENT_RESET,
+} from "../../constants/commentContants";
 import {
   editComment,
   deleteComment,
   likeComment,
+  replyComment,
 } from "../../actions/commentActions";
-const Comment = ({ comment, user, commentUser, index }) => {
+const Comment = ({ comment, commentUser, index, post }) => {
   const inputRef = useRef();
+  const replyRef = useRef();
   const [value, setValue] = useState("");
+  const [reply, setReply] = useState("");
   const [displayEdit, setDisplayEdit] = useState(false);
+  const [displayReply, setDisplayReply] = useState(false);
   const [edit, setEdit] = useState(null);
   const [update, setUpdate] = useState(false);
   const [replyDisplay, setReplyDisplay] = useState(false);
-  const {success:editSuccess} = useSelector((state) => state.editComment);
-  const {success:likeSuccess,message} = useSelector((state) => state.likeComment);
+  const { success: editSuccess } = useSelector((state) => state.editComment);
+  const { success: likeSuccess, message } = useSelector(
+    (state) => state.likeComment
+  );
 
+  const { success: deleteSuccess } = useSelector(
+    (state) => state.deleteComment
+  );
+
+  const { success: replySuccess } = useSelector((state) => state.replyComment);
+  const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     if (update) {
@@ -39,18 +51,34 @@ const Comment = ({ comment, user, commentUser, index }) => {
         dispatch({ type: LIKE_COMMENT_RESET });
       }
     }
-  }, [update, editSuccess, likeSuccess,message]);
-  const handleEdit = (index) => {
-    setEdit(index);
 
-    setDisplayEdit(!displayEdit);
+    if (replyDisplay) {
+      replyRef.current.focus();
+    }
+    if (replySuccess) {
+      setReplyDisplay(false);
+      dispatch({ type: REPLY_COMMENT_RESET });
+    }
+ 
+    if(deleteSuccess) {
+      setDisplayReply(false)
+  dispatch({type:DELETE_COMMENT_RESET})
+    }
+  
+  }, [update, editSuccess, likeSuccess, message, replyDisplay, replySuccess,deleteSuccess]);
+  const handleEdit = (index, type) => {
+    if (type === "replyPost") {
+      setDisplayEdit(!displayEdit);
+      setEdit(index);
+    } else {
+      setDisplayReply(!displayReply);
+      setEdit(index);
+    }
   };
 
   const handleDeleteComment = (id) => {
     if (window.confirm("Are you sure")) {
       dispatch(deleteComment(id));
-
-      dispatch({ type: DELETE_COMMENT_RESET });
     }
   };
 
@@ -64,6 +92,12 @@ const Comment = ({ comment, user, commentUser, index }) => {
     setUpdate(true);
     setValue(content);
     setDisplayEdit(false);
+  };
+
+  const handleReply = (postId, commentId) => {
+    dispatch(
+      replyComment(commentId, { postId, content: reply, user: userInfo._id })
+    );
   };
 
   return (
@@ -104,8 +138,11 @@ const Comment = ({ comment, user, commentUser, index }) => {
               <div className="commentProfile">
                 <img
                   style={{ width: "40px", height: "40px" }}
-                  className="postProfileImg"
-                  src={user.profilePicture || "../../assets/person/noUser.jpg"}
+                  className="commentProfileImg"
+                  src={
+                    commentUser.profilePicture ||
+                    "../../assets/person/noUser.jpg"
+                  }
                   alt=""
                 />
                 <span className="postUsername">{commentUser.username}</span>
@@ -133,15 +170,31 @@ const Comment = ({ comment, user, commentUser, index }) => {
                     {moment(comment.createdAt).fromNow()}
                   </span>
                 </div>
-                <div className="replyInput">
-                  <input className="commentInput" />
-                  <button className="replyBtn">Send</button>
-                </div>
+                {replyDisplay && (
+                  <div className="replyInput">
+                    <input
+                      ref={replyRef}
+                      onChange={(e) => {
+                        setReply(e.target.value);
+                      }}
+                      className="commentInput"
+                    />
+                    <button
+                      onClick={() => handleReply(post._id, comment._id)}
+                      className="replyBtn"
+                    >
+                      Send
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="editWrapper">
-              <div className="editIcon" onClick={() => handleEdit(index)}>
+              <div
+                className="editIcon"
+                onClick={() => handleEdit(index, "replyPost")}
+              >
                 <MoreVert style={{ fontSize: "medium" }} />
               </div>
               <div
@@ -172,6 +225,68 @@ const Comment = ({ comment, user, commentUser, index }) => {
             </div>
           </div>
         )}
+        {comment.reply?.map((reply, index) => {
+          return (
+            <div className="replyWrapper">
+              <div className="replyEditWrapper">
+                <div
+                  className="editIcon"
+                  onClick={() => handleEdit(index, "replyComment")}
+                >
+                  <MoreVert style={{ fontSize: "medium" }} />
+                </div>
+                <div
+                  className={
+                    edit === index && displayReply
+                      ? "adjustReply active"
+                      : "adjustReply"
+                  }
+                >
+                  <span className="adjustEdit">Edit</span>
+
+                  <span
+                    className="adjustEdit"
+                    onClick={() => {
+                      handleDeleteComment(reply._id);
+                    }}
+                  >
+                    Remove
+                  </span>
+                </div>
+              </div>
+              <div className="commentProfile">
+                <img
+                  style={{ width: "40px", height: "40px" }}
+                  className="commentProfileImg"
+                  src={
+                    reply.user.profilePicture ||
+                    "../../assets/person/noUser.jpg"
+                  }
+                  alt=""
+                />
+                <span className="postUsername">{reply.user.username}</span>
+              </div>
+              <div className="likeWrapper">
+                <span className="postComment">{reply.content}</span>
+                <div className="commentLike">
+                  <span
+                    onClick={() => {
+                      handleLike();
+                    }}
+                    className={"likeComment"}
+                  >
+                    Like
+                  </span>
+                  <span className="replyComment">Reply</span>
+
+                  <span className="timeComment">
+                    {moment(reply.createdAt).fromNow()}
+                  </span>
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

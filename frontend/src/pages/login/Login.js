@@ -1,6 +1,6 @@
 import "./login.css";
 import  {useState,useEffect} from 'react'
-import {login} from '../../actions/userActions'
+import {login,getUserDetails} from '../../actions/userActions'
 import {useDispatch,useSelector} from 'react-redux'
 export default function Login({history}) {
   const dispatch =useDispatch()
@@ -10,11 +10,13 @@ export default function Login({history}) {
   const {userInfo} = useSelector(state => state.userLogin)
 
 
-
  useEffect(()=> {
 
   if(userInfo?.token) {
+    dispatch(getUserDetails(userInfo?._id))
     history.push('/')
+  }else {
+    history.push('/login')
   }
    
  },[history,userInfo?.token])
@@ -36,7 +38,7 @@ dispatch(login(email,password))
             <input type='password' placeholder="Password" className="loginInput" onChange ={(e) => setPassword(e.target.value)}/>
             <button className="loginButton" onClick={handleLogin}>Log In</button>
             <span className="loginForgot">Forgot Password?</span>
-            <button className="loginRegisterButton">
+            <button onClick={()=> history.push('/register')} className="loginRegisterButton">
               Create a New Account
             </button>
           </div>

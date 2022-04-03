@@ -2,8 +2,8 @@ import "./rightbar.css";
 import { Users } from "../../dummyData";
 import Online from "../online/Online";
 import { useSelector } from "react-redux";
-export default function Rightbar({ profile,users }) {
-  const HomeRightbar = (users) => {
+export default function Rightbar({ profile }) {
+  const HomeRightbar = () => {
   
     return (
       <>
