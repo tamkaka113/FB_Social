@@ -26,6 +26,9 @@ import {
   UPDATE_PROFILE_RESET,
   UPDATE_PROFILE_SUCCESS,
   UPDATE_PROFILE_FAIL,
+  USER_INFO_REQUEST,
+  USER_INFO_SUCCESS,
+  USER_INFO_FAIL,
 } from "../constants/userConstants";
 
 export const login = (email, password) => async (dispatch) => {
@@ -97,6 +100,7 @@ export const register = (username, email, password) => async (dispatch) => {
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
+
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -126,6 +130,42 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     });
   }
 };
+
+export const getOtherUsers = (id) => async (dispatch, getState) => {
+
+
+  try {
+    dispatch({
+      type: USER_INFO_REQUEST,
+    });
+
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/v1/users/conversations/${id}`, config);
+    dispatch({
+      type: USER_INFO_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: USER_INFO_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
 
 export const updateUserProfile =
   (id, content) => async (dispatch, getState) => {

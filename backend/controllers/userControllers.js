@@ -29,7 +29,6 @@ export const register = asyncHandler(async (req, res) => {
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-
   const user = await User.findOne({ email });
 
   if (!user) {
@@ -47,11 +46,14 @@ export const login = asyncHandler(async (req, res) => {
 });
 
 export const updateProfile = asyncHandler(async (req, res) => {
-
-  const updateUser = await User.findOneAndUpdate({ _id: req.params.id}, req.body, {
-    new: true,
-    runValidators: true,
-  });
+  const updateUser = await User.findOneAndUpdate(
+    { _id: req.params.id },
+    req.body,
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   if (!updateUser) {
     throw new Error("User Not Updated");
@@ -61,7 +63,7 @@ export const updateProfile = asyncHandler(async (req, res) => {
 });
 
 export const getUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id).select('-password');
+  const user = await User.findById(req.params.id).select("-password");
 
   if (!user) {
     throw new Error("User does not exist");
@@ -70,55 +72,62 @@ export const getUserProfile = asyncHandler(async (req, res) => {
   res.status(200).json(user);
 });
 
-
-
 export const getRecommendedFriends = asyncHandler(async (req, res) => {
+  const currentUser = await User.findById(req.user._id);
 
-  const currentUser = await User.findById(req.user._id)
+  const users = await User.find({});
 
-  const users = await User.find({})
-  
-  const newUsers =users.filter(user => !currentUser.following.includes(user._id))
+  const newUsers = users.filter(
+    (user) => !currentUser.following.includes(user._id)
+  );
 
-
-  
   res.status(200).json(newUsers);
+});
 
+export const getUsers = asyncHandler(async (req, res) => {
+  const userId = req.params.id;
 
+  const user = await User.findById(userId)
+
+  if (!user) {
+    throw new Error("User Not Found");
+  }
+
+  const { password, updatedAt, ...other } = user._doc;
+
+  res.status(200).json(other);
 });
 
 export const getFriendList = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id)
+  const user = await User.findById(req.params.id);
 
   if (!user) {
     throw new Error("User does not exist");
   }
 
-  const friends = await Promise.all(user.following.map(friendId => {
-    
-    return User.findById(friendId)
-  }))
-  
-  let friendList =[]
-  friends.map(friend =>  {
+  const friends = await Promise.all(
+    user.following.map((friendId) => {
+      return User.findById(friendId);
+    })
+  );
+
+  let friendList = [];
+  friends.map((friend) => {
     const { _id, username, profilePicture } = friend;
     friendList.push({ _id, username, profilePicture });
-  })
-  
+  });
 
   res.status(200).json(friendList);
 });
 
-
 export const followUser = asyncHandler(async (req, res) => {
-
   if (req.user._id !== req.params.id) {
     const user = await User.findById(req.params.id);
-     
+
     const currentUser = await User.findById(req.user._id);
 
     if (!user.followers.includes(req.user.userId)) {
-      await user.updateOne({ $push: { followers: req.user._id} });
+      await user.updateOne({ $push: { followers: req.user._id } });
       await currentUser.updateOne({ $push: { following: req.params.id } });
 
       res.status(200).json("You have followed this user");
@@ -131,13 +140,13 @@ export const followUser = asyncHandler(async (req, res) => {
 });
 
 export const unFollowUser = asyncHandler(async (req, res) => {
-  if (req.user._id!== req.params.id) {
+  if (req.user._id !== req.params.id) {
     const user = await User.findById(req.params.id);
 
     const currentUser = await User.findById(req.user.userId);
 
     if (user.followers.includes(req.user.userId)) {
-      await user.updateOne({ $pull: { followers: req.user._id} });
+      await user.updateOne({ $pull: { followers: req.user._id } });
       await currentUser.updateOne({ $pull: { following: req.params.id } });
 
       res.status(200).json("You have unfollowed this user");

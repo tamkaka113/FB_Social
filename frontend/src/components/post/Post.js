@@ -19,8 +19,7 @@ export default function Post({ post,idx,updatePostSuccess }) {
   const [editDisplay, setEditDisplay] = useState(false);
   const [display, setDisplay] = useState(false);
   const { user, comments } = post;
-  const { userInfo } = useSelector((state) => state.userLogin);
-  
+  const { userInfo } = useSelector((state) => state.userLogin)
   useEffect(() => {
     setIsLiked(post.likes.includes(userInfo?._id));
   }, [userInfo?._id, post.likes]);
@@ -86,7 +85,7 @@ export default function Post({ post,idx,updatePostSuccess }) {
            <div onClick={()=> {handleShowEdit(idx)}} className="postEditMore">
              <MoreVert />
            </div>
-           <div className={idx === edit &&editDisplay ?'adjustPost active':'adjustPost'}>
+           <div className={idx === edit &&editDisplay && post.user._id ===userInfo._id ?'adjustPost active':'adjustPost'}>
              <span onClick = {()=> setEditPost(true)}className="adjustEditPost">Edit</span>
 
              <span onClick={()=> handleRemove(post._id)} className="adjustEditPost">Remove</span>

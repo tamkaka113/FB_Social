@@ -11,7 +11,9 @@ export default function Topbar() {
   const { userInfo } = useSelector((state) => state.userLogin);
   const { user } = useSelector((state) => state.userDetail);
 
+  const {conversation} = useSelector((state) => state.getConversation)
 
+const userId = conversation && conversation[0]?.members.find(m=> m !== userInfo._id)
   useEffect(()=> {
   if(userInfo?.username) {
     dispatch(getUserDetails(userInfo?._id))
@@ -45,7 +47,7 @@ export default function Topbar() {
             <Person />
             <span className="topbarIconBadge">1</span>
           </div>
-          <div className="topbarIconItem">
+          <div className="topbarIconItem" onClick={()=> history.push(`/messenger/${userId}`)}>
             <Chat />
             <span className="topbarIconBadge">2</span>
           </div>
