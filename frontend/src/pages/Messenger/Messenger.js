@@ -11,63 +11,91 @@ import {
   getMessages,
   createMessages,
 } from "../../actions/messageActions";
-import io from 'socket.io-client'
+import { io } from "socket.io-client";
 import { CREATE_MESSAGE_RESET } from "../../constants/messageContants";
 
 export default function Messenger({ history, match }) {
   const messRef = useRef(null);
   const id = match.params.id;
   const dispatch = useDispatch();
-
+  const { conversation } = useSelector((state) => state.getConversation);
+  const { messages: newMessages } = useSelector((state) => state.getMessages);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
-  const [onlineUsers, setOnlineUsers] = useState([]);
-const socket = useRef()
+  const [currentChat, setCurrentChat] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
-  const { conversation } = useSelector((state) => state.getConversation);
-  const { messages: newMessages } = useSelector((state) => state.getMessages);
+  console.log(arrivalMessage);
   const { success: createMessageSuccess } = useSelector(
     (state) => state.createMessage
   );
 
-  useEffect(()=> {
-    socket.current = io('ws://localhost:3000')
-  },[])
+  const socket = useRef(null);
 
+  useEffect(() => {
+    socket.current = io("ws://localhost:5000", { withCredentials: true });
+  }, []);
 
- useEffect(()=> {
-    socket?.current.emit('addUsers',userInfo._id)
-    socket?.current.on('getUsers', users => {
-      setOnlineUsers(users)
-    })
-  },[]) 
-  console.log(onlineUsers)
+  useEffect(() => {
+    socket.current.on("getMessage", (data) => {
+      console.log({ data });
+      // setArrivalMessage({
+      //   sender: data.senderId,
+      //   text: data.text,
+      //   createdAt: Date.now(),
+      // });
+    });
+  }, []);
+  useEffect(() => {
+    arrivalMessage &&
+      currentChat?.members.includes(arrivalMessage.sender) &&
+      setMessages((prev) => [...prev, arrivalMessage]);
+  }, [arrivalMessage, currentChat]);
+
+  useEffect(() => {
+    socket?.current.emit("addUsers", userInfo._id);
+    socket?.current.on("getUsers", (users) => {
+      setCurrentChat(users);
+    });
+  }, [userInfo]);
+
   useEffect(() => {
     dispatch(getConversations(userInfo?._id));
-    dispatch(getMessages(id));
+    dispatch(getMessages(id, setMessages));
 
     if (createMessageSuccess) {
       dispatch({ type: CREATE_MESSAGE_RESET });
+      dispatch(getMessages(id, setMessages));
     }
-  }, [userInfo, id, createMessageSuccess]);
+  }, [userInfo, id, createMessageSuccess, currentChat]);
 
   useEffect(() => {
     messRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [newMessages]);
 
   const handleMessage = (c) => {
+    setCurrentChat(c);
     history.push(`/messenger/${c._id}`);
   };
 
   const handleSubmit = () => {
-    dispatch(
-      createMessages({
-        conversationId: id,
-        sender: userInfo._id,
-        text: newMessage,
-      })
-    );
+    console.log(socket.current);
+    // dispatch(
+    //   createMessages({
+    //     conversationId: id,
+    //     sender: userInfo._id,
+    //     text: newMessage,
+    //   })
+    // );
+
+    // const receiverId = currentChat?.members.find(
+    //   (member) => member !== userInfo._id
+    // );
+    socket.current.emit("sendMessage", {
+      senderId: userInfo._id,
+      receiverId: 123,
+      text: newMessage,
+    });
   };
 
   return (
@@ -87,7 +115,7 @@ const socket = useRef()
         <div className="chatBox">
           <div className="chatBoxWrapper">
             <div className="chatBoxTop">
-              {newMessages.map((m) => (
+              {messages.map((m) => (
                 <div ref={messRef}>
                   <Message message={m} own={userInfo._id === m.sender._id} />
                 </div>
@@ -108,7 +136,7 @@ const socket = useRef()
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline onlineUsers={onlineUsers} />
+            <ChatOnline />
           </div>
         </div>
       </div>

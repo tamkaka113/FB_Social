@@ -100,7 +100,7 @@ export const createMessages = (message) => async (dispatch, getState) => {
 };
 
 
-export const getMessages = (id) => async (dispatch, getState) => {
+export const getMessages = (id,setMessages) => async (dispatch, getState) => {
     try {
       dispatch({
         type: GET_MESSAGES_REQUEST,
@@ -116,7 +116,7 @@ export const getMessages = (id) => async (dispatch, getState) => {
         },
       };
       const { data } = await axios.get(`/api/v1/messages/${id}`, config);
-
+      setMessages(data)
       dispatch({
         type: GET_MESSAGES_SUCCESS,
         payload: data,
