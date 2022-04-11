@@ -2,24 +2,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import "./chatOnline.css";
 
-export default function ChatOnline({  }) {
-  const [friends, setFriends] = useState([]);
-  const [onlineFriends, setOnlineFriends] = useState([]);
-
+export default function ChatOnline({ users }) {
   return (
     <div className="chatOnline">
-      {onlineFriends.map((o) => (
-        <div className="chatOnlineFriend" >
+      {users.map((user) => (
+        <div className="chatOnlineFriend">
           <div className="chatOnlineImgContainer">
-            <img
-              className="chatOnlineImg"
-              src=''
-       
-              alt=""
-            />
+            <img className="chatOnlineImg" src={user.profilePicture} alt="" />
             <div className="chatOnlineBadge"></div>
           </div>
-          <span className="chatOnlineName">{o?.username}</span>
+          <span className="chatOnlineName">{user?.username}</span>
         </div>
       ))}
     </div>

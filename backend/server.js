@@ -21,7 +21,7 @@ const app = express();
 app.use(express.json());
 connectDB();
 app.use(morgan("dev"));
-app.use(cors());
+
 app.use(fileUpload({ useTempFiles: true }));
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,

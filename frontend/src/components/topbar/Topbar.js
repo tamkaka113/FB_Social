@@ -3,7 +3,7 @@ import "./topbar.css";
 import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { logout,getUserDetails } from "../../actions/userActions";
+import { logout, getUserDetails } from "../../actions/userActions";
 
 export default function Topbar() {
   const history = useHistory();
@@ -11,21 +11,21 @@ export default function Topbar() {
   const { userInfo } = useSelector((state) => state.userLogin);
   const { user } = useSelector((state) => state.userDetail);
 
-  const {conversation} = useSelector((state) => state.getConversation)
+  const { conversation } = useSelector((state) => state.getConversation);
 
-const userId = conversation && conversation[0]?.members.find(m=> m !== userInfo._id)
-  useEffect(()=> {
-  if(userInfo?.username) {
-    dispatch(getUserDetails(userInfo?._id))
-  }
-  },[userInfo?.username])
+  const userId =
+    conversation && conversation[0]?.members.find((m) => m !== userInfo._id);
+  useEffect(() => {
+    if (userInfo?.username) {
+      dispatch(getUserDetails(userInfo?._id));
+    }
+  }, [userInfo?.username]);
 
   const handleLogout = () => {
-  
-    if(userInfo?.username) {
+    if (userInfo?.username) {
       dispatch(logout());
-      history.push('/login')
-    } 
+      history.push("/login");
+    }
   };
   return (
     <div className="topbarContainer">
@@ -47,7 +47,10 @@ const userId = conversation && conversation[0]?.members.find(m=> m !== userInfo.
             <Person />
             <span className="topbarIconBadge">1</span>
           </div>
-          <div className="topbarIconItem" onClick={()=> history.push(`/messenger/${userId}`)}>
+          <div
+            className="topbarIconItem"
+            onClick={() => history.push(`/messenger/${userId}`)}
+          >
             <Chat />
             <span className="topbarIconBadge">2</span>
           </div>
@@ -64,7 +67,12 @@ const userId = conversation && conversation[0]?.members.find(m=> m !== userInfo.
               className="topbarImg"
             />
           </Link>
-          <button onClick={()=> {handleLogout()}} className="logoutBtn">
+          <button
+            onClick={() => {
+              handleLogout();
+            }}
+            className="logoutBtn"
+          >
             Log out
           </button>
         </div>

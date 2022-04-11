@@ -14,34 +14,38 @@ import {
   GET_CONVERSATION_FAIL,
 } from "../constants/messageContants";
 
-export const createConversation = (conversation) => async (dispatch, getState) => {
-  try {
-    dispatch({
-      type: CREATE_CONVERSATION_REQUEST,
-    });
+export const createConversation =
+  (conversation) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: CREATE_CONVERSATION_REQUEST,
+      });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
+      const {
+        userLogin: { userInfo },
+      } = getState();
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${userInfo.token}`,
-      },
-    };
-    const { data } = await axios.post(`/api/v1/conversations`, conversation, config);
-    dispatch({
-      type: CREATE_CONVERSATION_SUCCESS,
-      payload: data,
-    });
-  } catch (error) {
-    dispatch({
-      type: CREATE_CONVERSATION_FAIL,
-      payload: error.response.data.message || error.message,
-    });
-  }
-};
-
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `/api/v1/conversations`,
+        conversation,
+        config
+      );
+      dispatch({
+        type: CREATE_CONVERSATION_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: CREATE_CONVERSATION_FAIL,
+        payload: error.response.data.message || error.message,
+      });
+    }
+  };
 
 export const getConversations = (id) => async (dispatch, getState) => {
   try {
@@ -99,33 +103,31 @@ export const createMessages = (message) => async (dispatch, getState) => {
   }
 };
 
+export const getMessages = (id, setMessages) => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: GET_MESSAGES_REQUEST,
+    });
 
-export const getMessages = (id,setMessages) => async (dispatch, getState) => {
-    try {
-      dispatch({
-        type: GET_MESSAGES_REQUEST,
-      });
-  
-      const {
-        userLogin: { userInfo },
-      } = getState();
-  
-      const config = {
-        headers: {
-          Authorization: `Bearer ${userInfo.token}`,
-        },
-      };
-      const { data } = await axios.get(`/api/v1/messages/${id}`, config);
-      setMessages(data)
-      dispatch({
-        type: GET_MESSAGES_SUCCESS,
-        payload: data,
-      });
-    } catch (error) {
-      dispatch({
-        type: GET_MESSAGES_FAIL,
-        payload: error.response.data.message || error.message,
-      });
-    }
-  };
-  
+    const {
+      userLogin: { userInfo },
+    } = getState();
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${userInfo.token}`,
+      },
+    };
+    const { data } = await axios.get(`/api/v1/messages/${id}`, config);
+    setMessages(data);
+    dispatch({
+      type: GET_MESSAGES_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: GET_MESSAGES_FAIL,
+      payload: error.response.data.message || error.message,
+    });
+  }
+};

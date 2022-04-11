@@ -18,7 +18,6 @@ import {
 } from "../constants/postConstants";
 
 import axios from "axios";
-
 export const createPost = (content) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -35,7 +34,7 @@ export const createPost = (content) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.post(`/api/v1/posts`, content,config);
+    const { data } = await axios.post(`/api/v1/posts`, content, config);
     dispatch({
       type: CREATE_POST_SUCCESS,
       payload: data,
@@ -43,13 +42,15 @@ export const createPost = (content) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: CREATE_POST_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
 
-
-export const updatePost = (id,content) => async (dispatch, getState) => {
+export const updatePost = (id, content) => async (dispatch, getState) => {
   try {
     dispatch({
       type: UPDATE_POST_REQUEST,
@@ -65,7 +66,7 @@ export const updatePost = (id,content) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.patch(`/api/v1/posts/${id}`, content,config);
+    const { data } = await axios.patch(`/api/v1/posts/${id}`, content, config);
     dispatch({
       type: UPDATE_POST_SUCCESS,
       payload: data,
@@ -73,11 +74,13 @@ export const updatePost = (id,content) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UPDATE_POST_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
-
 
 export const deletePost = (id) => async (dispatch, getState) => {
   try {
@@ -95,15 +98,18 @@ export const deletePost = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.delete(`/api/v1/posts/${id}`,config);
+    const { data } = await axios.delete(`/api/v1/posts/${id}`, config);
     dispatch({
       type: DELETE_POST_SUCCESS,
       payload: data,
     });
   } catch (error) {
     dispatch({
-      type:DELETE_POST_FAIL,
-      payload: error.response.data.message || error.message,
+      type: DELETE_POST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -132,7 +138,10 @@ export const getAllPosts = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: GET_ALLPOSTS_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -152,7 +161,7 @@ export const likePost = (id) => async (dispatch, getState) => {
         Authorization: `Bearer ${userInfo.token}`,
       },
     };
-    const { data } = await axios.post(`/api/v1/posts/${id}/like`,{},config);
+    const { data } = await axios.post(`/api/v1/posts/${id}/like`, {}, config);
     dispatch({
       type: LIKE_POST_SUCCESS,
       payload: data,
@@ -160,7 +169,10 @@ export const likePost = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: LIKE_POST_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };

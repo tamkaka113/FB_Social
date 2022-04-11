@@ -28,6 +28,9 @@ export const register = asyncHandler(async (req, res) => {
 
 export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
+  if (!email || !password) {
+    throw new Error("Invalid email and password");
+  }
 
   const user = await User.findOne({ email });
 
@@ -42,6 +45,8 @@ export const login = asyncHandler(async (req, res) => {
       email: user.email,
       token: generateToken(user._id),
     });
+  } else {
+    throw new Error("Password does not match");
   }
 });
 
@@ -87,7 +92,7 @@ export const getRecommendedFriends = asyncHandler(async (req, res) => {
 export const getUsers = asyncHandler(async (req, res) => {
   const userId = req.params.id;
 
-  const user = await User.findById(userId)
+  const user = await User.findById(userId);
 
   if (!user) {
     throw new Error("User Not Found");
@@ -111,6 +116,11 @@ export const getFriendList = asyncHandler(async (req, res) => {
     })
   );
 
+  if (!friends) {
+    throw new Error("No friends have found");
+  }
+
+  console.log(friends);
   let friendList = [];
   friends.map((friend) => {
     const { _id, username, profilePicture } = friend;

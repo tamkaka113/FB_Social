@@ -11,7 +11,9 @@ import {
   getMessages,
   createMessages,
 } from "../../actions/messageActions";
+import { getUserFriends } from "../../actions/userActions";
 import { io } from "socket.io-client";
+import { API_URL } from "../../utils/config";
 import { CREATE_MESSAGE_RESET } from "../../constants/messageContants";
 
 export default function Messenger({ history, match }) {
@@ -20,47 +22,21 @@ export default function Messenger({ history, match }) {
   const dispatch = useDispatch();
   const { conversation } = useSelector((state) => state.getConversation);
   const { messages: newMessages } = useSelector((state) => state.getMessages);
+  const { users } = useSelector((state) => state.userFriends);
+
+  console.log(users);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [arrivalMessage, setArrivalMessage] = useState(null);
   const [currentChat, setCurrentChat] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
-  console.log(arrivalMessage);
   const { success: createMessageSuccess } = useSelector(
     (state) => state.createMessage
   );
 
-  const socket = useRef(null);
-
   useEffect(() => {
-    socket.current = io("ws://localhost:5000", { withCredentials: true });
-  }, []);
-
-  useEffect(() => {
-    socket.current.on("getMessage", (data) => {
-      console.log({ data });
-      // setArrivalMessage({
-      //   sender: data.senderId,
-      //   text: data.text,
-      //   createdAt: Date.now(),
-      // });
-    });
-  }, []);
-  useEffect(() => {
-    arrivalMessage &&
-      currentChat?.members.includes(arrivalMessage.sender) &&
-      setMessages((prev) => [...prev, arrivalMessage]);
-  }, [arrivalMessage, currentChat]);
-
-  useEffect(() => {
-    socket?.current.emit("addUsers", userInfo._id);
-    socket?.current.on("getUsers", (users) => {
-      setCurrentChat(users);
-    });
-  }, [userInfo]);
-
-  useEffect(() => {
-    dispatch(getConversations(userInfo?._id));
+    if (userInfo) {
+      dispatch(getConversations(userInfo?._id));
+    }
     dispatch(getMessages(id, setMessages));
 
     if (createMessageSuccess) {
@@ -73,29 +49,23 @@ export default function Messenger({ history, match }) {
     messRef?.current?.scrollIntoView({ behavior: "smooth" });
   }, [newMessages]);
 
+  useEffect(() => {
+    dispatch(getUserFriends(userInfo?._id));
+  }, []);
+
   const handleMessage = (c) => {
     setCurrentChat(c);
     history.push(`/messenger/${c._id}`);
   };
 
   const handleSubmit = () => {
-    console.log(socket.current);
-    // dispatch(
-    //   createMessages({
-    //     conversationId: id,
-    //     sender: userInfo._id,
-    //     text: newMessage,
-    //   })
-    // );
-
-    // const receiverId = currentChat?.members.find(
-    //   (member) => member !== userInfo._id
-    // );
-    socket.current.emit("sendMessage", {
-      senderId: userInfo._id,
-      receiverId: 123,
-      text: newMessage,
-    });
+    dispatch(
+      createMessages({
+        conversationId: id,
+        sender: userInfo._id,
+        text: newMessage,
+      })
+    );
   };
 
   return (
@@ -136,7 +106,7 @@ export default function Messenger({ history, match }) {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline />
+            <ChatOnline users={users} />
           </div>
         </div>
       </div>

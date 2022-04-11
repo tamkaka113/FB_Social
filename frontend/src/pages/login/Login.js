@@ -1,44 +1,62 @@
 import "./login.css";
-import  {useState,useEffect} from 'react'
-import {login,getUserDetails} from '../../actions/userActions'
-import {useDispatch,useSelector} from 'react-redux'
-export default function Login({history}) {
-  const dispatch =useDispatch()
-  const [email, setEmail] =useState('')
-  const [password, setPassword] =useState('')
+import { useState, useEffect } from "react";
+import { login, getUserDetails } from "../../actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+export default function Login({ history }) {
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  const {userInfo} = useSelector(state => state.userLogin)
-
-
- useEffect(()=> {
-
-  if(userInfo?.token) {
-    dispatch(getUserDetails(userInfo?._id))
-    history.push('/')
-  }else {
-    history.push('/login')
-  }
-   
- },[history,userInfo?.token])
-const handleLogin =() => {
-dispatch(login(email,password))
-}
+  const { userInfo, error } = useSelector((state) => state.userLogin);
+  console.log(error);
+  useEffect(() => {
+    if (userInfo?.token) {
+      dispatch(getUserDetails(userInfo?._id));
+      history.push("/");
+    } else {
+      history.push("/login");
+    }
+  }, [history, userInfo?.token]);
+  const handleLogin = () => {
+    dispatch(login(email, password));
+  };
   return (
     <div className="login">
       <div className="loginWrapper">
         <div className="loginLeft">
           <h3 className="loginLogo">FB Social</h3>
           <span className="loginDesc">
-            Connect with friends and the world around you on Lamasocial.
+            Connect with friends and all over the world.
           </span>
         </div>
         <div className="loginRight">
           <div className="loginBox">
-            <input placeholder="Email" className="loginInput" onChange ={(e) => setEmail(e.target.value)}/>
-            <input type='password' placeholder="Password" className="loginInput" onChange ={(e) => setPassword(e.target.value)}/>
-            <button className="loginButton" onClick={handleLogin}>Log In</button>
+            <input
+              placeholder="Email"
+              className="loginInput"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              className="loginInput"
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            {error && (
+              <p
+                style={{ color: "red", fontSize: "16px", textAlign: "center" }}
+              >
+                {error}
+              </p>
+            )}
+            <button className="loginButton" onClick={handleLogin}>
+              Log In
+            </button>
             <span className="loginForgot">Forgot Password?</span>
-            <button onClick={()=> history.push('/register')} className="loginRegisterButton">
+            <button
+              onClick={() => history.push("/register")}
+              className="loginRegisterButton"
+            >
               Create a New Account
             </button>
           </div>

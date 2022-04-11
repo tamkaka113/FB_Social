@@ -59,13 +59,20 @@ const Comment = ({ comment, commentUser, index, post }) => {
       setReplyDisplay(false);
       dispatch({ type: REPLY_COMMENT_RESET });
     }
- 
-    if(deleteSuccess) {
-      setDisplayReply(false)
-  dispatch({type:DELETE_COMMENT_RESET})
+
+    if (deleteSuccess) {
+      setDisplayReply(false);
+      dispatch({ type: DELETE_COMMENT_RESET });
     }
-  
-  }, [update, editSuccess, likeSuccess, message, replyDisplay, replySuccess,deleteSuccess]);
+  }, [
+    update,
+    editSuccess,
+    likeSuccess,
+    message,
+    replyDisplay,
+    replySuccess,
+    deleteSuccess,
+  ]);
   const handleEdit = (index, type) => {
     if (type === "replyPost") {
       setDisplayEdit(!displayEdit);
@@ -199,7 +206,9 @@ const Comment = ({ comment, commentUser, index, post }) => {
               </div>
               <div
                 className={
-                  edit === index && displayEdit
+                  edit === index &&
+                  displayEdit &&
+                  comment.user._id === userInfo._id
                     ? "adjustComment active"
                     : "adjustComment"
                 }
@@ -237,7 +246,9 @@ const Comment = ({ comment, commentUser, index, post }) => {
                 </div>
                 <div
                   className={
-                    edit === index && displayReply
+                    edit === index &&
+                    displayReply &&
+                    reply.user._id === userInfo._id
                       ? "adjustReply active"
                       : "adjustReply"
                   }

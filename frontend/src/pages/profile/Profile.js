@@ -7,6 +7,7 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import axios from "axios";
 import { PhotoCamera } from "@material-ui/icons";
 import { useEffect } from "react";
+import { API_URL } from "../../utils/config";
 import {
   getUserDetails,
   getUserFriends,
@@ -24,17 +25,16 @@ export default function Profile({ match }) {
   const { success: updateProfileSuccess } = useSelector(
     (state) => state.userUpdateProfile
   );
-  const handleImage = async (e,type) => {
+  const handleImage = async (e, type) => {
     const file = e.target.files[0];
     const formData = new FormData();
     formData.append("image", file);
     try {
       const { data } = await axios.post(`/api/v1/posts/uploads`, formData);
 
-      if(type ==='cover') {
-        setCover(data)
-      }else {
-
+      if (type === "cover") {
+        setCover(data);
+      } else {
         setImage(data);
       }
     } catch (error) {
@@ -52,11 +52,11 @@ export default function Profile({ match }) {
       setImage("");
     }
 
-    if(cover) {
+    if (cover) {
       dispatch(updateUserProfile(id, { coverPicture: cover }));
       setCover("");
     }
-  }, [id, dispatch, image, updateProfileSuccess,cover]);
+  }, [id, dispatch, image, updateProfileSuccess, cover]);
   return (
     <>
       <Topbar />
@@ -75,7 +75,7 @@ export default function Profile({ match }) {
                 <input
                   className="profileCoverInput"
                   type="file"
-                  onChange={(e) => handleImage(e,'cover')}
+                  onChange={(e) => handleImage(e, "cover")}
                 />
               </div>
               <img
@@ -89,7 +89,7 @@ export default function Profile({ match }) {
                   placeholder="What's in your mind Safak?"
                   className="profileUserInput"
                   type="file"
-                  onChange={(e) => handleImage(e,'profile')}
+                  onChange={(e) => handleImage(e, "profile")}
                 />
               </div>
             </div>

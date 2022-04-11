@@ -100,7 +100,6 @@ export const register = (username, email, password) => async (dispatch) => {
 };
 
 export const getUserDetails = (id) => async (dispatch, getState) => {
-
   try {
     dispatch({
       type: USER_DETAILS_REQUEST,
@@ -132,8 +131,6 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
 };
 
 export const getOtherUsers = (id) => async (dispatch, getState) => {
-
-
   try {
     dispatch({
       type: USER_INFO_REQUEST,
@@ -150,7 +147,10 @@ export const getOtherUsers = (id) => async (dispatch, getState) => {
       },
     };
 
-    const { data } = await axios.get(`/api/v1/users/conversations/${id}`, config);
+    const { data } = await axios.get(
+      `/api/v1/users/conversations/${id}`,
+      config
+    );
     dispatch({
       type: USER_INFO_SUCCESS,
       payload: data,
@@ -165,7 +165,6 @@ export const getOtherUsers = (id) => async (dispatch, getState) => {
     });
   }
 };
-
 
 export const updateUserProfile =
   (id, content) => async (dispatch, getState) => {
@@ -198,7 +197,10 @@ export const updateUserProfile =
     } catch (error) {
       dispatch({
         type: UPDATE_PROFILE_FAIL,
-        payload: error.response.data.message || error.message,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
       });
     }
   };
@@ -229,7 +231,10 @@ export const getUserFriends = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: USER_FRIENDS_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -260,7 +265,10 @@ export const getRecommendedFriends = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: RECOMMENDED_FRIENDS_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -291,7 +299,10 @@ export const followUser = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: FOLLOW_USER_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
@@ -326,7 +337,10 @@ export const unFollowUser = (id) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: UNFOLLOW_USER_FAIL,
-      payload: error.response.data.message || error.message,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
     });
   }
 };
