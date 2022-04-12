@@ -22,6 +22,9 @@ export const register = asyncHandler(async (req, res) => {
       username: user.username,
       email: user.email,
       token: generateToken(user._id),
+      profilePicture: user.profilePicture,
+      following: user.following,
+      followers: user.followers,
     });
   }
 });
@@ -44,6 +47,9 @@ export const login = asyncHandler(async (req, res) => {
       username: user.username,
       email: user.email,
       token: generateToken(user._id),
+      profilePicture: user.profilePicture,
+      following: user.following,
+      followers: user.followers,
     });
   } else {
     throw new Error("Password does not match");
@@ -120,7 +126,6 @@ export const getFriendList = asyncHandler(async (req, res) => {
     throw new Error("No friends have found");
   }
 
-  console.log(friends);
   let friendList = [];
   friends.map((friend) => {
     const { _id, username, profilePicture } = friend;

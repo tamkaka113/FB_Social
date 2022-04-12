@@ -1,30 +1,36 @@
 import "./share.css";
 import { useEffect, useState } from "react";
-import { PermMedia, Label, Room, EmojiEmotions, ContactSupport } from "@material-ui/icons";
-import { useSelector,useDispatch } from "react-redux";
+import {
+  PermMedia,
+  Label,
+  Room,
+  EmojiEmotions,
+  ContactSupport,
+} from "@material-ui/icons";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { createPost } from "../../actions/postActions";
-import {CREATE_POST_RESET} from '../../constants/postConstants'
+import { CREATE_POST_RESET } from "../../constants/postConstants";
 export default function Share() {
   const dispatch = useDispatch();
   const [images, setImages] = useState();
   const [desc, setDesc] = useState("");
   const { user } = useSelector((state) => state.userDetail);
+  const { userInfo } = useSelector((state) => state.userLogin);
   const { success: createPostSuccess } = useSelector(
     (state) => state.createPost
   );
 
-  useEffect(()=> {
-  if(createPostSuccess) {
-    setDesc('')
-    setImages()
+  useEffect(() => {
+    if (createPostSuccess) {
+      setDesc("");
+      setImages();
 
-    setTimeout(()=> {
-
-      dispatch({type:CREATE_POST_RESET})
-    },1000)
-  }
-  },[createPostSuccess])
+      setTimeout(() => {
+        dispatch({ type: CREATE_POST_RESET });
+      }, 1000);
+    }
+  }, [createPostSuccess]);
   const handleImage = async (e) => {
     const files = Array.from(e.target.files);
 
@@ -53,7 +59,7 @@ export default function Share() {
     setImages(newImage);
   };
   const handleCreatePost = () => {
-    dispatch(createPost({ image:images, desc }));
+    dispatch(createPost({ image: images, desc }));
   };
 
   return (
@@ -68,7 +74,7 @@ export default function Share() {
             />
 
             <input
-              placeholder="What's in your mind Safak?"
+              placeholder="What's in your mind?"
               className="shareInput"
               value={desc}
               onChange={(e) => setDesc(e.target.value)}
@@ -120,7 +126,12 @@ export default function Share() {
               <span className="shareOptionText">Feelings</span>
             </div>
           </div>
-          <button onClick={()=>{handleCreatePost()}} className="shareButton">
+          <button
+            onClick={() => {
+              handleCreatePost();
+            }}
+            className="shareButton"
+          >
             Share
           </button>
         </div>

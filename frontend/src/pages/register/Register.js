@@ -10,7 +10,7 @@ export default function Register({ history }) {
   const { userInfo, error } = useSelector((state) => state.userRegister);
 
   useEffect(() => {
-    if (userInfo?.token) {
+    if (userInfo?.username) {
       history.push("/");
     }
   }, [history, userInfo?.token]);

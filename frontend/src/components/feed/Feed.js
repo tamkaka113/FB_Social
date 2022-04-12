@@ -5,10 +5,10 @@ import { useEffect } from "react";
 import { getAllPosts } from "../../actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { SpinnerDotted } from 'spinners-react';
-export default function Feed() {
+export default function Feed({ paramsId }) {
   const dispatch = useDispatch();
   const { id } = useParams();
+
   const getPosts = useSelector((state) => state.getAllPosts);
   const { success: commentSuccess } = useSelector(
     (state) => state.createComment
@@ -33,13 +33,11 @@ export default function Feed() {
     (state) => state.deletePost
   );
 
-  const { success: followSuccess } = useSelector(
-    (state) => state.followUser
+  const { success: followSuccess } = useSelector((state) => state.followUser);
+  const { success: replySuccess } = useSelector((state) => state.replyComment);
+  const { success: updatePostSuccess } = useSelector(
+    (state) => state.updatePost
   );
-  const { success: replySuccess } = useSelector(
-    (state) => state.replyComment
-  );
-  const { success: updatePostSuccess } = useSelector((state) => state.updatePost);
   const { userInfo } = useSelector((state) => state.userLogin);
 
   const { posts } = getPosts;
@@ -66,20 +64,17 @@ export default function Feed() {
   ]);
   return (
     <div className="feed">
-      
-     <div className="feedWrapper">
-
-     <Share />
-     {posts?.map((p,idx) => (
-       <Post
-         key={p.id}
-         post={p}
-         updatePostSuccess={updatePostSuccess}
-         idx={idx}
-       />
-     ))}
-     </div> 
-   </div>
-      
+      <div className="feedWrapper">
+        {(!paramsId || paramsId === userInfo?._id) && <Share />}
+        {posts?.map((p, idx) => (
+          <Post
+            key={p.id}
+            post={p}
+            updatePostSuccess={updatePostSuccess}
+            idx={idx}
+          />
+        ))}
+      </div>
+    </div>
   );
 }

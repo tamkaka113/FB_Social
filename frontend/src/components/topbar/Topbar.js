@@ -5,12 +5,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout, getUserDetails } from "../../actions/userActions";
 
-export default function Topbar() {
+export default function Topbar({ paramsId }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
   const { user } = useSelector((state) => state.userDetail);
-
   const { conversation } = useSelector((state) => state.getConversation);
 
   const userId =
@@ -19,7 +18,7 @@ export default function Topbar() {
     if (userInfo?.username) {
       dispatch(getUserDetails(userInfo?._id));
     }
-  }, [userInfo?.username]);
+  }, []);
 
   const handleLogout = () => {
     if (userInfo?.username) {
@@ -62,7 +61,11 @@ export default function Topbar() {
         <div className="topbarProfile">
           <Link to={`/profile/${userInfo?._id}`}>
             <img
-              src={user?.profilePicture || "../../assets/person/noUser.jpg"}
+              src={
+                !paramsId || (paramsId && paramsId === userInfo._id)
+                  ? user?.profilePicture
+                  : userInfo?.profilePicture
+              }
               alt=""
               className="topbarImg"
             />

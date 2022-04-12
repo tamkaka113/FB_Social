@@ -19,11 +19,11 @@ const UserSchema = new mongoose.Schema(
     },
     profilePicture: {
       type: String,
-      default: "",
+      default: "../../assets/person/noUser.jpg",
     },
     coverPicture: {
       type: String,
-      default: "",
+      default: "../../assets/person/post/2.jpg",
     },
     followers: {
       type: Array,
@@ -41,10 +41,9 @@ const UserSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-
-UserSchema.methods.matchPassword =async function(enterdPassword) {
-  return await bcrypt.compare(enterdPassword,this.password)
-}
+UserSchema.methods.matchPassword = async function (enterdPassword) {
+  return await bcrypt.compare(enterdPassword, this.password);
+};
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
     next();
@@ -52,9 +51,9 @@ UserSchema.pre("save", async function (next) {
 
   const salt = await bcrypt.genSalt(10);
 
-  this.password = await bcrypt.hash(this.password, salt)
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model("User", UserSchema);
 
-export default User
+export default User;

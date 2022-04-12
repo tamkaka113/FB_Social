@@ -1,10 +1,22 @@
 import "./rightbar.css";
-import { Users } from "../../dummyData";
+import { useEffect, useState } from "react";
 import Online from "../online/Online";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-export default function Rightbar({ profile }) {
+export default function Rightbar({ profile, paramsId, friendUser }) {
   const { users } = useSelector((state) => state.userFriends);
+  const { userInfo } = useSelector((state) => state.userLogin);
+
+  const [follow, setFollow] = useState(false);
+
+  useEffect(() => {
+    if (userInfo?.following?.includes(paramsId)) {
+      setFollow(true);
+    } else {
+      setFollow(false);
+    }
+  }, [paramsId, userInfo]);
+
   const HomeRightbar = () => {
     return (
       <>
@@ -17,7 +29,7 @@ export default function Rightbar({ profile }) {
         <img className="rightbarAd" src="assets/ad.png" alt="" />
         <h4 className="rightbarTitle">Online Friends</h4>
         <ul className="rightbarFriendList">
-          {users.map((u) => (
+          {users?.map((u) => (
             <Online key={u.id} user={u} />
           ))}
         </ul>
@@ -30,6 +42,11 @@ export default function Rightbar({ profile }) {
 
     return (
       <>
+        {paramsId !== userInfo._id && (
+          <button className="rightbarFollowButton">
+            {follow ? "Unfollow" : "Follow"}
+          </button>
+        )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
           <div className="rightbarInfoItem">

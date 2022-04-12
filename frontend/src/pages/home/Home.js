@@ -10,7 +10,7 @@ export default function Home({ history }) {
   const { userInfo } = useSelector((state) => state.userLogin);
 
   useEffect(() => {
-    if (!userInfo?.token) {
+    if (!userInfo?.username) {
       history.push("/login");
     }
   }, []);

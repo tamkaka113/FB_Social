@@ -3,15 +3,15 @@ import asyncHandler from "express-async-handler";
 import User from "../models/userModels.js";
 import { v2 as cloudinary } from "cloudinary";
 export const createPost = asyncHandler(async (req, res) => {
-  const {image,desc} =req.body
+  const { image, desc } = req.body;
 
-  if(!image && !desc) {
-    throw new Error('Need an image or description')
+  if (!image && !desc) {
+    throw new Error("Need an image or description");
   }
   const post = await Post.create({
-    user:req.user._id,
+    user: req.user._id,
     image,
-    desc
+    desc,
   });
 
   res.status(200).json(post);
@@ -29,26 +29,20 @@ export const updatePost = asyncHandler(async (req, res) => {
   res.status(200).json(post);
 });
 
+export const uploadNewImages = asyncHandler(async (req, res) => {
+  const imageLinks = [];
 
- export const uploadNewImages = asyncHandler(async (req, res) => {
- 
-
-  const imageLinks =[]
-
-   const result = await cloudinary.uploader.upload(
+  const result = await cloudinary.uploader.upload(
     req.files.image.tempFilePath,
-     {
-       use_filename: true,
-       folder: "upload-image2",
-     }
-   )
-   imageLinks.push(result.secure_url)
-   
-  
-  res.status(200).json(result.secure_url) 
-}) 
+    {
+      use_filename: true,
+      folder: "upload-image2",
+    }
+  );
+  imageLinks.push(result.secure_url);
 
-
+  res.status(200).json(result.secure_url);
+});
 
 export const deletePost = asyncHandler(async (req, res) => {
   const post = await Post.findByIdAndDelete(req.params.id);
@@ -87,8 +81,14 @@ export const getPosts = asyncHandler(async (req, res) => {
 });
 
 export const getTimelinePosts = asyncHandler(async (req, res) => {
-  const currentUser = await User.findById(req.user.id);
-  const userPosts = await Post.find({ user: currentUser._id }).sort('-createdAt')
+  let currentUser;
+  if (req.params.id === "all") {
+    currentUser = await User.findById(req.user.id);
+  } else {
+    currentUser = await User.findById(req.params.id);
+  }
+  const userPosts = await Post.find({ user: currentUser._id })
+    .sort("-createdAt")
     .populate("user", "username profilePicture")
     .populate({
       path: "comments",
@@ -110,7 +110,8 @@ export const getTimelinePosts = asyncHandler(async (req, res) => {
 
   const friendPosts = await Promise.all(
     currentUser.following.map((friendId) => {
-      return Post.find({ user: friendId }).sort('-createdAt')
+      return Post.find({ user: friendId })
+        .sort("-createdAt")
         .populate("user", "username profilePicture createdAt")
         .populate({
           path: "comments",

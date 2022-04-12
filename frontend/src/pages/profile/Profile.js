@@ -19,12 +19,12 @@ export default function Profile({ match }) {
   const id = match.params.id;
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
-
   const [cover, setCover] = useState("");
   const { user } = useSelector((state) => state.userDetail);
   const { success: updateProfileSuccess } = useSelector(
     (state) => state.userUpdateProfile
   );
+  const { success: followSuccess } = useSelector((state) => state.followUser);
   const handleImage = async (e, type) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -56,10 +56,10 @@ export default function Profile({ match }) {
       dispatch(updateUserProfile(id, { coverPicture: cover }));
       setCover("");
     }
-  }, [id, dispatch, image, updateProfileSuccess, cover]);
+  }, [id, dispatch, image, updateProfileSuccess, cover, followSuccess]);
   return (
     <>
-      <Topbar />
+      <Topbar paramsId={id} />
       <div className="profile">
         <Sidebar />
         <div className="profileRight">
@@ -100,8 +100,8 @@ export default function Profile({ match }) {
             </div>
           </div>
           <div className="profileRightBottom">
-            <Feed />
-            <Rightbar profile />
+            <Feed paramsId={id} />
+            <Rightbar profile paramsId={id} friendUser={user} />
           </div>
         </div>
       </div>

@@ -8,15 +8,13 @@ export default function Login({ history }) {
   const [password, setPassword] = useState("");
 
   const { userInfo, error } = useSelector((state) => state.userLogin);
-  console.log(error);
+
   useEffect(() => {
-    if (userInfo?.token) {
+    if (userInfo?.username) {
       dispatch(getUserDetails(userInfo?._id));
       history.push("/");
-    } else {
-      history.push("/login");
     }
-  }, [history, userInfo?.token]);
+  }, [history, userInfo?.username]);
   const handleLogin = () => {
     dispatch(login(email, password));
   };
@@ -54,7 +52,7 @@ export default function Login({ history }) {
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button
-              onClick={() => history.push("/register")}
+              onClick={() => !userInfo && history.push("/register")}
               className="loginRegisterButton"
             >
               Create a New Account
