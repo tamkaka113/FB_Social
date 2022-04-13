@@ -80,7 +80,12 @@ export const getUserProfile = asyncHandler(async (req, res) => {
     throw new Error("User does not exist");
   }
 
-  res.status(200).json(user);
+  const { isAdmin, ...others } = user._doc;
+
+  res.status(200).json({
+    ...others,
+    token: generateToken(user._id),
+  });
 });
 
 export const getRecommendedFriends = asyncHandler(async (req, res) => {
@@ -121,7 +126,6 @@ export const getFriendList = asyncHandler(async (req, res) => {
       return User.findById(friendId);
     })
   );
-
   if (!friends) {
     throw new Error("No friends have found");
   }
@@ -139,13 +143,13 @@ export const followUser = asyncHandler(async (req, res) => {
   if (req.user._id !== req.params.id) {
     const user = await User.findById(req.params.id);
 
-    const currentUser = await User.findById(req.user._id);
+    let currentUser = await User.findById(req.user._id);
 
     if (!user.followers.includes(req.user.userId)) {
       await user.updateOne({ $push: { followers: req.user._id } });
       await currentUser.updateOne({ $push: { following: req.params.id } });
 
-      res.status(200).json("You have followed this user");
+      res.status(200).json(currentUser);
     }
 
     res.status(403).json("You already follow this user");
@@ -158,16 +162,16 @@ export const unFollowUser = asyncHandler(async (req, res) => {
   if (req.user._id !== req.params.id) {
     const user = await User.findById(req.params.id);
 
-    const currentUser = await User.findById(req.user.userId);
+    const currentUser = await User.findById(req.user._id);
 
-    if (user.followers.includes(req.user.userId)) {
+    if (user.followers.includes(req.user._id)) {
       await user.updateOne({ $pull: { followers: req.user._id } });
       await currentUser.updateOne({ $pull: { following: req.params.id } });
 
       res.status(200).json("You have unfollowed this user");
+    } else {
+      res.status(403).json("You do not follow this user");
     }
-
-    res.status(403).json("You do not follow this user");
   }
 
   res.status(403).json("you can not follow yourself");

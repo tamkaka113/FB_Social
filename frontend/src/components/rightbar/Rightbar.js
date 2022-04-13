@@ -1,21 +1,38 @@
 import "./rightbar.css";
 import { useEffect, useState } from "react";
 import Online from "../online/Online";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-export default function Rightbar({ profile, paramsId, friendUser }) {
+import { followUser, unFollowUser } from "../../actions/userActions";
+import {
+  FOLLOW_USER_RESET,
+  UNFOLLOW_USER_RESET,
+} from "../../constants/userConstants";
+export default function Rightbar({ profile, paramsId }) {
+  const dispatch = useDispatch();
   const { users } = useSelector((state) => state.userFriends);
   const { userInfo } = useSelector((state) => state.userLogin);
-
-  const [follow, setFollow] = useState(false);
+  const { success: unfollowSuccess, user: unfollowUsers } = useSelector(
+    (state) => state.unfollowUser
+  );
+  const { success: followSuccess, user } = useSelector(
+    (state) => state.followUser
+  );
+  console.log(user, unfollowUsers);
+  const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
     if (userInfo?.following?.includes(paramsId)) {
-      setFollow(true);
+      setFollowed(true);
     } else {
-      setFollow(false);
+      setFollowed(false);
     }
-  }, [paramsId, userInfo]);
+    if (unfollowSuccess) {
+    }
+
+    if (followSuccess) {
+    }
+  }, [paramsId, userInfo, unfollowSuccess, followSuccess]);
 
   const HomeRightbar = () => {
     return (
@@ -40,11 +57,19 @@ export default function Rightbar({ profile, paramsId, friendUser }) {
   const ProfileRightbar = () => {
     const history = useHistory();
 
+    const handleFollow = () => {
+      if (followed) {
+        dispatch(unFollowUser(paramsId));
+      } else {
+        dispatch(followUser(paramsId));
+      }
+    };
+
     return (
       <>
         {paramsId !== userInfo._id && (
-          <button className="rightbarFollowButton">
-            {follow ? "Unfollow" : "Follow"}
+          <button className="rightbarFollowButton" onClick={handleFollow}>
+            {followed ? "Unfollow" : "Follow"}
           </button>
         )}
         <h4 className="rightbarTitle">User information</h4>

@@ -2,6 +2,7 @@ import {
   CREATE_CONVERSATION_REQUEST,
   CREATE_CONVERSATION_SUCCESS,
   CREATE_CONVERSATION_FAIL,
+  CREATE_CONVERSATION_RESET,
   CREATE_MESSAGE_FAIL,
   CREATE_MESSAGE_REQUEST,
   CREATE_MESSAGE_SUCCESS,
@@ -30,6 +31,13 @@ export const createConversationReducer = (
       };
     case CREATE_CONVERSATION_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case CREATE_CONVERSATION_RESET:
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        conversation: action.payload,
+      };
 
     default:
       return state;
@@ -37,7 +45,7 @@ export const createConversationReducer = (
 };
 
 export const getConversationReducer = (
-  state = { conversation: [] },
+  state = { conversations: [] },
   action
 ) => {
   switch (action.type) {
@@ -48,7 +56,7 @@ export const getConversationReducer = (
         ...state,
         loading: false,
         success: true,
-        conversation: action.payload,
+        conversations: action.payload,
       };
     case GET_CONVERSATION_FAIL:
       return { ...state, loading: false, error: action.payload };

@@ -3,11 +3,8 @@ import "./conversation.css";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 export default function Conversation({ conversation }) {
-  const dispatch = useDispatch();
   const [user, setUser] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
-
-
 
   useEffect(() => {
     const otherUsersId = conversation.members.find(
@@ -28,8 +25,7 @@ export default function Conversation({ conversation }) {
 
         setUser(data);
       } catch (error) {
-
-        console.log(error)
+        console.log(error);
       }
     };
     getUser();

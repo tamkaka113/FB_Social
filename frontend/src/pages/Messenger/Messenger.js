@@ -20,11 +20,12 @@ export default function Messenger({ history, match }) {
   const messRef = useRef(null);
   const id = match.params.id;
   const dispatch = useDispatch();
-  const { conversation } = useSelector((state) => state.getConversation);
+  const { conversations } = useSelector((state) => state.getConversation);
   const { messages: newMessages } = useSelector((state) => state.getMessages);
+  const { success: createConversationSuccess } = useSelector(
+    (state) => state.createConversation
+  );
   const { users } = useSelector((state) => state.userFriends);
-
-  console.log(users);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [currentChat, setCurrentChat] = useState(null);
@@ -42,8 +43,15 @@ export default function Messenger({ history, match }) {
     if (createMessageSuccess) {
       dispatch({ type: CREATE_MESSAGE_RESET });
       dispatch(getMessages(id, setMessages));
+      setNewMessage("");
     }
-  }, [userInfo, id, createMessageSuccess, currentChat]);
+  }, [
+    userInfo,
+    id,
+    createMessageSuccess,
+    currentChat,
+    createConversationSuccess,
+  ]);
 
   useEffect(() => {
     messRef?.current?.scrollIntoView({ behavior: "smooth" });
@@ -75,7 +83,7 @@ export default function Messenger({ history, match }) {
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input placeholder="Search for friends" className="chatMenuInput" />
-            {conversation.map((c) => (
+            {conversations.map((c) => (
               <div key={c._id} onClick={() => handleMessage(c)}>
                 <Conversation conversation={c} />
               </div>
@@ -106,7 +114,7 @@ export default function Messenger({ history, match }) {
         </div>
         <div className="chatOnline">
           <div className="chatOnlineWrapper">
-            <ChatOnline users={users} />
+            <ChatOnline conversations={conversations} users={users} />
           </div>
         </div>
       </div>

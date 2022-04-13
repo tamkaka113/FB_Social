@@ -6,6 +6,8 @@
 
 .messageTop{
     display: flex;
+
+    align-items: center;
 }
 
 .messageImg {
@@ -22,11 +24,12 @@
     background-color: #1877f2;
     color: white;
     max-width: 300px;
+    height: auto;
 }
 
 .messageBottom{
     font-size: 12px;
-    margin-top: 10px;
+    margin-top: -10px;
 }
 
 .message.own{
@@ -37,3 +40,4 @@
     background-color: rgb(245, 241, 241);
     color: black;
 }
+

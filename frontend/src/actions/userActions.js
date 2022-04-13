@@ -117,7 +117,7 @@ export const getUserDetails = (id) => async (dispatch, getState) => {
     };
 
     const { data } = await axios.get(`/api/v1/users/${id}`, config);
-    localStorage.setItem("userInfo", JSON.stringify(data));
+
     dispatch({
       type: USER_DETAILS_SUCCESS,
       payload: data,
