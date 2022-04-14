@@ -10,10 +10,8 @@ export default function Topbar({ paramsId }) {
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
   const { user } = useSelector((state) => state.userDetail);
-  const { conversation } = useSelector((state) => state.getConversation);
+  const { conversations } = useSelector((state) => state.getConversation);
 
-  const userId =
-    conversation && conversation[0]?.members.find((m) => m !== userInfo._id);
   useEffect(() => {
     if (userInfo?.username) {
       dispatch(getUserDetails(userInfo?._id));
@@ -48,7 +46,11 @@ export default function Topbar({ paramsId }) {
           </div>
           <div
             className="topbarIconItem"
-            onClick={() => history.push(`/messenger/${userId}`)}
+            onClick={() =>
+              history.push(
+                `/messenger/${conversations && conversations[0]?._id}`
+              )
+            }
           >
             <Chat />
             <span className="topbarIconBadge">2</span>
@@ -59,16 +61,19 @@ export default function Topbar({ paramsId }) {
           </div>
         </div>
         <div className="topbarProfile">
-          <Link to={`/profile/${userInfo?._id}`}>
-            <img
-              src={
-                !paramsId || (paramsId && paramsId === userInfo._id)
-                  ? user?.profilePicture
-                  : userInfo?.profilePicture
-              }
-              alt=""
-              className="topbarImg"
-            />
+          <Link className="topbarLink" to={`/profile/${userInfo?._id}`}>
+            <div className="profileWrapper">
+              <span>{userInfo?.username}</span>
+              <img
+                src={
+                  !paramsId || (paramsId && paramsId === userInfo._id)
+                    ? user?.profilePicture
+                    : userInfo?.profilePicture
+                }
+                alt=""
+                className="topbarImg"
+              />
+            </div>
           </Link>
           <button
             onClick={() => {

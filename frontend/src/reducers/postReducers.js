@@ -5,6 +5,7 @@ import {
   LIKE_POST_REQUEST,
   LIKE_POST_SUCCESS,
   LIKE_POST_FAIL,
+  LIKE_POST_RESET,
   CREATE_POST_REQUEST,
   CREATE_POST_SUCCESS,
   CREATE_POST_FAIL,
@@ -17,10 +18,6 @@ import {
   CREATE_POST_RESET,
   UPDATE_POST_RESET,
   DELETE_POST_RESET,
-  UPLOAD_IMAGE_SUCCESS,
-  UPLOAD_IMAGE_FAIL,
-  UPLOAD_IMAGE_REQUEST,
-  UPLOAD_IMAGE_RESET,
 } from "../constants/postConstants";
 
 export const createPostReducer = (state = { post: {} }, action) => {
@@ -28,13 +25,13 @@ export const createPostReducer = (state = { post: {} }, action) => {
     case CREATE_POST_REQUEST:
       return { ...state, loading: true };
     case CREATE_POST_SUCCESS:
-      return { ...state, loading: false,success:true, post: action.payload };
+      return { ...state, loading: false, success: true, post: action.payload };
     case CREATE_POST_FAIL:
       return { ...state, loading: false, error: action.payload };
 
-     case CREATE_POST_RESET:
-        return { ...state, loading: false,success:false};
-  
+    case CREATE_POST_RESET:
+      return { ...state, loading: false, success: false };
+
     default:
       return state;
   }
@@ -45,11 +42,16 @@ export const updatePostReducer = (state = { post: {} }, action) => {
     case UPDATE_POST_REQUEST:
       return { ...state, loading: true };
     case UPDATE_POST_SUCCESS:
-      return { ...state, loading: false,success:true, post: action.payload };
+      return { ...state, loading: false, success: true, post: action.payload };
     case UPDATE_POST_FAIL:
-      return { ...state, loading: false,success:false, error: action.payload };
-      case UPDATE_POST_RESET:
-        return {};
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.payload,
+      };
+    case UPDATE_POST_RESET:
+      return {};
     default:
       return state;
   }
@@ -60,11 +62,21 @@ export const deletePostReducer = (state = { message: "" }, action) => {
     case DELETE_POST_REQUEST:
       return { ...state, loading: true };
     case DELETE_POST_SUCCESS:
-      return { ...state, loading: false,success:true, message: action.payload };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        message: action.payload,
+      };
     case DELETE_POST_FAIL:
-      return { ...state, loading: false,success:false, error: action.payload };
-      case DELETE_POST_RESET:
-        return {};
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.payload,
+      };
+    case DELETE_POST_RESET:
+      return {};
     default:
       return state;
   }
@@ -91,6 +103,8 @@ export const likePostsReducer = (state = { message: "" }, action) => {
       return { ...state, loading: false, message: action.payload };
     case LIKE_POST_FAIL:
       return { ...state, loading: false, error: action.payload };
+    case LIKE_POST_RESET:
+      return {};
 
     default:
       return state;

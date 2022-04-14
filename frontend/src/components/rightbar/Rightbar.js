@@ -4,35 +4,26 @@ import Online from "../online/Online";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { followUser, unFollowUser } from "../../actions/userActions";
-import {
-  FOLLOW_USER_RESET,
-  UNFOLLOW_USER_RESET,
-} from "../../constants/userConstants";
 export default function Rightbar({ profile, paramsId }) {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.userFriends);
   const { userInfo } = useSelector((state) => state.userLogin);
-  const { success: unfollowSuccess, user: unfollowUsers } = useSelector(
-    (state) => state.unfollowUser
-  );
-  const { success: followSuccess, user } = useSelector(
-    (state) => state.followUser
-  );
-  console.log(user, unfollowUsers);
+
+  const [user, setUser] = useState(userInfo);
+
   const [followed, setFollowed] = useState(false);
 
-  useEffect(() => {
-    if (userInfo?.following?.includes(paramsId)) {
-      setFollowed(true);
-    } else {
-      setFollowed(false);
-    }
-    if (unfollowSuccess) {
-    }
+  console.log(followed);
 
-    if (followSuccess) {
-    }
-  }, [paramsId, userInfo, unfollowSuccess, followSuccess]);
+  useEffect(() => {
+    setFollowed(userInfo.following.includes(paramsId));
+  }, [paramsId, userInfo.following]);
+
+  console.log();
+
+  useEffect(() => {
+    localStorage.setItem("userInfo", JSON.stringify(user));
+  }, [user, paramsId]);
 
   const HomeRightbar = () => {
     return (
@@ -44,7 +35,7 @@ export default function Rightbar({ profile, paramsId }) {
           </span>
         </div>
         <img className="rightbarAd" src="assets/ad.png" alt="" />
-        <h4 className="rightbarTitle">Online Friends</h4>
+        <h4 className="rightbarTitle">Your Friends</h4>
         <ul className="rightbarFriendList">
           {users?.map((u) => (
             <Online key={u.id} user={u} />
@@ -60,9 +51,18 @@ export default function Rightbar({ profile, paramsId }) {
     const handleFollow = () => {
       if (followed) {
         dispatch(unFollowUser(paramsId));
+        setUser({
+          ...user,
+          following: user.following.filter((f) => f !== paramsId),
+        });
       } else {
         dispatch(followUser(paramsId));
+        setUser({
+          ...user,
+          following: [...user.following, paramsId],
+        });
       }
+      setFollowed(!followed);
     };
 
     return (
@@ -93,7 +93,7 @@ export default function Rightbar({ profile, paramsId }) {
             users?.map((user) => {
               return (
                 <div
-                  onClick={() => history.push(`/profile/${user._id}`)}
+                  onClick={() => history.push(`/profile/${user?._id}`)}
                   className="rightbarFollowing"
                 >
                   <img

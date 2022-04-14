@@ -26,13 +26,22 @@ export const createCommentReducer = (state = { comment: {} }, action) => {
     case CREATE_COMMENT_REQUEST:
       return { ...state, loading: true };
     case CREATE_COMMENT_SUCCESS:
-      return { ...state, loading: false,success:true, comment: action.payload };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        comment: action.payload,
+      };
     case CREATE_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     case CREATE_COMMENT_RESET:
-        return { ...state,loading: false,success:false, error: action.payload };
-  
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.payload,
+      };
 
     default:
       return state;
@@ -41,73 +50,86 @@ export const createCommentReducer = (state = { comment: {} }, action) => {
 
 export const editCommentReducer = (state = { newComment: {} }, action) => {
   switch (action.type) {
-    case  EDIT_COMMENT_REQUEST:
+    case EDIT_COMMENT_REQUEST:
       return { ...state, loading: true };
     case EDIT_COMMENT_SUCCESS:
-      return { ...state, loading: false, success:true, newComment: action.payload };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        newComment: action.payload,
+      };
     case EDIT_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     case EDIT_COMMENT_RESET:
-        return { ...state,loading: false,success:false};
-  
+      return { ...state, loading: false, success: false };
 
     default:
       return state;
   }
 };
 
-
-export const deleteCommentReducer = (state = { message: '' }, action) => {
+export const deleteCommentReducer = (state = { message: "" }, action) => {
   switch (action.type) {
     case DELETE_COMMENT_REQUEST:
       return { ...state, loading: true };
     case DELETE_COMMENT_SUCCESS:
-      return { ...state, loading: false,success:true, message: action.payload };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        message: action.payload,
+      };
     case DELETE_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     case DELETE_COMMENT_RESET:
-        return { ...state,loading: false,success:false, error: action.payload };
-  
+      return {
+        ...state,
+        loading: false,
+        success: false,
+        error: action.payload,
+      };
 
     default:
       return state;
   }
 };
 
-
-export const likeCommentReducer = (state = { message: '' }, action) => {
+export const likeCommentReducer = (state = { message: "" }, action) => {
   switch (action.type) {
     case LIKE_COMMENT_REQUEST:
       return { ...state, loading: true };
     case LIKE_COMMENT_SUCCESS:
-      return { ...state, loading: false,success:true, message: action.payload };
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        message: action.payload,
+      };
     case LIKE_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     case LIKE_COMMENT_RESET:
-       return { ...state,loading: false,success:false,message:''};;
-  
+      return {};
 
     default:
       return state;
   }
 };
 
-
-export const replyCommentReducer = (state = { reply:[] }, action) => {
+export const replyCommentReducer = (state = { reply: [] }, action) => {
   switch (action.type) {
     case REPLY_COMMENT_REQUEST:
       return { ...state, loading: true };
     case REPLY_COMMENT_SUCCESS:
-      return { ...state, loading: false,success:true, reply: action.payload };
+      return { ...state, loading: false, success: true, reply: action.payload };
     case REPLY_COMMENT_FAIL:
       return { ...state, loading: false, error: action.payload };
 
     case REPLY_COMMENT_RESET:
-        return {};
-  
+      return {};
 
     default:
       return state;

@@ -5,11 +5,19 @@ import { likePost, deletePost } from "../../actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "../../actions/commentActions";
 import { CREATE_COMMENT_RESET } from "../../constants/commentContants";
-import { UPDATE_POST_RESET } from "../../constants/postConstants";
+import {
+  LIKE_POST_RESET,
+  UPDATE_POST_RESET,
+} from "../../constants/postConstants";
 import moment from "moment";
 import Comment from "../comment/Comment";
 import EditPost from "../EditPost/EditPost";
-export default function Post({ post, idx, updatePostSuccess }) {
+export default function Post({
+  post,
+  idx,
+  updatePostSuccess,
+  likePostSuccess,
+}) {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [like, setLike] = useState(post.likes.length);
@@ -35,7 +43,11 @@ export default function Post({ post, idx, updatePostSuccess }) {
       setEditDisplay(false);
       dispatch({ type: UPDATE_POST_RESET });
     }
-  }, [updatePostSuccess, dispatch]);
+
+    if (likePostSuccess) {
+      dispatch({ type: LIKE_POST_RESET });
+    }
+  }, [updatePostSuccess, dispatch, likePostSuccess]);
   const handleComment = (postId) => {
     dispatch(
       createComment({
@@ -58,6 +70,7 @@ export default function Post({ post, idx, updatePostSuccess }) {
   const handleRemove = (id) => {
     if (window.confirm("Are you sure")) {
       dispatch(deletePost(id));
+      setEditDisplay(!editDisplay);
     }
   };
 

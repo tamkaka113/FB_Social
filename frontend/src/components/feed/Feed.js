@@ -25,10 +25,12 @@ export default function Feed({ paramsId }) {
   const { success: likeSuccess, message } = useSelector(
     (state) => state.likeComment
   );
+  const { success: likePostSuccess } = useSelector((state) => state.likePost);
   const { success: createPostSuccess } = useSelector(
     (state) => state.createPost
   );
 
+  console.log(likePostSuccess);
   const { success: deletePostSuccess } = useSelector(
     (state) => state.deletePost
   );
@@ -60,6 +62,8 @@ export default function Feed({ paramsId }) {
     updateProfileSuccess,
     followSuccess,
     replySuccess,
+    likeSuccess,
+    likePostSuccess,
     userInfo?.username,
   ]);
   return (
@@ -72,6 +76,7 @@ export default function Feed({ paramsId }) {
             post={p}
             updatePostSuccess={updatePostSuccess}
             idx={idx}
+            likePostSuccess={likePostSuccess}
           />
         ))}
       </div>

@@ -20,6 +20,8 @@ const Comment = ({ comment, commentUser, index, post }) => {
   const replyRef = useRef();
   const [value, setValue] = useState("");
   const [reply, setReply] = useState("");
+  const [like, setLike] = useState(comment.likes.length);
+  const [isLiked, setIsLiked] = useState(false);
   const [displayEdit, setDisplayEdit] = useState(false);
   const [displayReply, setDisplayReply] = useState(false);
   const [edit, setEdit] = useState(null);
@@ -29,14 +31,19 @@ const Comment = ({ comment, commentUser, index, post }) => {
   const { success: likeSuccess, message } = useSelector(
     (state) => state.likeComment
   );
-
   const { success: deleteSuccess } = useSelector(
     (state) => state.deleteComment
   );
-
   const { success: replySuccess } = useSelector((state) => state.replyComment);
   const { userInfo } = useSelector((state) => state.userLogin);
   const dispatch = useDispatch();
+  let likesId = [];
+  for (const like of comment.likes) {
+    likesId.push(like._id);
+  }
+  useEffect(() => {
+    setIsLiked(likesId.includes(userInfo?._id));
+  }, [userInfo?._id, comment.likes.length]);
 
   useEffect(() => {
     if (update) {
@@ -51,7 +58,6 @@ const Comment = ({ comment, commentUser, index, post }) => {
         dispatch({ type: LIKE_COMMENT_RESET });
       }
     }
-
     if (replyDisplay) {
       replyRef.current.focus();
     }
@@ -63,6 +69,10 @@ const Comment = ({ comment, commentUser, index, post }) => {
     if (deleteSuccess) {
       setDisplayReply(false);
       dispatch({ type: DELETE_COMMENT_RESET });
+    }
+
+    if (likeSuccess) {
+      dispatch({ type: LIKE_COMMENT_RESET });
     }
   }, [
     update,
@@ -92,13 +102,16 @@ const Comment = ({ comment, commentUser, index, post }) => {
   const handleUpdateComment = (id) => {
     dispatch(editComment(id, value));
   };
-  const handleLike = (id, likes) => {
-    dispatch(likeComment(id));
-  };
+
   const handlUpdate = (content) => {
     setUpdate(true);
     setValue(content);
     setDisplayEdit(false);
+  };
+  const handleLike = (id, likes) => {
+    setLike(isLiked ? like - 1 : like + 1);
+    setIsLiked(!isLiked);
+    dispatch(likeComment(id));
   };
 
   const handleReply = (postId, commentId) => {
@@ -162,7 +175,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                     onClick={() => {
                       handleLike(comment._id, comment.likes);
                     }}
-                    className={"likeComment"}
+                    className={isLiked ? "likeComment active" : "likeComment"}
                   >
                     Like
                   </span>

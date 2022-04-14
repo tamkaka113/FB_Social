@@ -93,6 +93,12 @@ export default function Messenger({ history, match }) {
         <div className="chatBox">
           <div className="chatBoxWrapper">
             <div className="chatBoxTop">
+              {messages.length === 0 && (
+                <span className="startConversation">
+                  You are friends, start a conversation now
+                </span>
+              )}
+
               {messages.map((m) => (
                 <div ref={messRef}>
                   <Message message={m} own={userInfo._id === m.sender._id} />

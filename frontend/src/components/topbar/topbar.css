@@ -78,6 +78,20 @@
   align-items: center;
   
 }
+.topbarLink {
+  text-decoration: none;
+  color: white;
+  font-size: 14px;
+}
+.profileWrapper {
+  display: flex;
+align-items: center;
+justify-content: space-between;
+}
+.profileWrapper span {
+  font-size: 16px;
+  margin-right: 8px;
+}
 
 .logoutBtn {
   background-color: #1877f2;

@@ -149,7 +149,7 @@ export const followUser = asyncHandler(async (req, res) => {
       await user.updateOne({ $push: { followers: req.user._id } });
       await currentUser.updateOne({ $push: { following: req.params.id } });
 
-      res.status(200).json(currentUser);
+      res.status(200).json("You have followed this user");
     }
 
     res.status(403).json("You already follow this user");

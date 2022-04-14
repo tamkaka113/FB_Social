@@ -12,7 +12,6 @@ export default function Message({ message, own }) {
         <p className="messageText">{message.text}</p>
       </div>
       <div className="messageBottom">{moment(message.createdAt).fromNow()}</div>
-      <div className="messageBottom"></div>
     </div>
   );
 }

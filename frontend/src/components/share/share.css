@@ -46,6 +46,7 @@
   margin: 20px;
 }
 
+
 .shareOptionWrapper {
   width: 100%;
   position: relative;
@@ -67,6 +68,40 @@ input[type='file']{
   font-size: 0;
   position: absolute;
 }
+
+
+.shareImageWrapper {
+  display: flex;
+  justify-content: flex-start;
+  
+  }
+  
+  .shareImageContainer {
+      position: relative;
+      padding: 5px;
+  }
+  .shareImageContainer span {
+    color: red;
+   position: absolute;
+   right: 0px;
+   top: -10px;
+   cursor: pointer;
+  
+  }
+  
+.shareImageContainer span:hover {
+      color: rgba(255, 0, 0, 0.777);
+      width: 17px;
+      height: 16px;
+      border-radius: 50%;
+      text-align: center;
+      background-color:bisque;
+      padding-bottom: 8px;
+  }
+  
+.shareShowImage {
+    margin-bottom: -10px;
+  }
 .shareBottom {
   display: flex;
   align-items: center;

@@ -56,7 +56,15 @@ export default function Profile({ match }) {
       dispatch(updateUserProfile(id, { coverPicture: cover }));
       setCover("");
     }
-  }, [id, dispatch, image, updateProfileSuccess, cover, followSuccess]);
+  }, [
+    id,
+    dispatch,
+    image,
+    updateProfileSuccess,
+    cover,
+    followSuccess,
+    user._id,
+  ]);
   return (
     <>
       <Topbar paramsId={id} />
