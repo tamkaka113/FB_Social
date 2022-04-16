@@ -3,13 +3,16 @@
   align-items: center;
   padding: 10px;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .conversation:hover {
-  background-color: rgb(245, 243, 243);
+  background-color: var( --light-color-hover);
 }
 
+.conversation.active {
+  background-color: var( --light-color-hover);
+}
 .conversationImg {
   width: 40px;
   height: 40px;

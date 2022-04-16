@@ -74,6 +74,12 @@ export default function Post({
     }
   };
 
+  let replyLength = 0;
+
+  for (const element of post.comments) {
+    replyLength += element.reply.length;
+  }
+
   return (
     <div className="post">
       {editPost ? (
@@ -159,7 +165,7 @@ export default function Post({
                 onClick={() => setDisplay(true)}
                 className="postCommentText"
               >
-                {post.comments.length} comments
+                {post.comments.length + replyLength} comments
               </span>
             </div>
           </div>
@@ -184,6 +190,7 @@ export default function Post({
                 const { user: commentUser } = comment;
                 return (
                   <Comment
+                    key={index}
                     comment={comment}
                     commentUser={commentUser}
                     user={user}

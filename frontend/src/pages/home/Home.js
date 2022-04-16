@@ -14,13 +14,11 @@ export default function Home({ history }) {
     if (!userInfo?.username) {
       history.push("/login");
     }
-  }, []);
+  }, [userInfo?.username]);
 
   useEffect(() => {
-    if (followSuccess) {
-      dispatch(getUserFriends(userInfo._id));
-    }
-  }, [followSuccess]);
+    dispatch(getUserFriends(userInfo?._id));
+  }, [followSuccess, userInfo?._id, dispatch]);
 
   return (
     <>

@@ -12,21 +12,19 @@ import {
   School,
 } from "@material-ui/icons";
 import CloseFriend from "../closeFriend/CloseFriend";
-import {getRecommendedFriends} from '../../actions/userActions'
+import { getRecommendedFriends } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import { SpinnerDotted } from 'spinners-react';
+import { SpinnerDotted } from "spinners-react";
 export default function Sidebar() {
+  const { loading, users } = useSelector((state) => state.recommendedFriends);
+  const { success: followSuccess } = useSelector((state) => state.followUser);
 
-  const {loading,users} = useSelector((state) => state.recommendedFriends);
-  const {success:followSuccess} = useSelector((state) => state.followUser);
-  
   const { userInfo } = useSelector((state) => state.userLogin);
-  const newUsers =users?.filter(user => user._id !== userInfo?._id)
+  const newUsers = users?.filter((user) => user._id !== userInfo?._id);
   const dispatch = useDispatch();
-  useEffect(()=> {
-      dispatch(getRecommendedFriends())
-  
-  },[followSuccess])
+  useEffect(() => {
+    dispatch(getRecommendedFriends());
+  }, [followSuccess]);
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -47,12 +45,12 @@ export default function Sidebar() {
             <Group className="sidebarIcon" />
             <span className="sidebarListItemText">Groups</span>
           </li>
-      
+
           <li className="sidebarListItem">
             <WorkOutline className="sidebarIcon" />
             <span className="sidebarListItemText">Jobs</span>
           </li>
-         
+
           <li className="sidebarListItem">
             <School className="sidebarIcon" />
             <span className="sidebarListItemText">Courses</span>
@@ -60,8 +58,10 @@ export default function Sidebar() {
         </ul>
         <button className="sidebarButton">Show More</button>
         <hr className="sidebarHr" />
-        <h3 className="sidebarText" >Recommended Friends</h3>
-        {loading&& <SpinnerDotted className="spinnerPost" style={{color:'#1877f2'}}/> }
+        <h3 className="sidebarText">Recommended Friends</h3>
+        {loading && (
+          <SpinnerDotted className="spinnerPost" style={{ color: "#1877f2" }} />
+        )}
         <ul className="sidebarFriendList">
           {newUsers?.map((u) => (
             <CloseFriend key={u._id} user={u} />

@@ -7,13 +7,11 @@ import Rightbar from "../../components/rightbar/Rightbar";
 import axios from "axios";
 import { PhotoCamera } from "@material-ui/icons";
 import { useEffect } from "react";
-import { API_URL } from "../../utils/config";
 import {
   getUserDetails,
   getUserFriends,
   updateUserProfile,
 } from "../../actions/userActions";
-
 import { useDispatch, useSelector } from "react-redux";
 export default function Profile({ match }) {
   const id = match.params.id;
@@ -25,6 +23,7 @@ export default function Profile({ match }) {
     (state) => state.userUpdateProfile
   );
   const { success: followSuccess } = useSelector((state) => state.followUser);
+
   const handleImage = async (e, type) => {
     const file = e.target.files[0];
     const formData = new FormData();
@@ -94,7 +93,7 @@ export default function Profile({ match }) {
               <div className="profileUserWrapper">
                 <PhotoCamera className="profileUserIcon" />
                 <input
-                  placeholder="What's in your mind Safak?"
+                  placeholder="What's in your mind?"
                   className="profileUserInput"
                   type="file"
                   onChange={(e) => handleImage(e, "profile")}

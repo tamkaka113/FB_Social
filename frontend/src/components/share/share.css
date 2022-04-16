@@ -81,7 +81,7 @@ input[type='file']{
       padding: 5px;
   }
   .shareImageContainer span {
-    color: red;
+    color: var(--red-color);
    position: absolute;
    right: 0px;
    top: -10px;
@@ -90,7 +90,7 @@ input[type='file']{
   }
   
 .shareImageContainer span:hover {
-      color: rgba(255, 0, 0, 0.777);
+      color: var( --red-color-hover);
       width: 17px;
       height: 16px;
       border-radius: 50%;
@@ -136,13 +136,13 @@ input[type='file']{
     border: none;
     padding: 7px;
     border-radius: 5px;
-    background-color: green;
+    background-color: var(--green-color);
     font-weight: 500;
     margin-right: 20px;
     cursor: pointer;
-    color: white;
+    color: var(--white-color);
 }
 
 .shareButton:hover {
-  background-color: rgba(0, 128, 0, 0.827);
+  background-color:  var(--green-color-hover);
 }

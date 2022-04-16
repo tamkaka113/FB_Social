@@ -4,7 +4,7 @@ import { Search, Person, Chat, Notifications } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout, getUserDetails } from "../../actions/userActions";
-
+import { getConversations } from "../../actions/messageActions";
 export default function Topbar({ paramsId }) {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -16,8 +16,11 @@ export default function Topbar({ paramsId }) {
     if (userInfo?.username) {
       dispatch(getUserDetails(userInfo?._id));
     }
-  }, []);
+  }, [userInfo, dispatch]);
 
+  useEffect(() => {
+    dispatch(getConversations(userInfo?._id));
+  }, []);
   const handleLogout = () => {
     if (userInfo?.username) {
       dispatch(logout());

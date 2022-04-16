@@ -6,6 +6,32 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+:root {
+  --clr-primary-1: #1877f2;
+  --clr-primary-1-hover: #1876f2d3;
+  --clr-primary-2: #ECF8F8 ;
+  --clr-primary-2-hover:#ecf8f8b9;
+  --clr-primary-3: #f0f2f5;
+  --clr-primary-4: rgba(0, 128, 128, 0.788);
+  --clr-primary-5: crimson;
+  --clr-primary-6: rgba(220, 20, 60, 0.76);
+  --white-color: white;
+  --red-color: red;
+  --red-color-hover: rgba(255, 0, 0, 0.756);
+  --black-color: black;
+  --green-color: green;
+  --green-color-hover: rgba(0, 128, 0, 0.833);
+  --lime-green-color:limegreen;
+  --lime-green-color-hover:rgba(50, 205, 50, 0.792);
+  --green-color-hover:rgba(0, 128, 0, 0.79);
+  --gray-color: #666;
+  --gray-color-hover:rgba(102, 102, 102, 0.81);
+  --gray-light-color: #777;
+  --light-color-hover: #F5F3F3;
+  --gray-lighter-color:rgb(236, 248, 248);
+  --sidebar-light-color:#f1f1f1;
+  
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',

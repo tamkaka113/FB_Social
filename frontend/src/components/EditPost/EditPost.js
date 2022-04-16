@@ -1,21 +1,26 @@
-import React, {useState} from 'react'
-import { updatePost} from "../../actions/postActions";
-import './edit.css'
+import React, { useState } from "react";
+import { updatePost } from "../../actions/postActions";
+import "./edit.css";
 import { useDispatch } from "react-redux";
-import { PermMedia, Label, Room, EmojiEmotions, ContactSupport } from "@material-ui/icons";
-import axios from 'axios';
+import {
+  PermMedia,
+  Label,
+  Room,
+  EmojiEmotions,
+  ContactSupport,
+} from "@material-ui/icons";
+import axios from "axios";
 
-export default function EditPost({post}) {
+export default function EditPost({ post }) {
   const dispatch = useDispatch();
 
-   const [desc, setDesc] =useState(post.desc)
-   const  [images, setImages] =useState(post.image)
-   const handleUpdatePost =(id)=> {
-     dispatch(updatePost(id,{desc,image:images}))
+  const [desc, setDesc] = useState(post.desc);
+  const [images, setImages] = useState(post.image);
+  const handleUpdatePost = (id) => {
+    dispatch(updatePost(id, { desc, image: images }));
+  };
 
-   }
-
-   const handleImage = async (e) => {
+  const handleImage = async (e) => {
     const files = Array.from(e.target.files);
 
     try {
@@ -36,45 +41,51 @@ export default function EditPost({post}) {
       console.error(error);
     }
   };
-   const handleRemove= (idx) => {
-     const newImages =images.filter((_,index)=> index !== idx )
+  const handleRemove = (idx) => {
+    const newImages = images.filter((_, index) => index !== idx);
 
-     setImages(newImages)
-   }
+    setImages(newImages);
+  };
   return (
-    <div className='editPost'>
-        <div className="editPostWrapper">
+    <div className="editPost">
+      <div className="editPostWrapper">
         <div className="editPostTop">
           <div className="editPostShowWrapper">
             <img
               className="editPostProfileImg"
-              src={post.user?.profilePicture || "../../assets/person/noUser.jpg"}
+              src={
+                post.user?.profilePicture || "../../assets/person/noUser.jpg"
+              }
               alt=""
             />
 
             <input
-            value ={desc}
+              value={desc}
               placeholder="What's in your mind Safak?"
               className="editPostInput"
-              onChange={(e)=> setDesc(e.target.value)}
-              
+              onChange={(e) => setDesc(e.target.value)}
             />
           </div>
           <div className="editPostImageWrapper">
             {images.map((img, idx) => {
               return (
                 <div
+                  key={idx}
                   className="editPostImageContainer"
                   style={{ width: "50px", height: "50px" }}
                 >
-
-                  <span onClick = {()=> {handleRemove(idx)}}>x</span>
+                  <span
+                    onClick={() => {
+                      handleRemove(idx);
+                    }}
+                  >
+                    x
+                  </span>
                   <img
-                    src={img}  
+                    src={img}
                     style={{ width: "100%", height: "100%" }}
                     className="editPostShowImage"
                   />
-              
                 </div>
               );
             })}
@@ -90,7 +101,9 @@ export default function EditPost({post}) {
                   className="editPostOptionInput"
                   multiple
                   type="file"
-                onChange={(e)=> {handleImage(e)}}
+                  onChange={(e) => {
+                    handleImage(e);
+                  }}
                 />
                 <span className="editPostOptionText">Photo or Video</span>
               </div>
@@ -108,13 +121,16 @@ export default function EditPost({post}) {
               <span className="editPostOptionText">Feelings</span>
             </div>
           </div>
-        <button onClick={()=> {handleUpdatePost(post._id)}}  className="editPostButton">
+          <button
+            onClick={() => {
+              handleUpdatePost(post._id);
+            }}
+            className="editPostButton"
+          >
             Update
           </button>
+        </div>
+      </div>
     </div>
-
-    </div>
-    </div>
-
-  )
+  );
 }

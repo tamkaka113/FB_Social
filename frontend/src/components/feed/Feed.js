@@ -29,8 +29,6 @@ export default function Feed({ paramsId }) {
   const { success: createPostSuccess } = useSelector(
     (state) => state.createPost
   );
-
-  console.log(likePostSuccess);
   const { success: deletePostSuccess } = useSelector(
     (state) => state.deletePost
   );
@@ -72,7 +70,7 @@ export default function Feed({ paramsId }) {
         {(!paramsId || paramsId === userInfo?._id) && <Share />}
         {posts?.map((p, idx) => (
           <Post
-            key={p.id}
+            key={p._id}
             post={p}
             updatePostSuccess={updatePostSuccess}
             idx={idx}

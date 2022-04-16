@@ -27,6 +27,7 @@ export default function Messenger({ history, match }) {
   );
   const { users } = useSelector((state) => state.userFriends);
   const [messages, setMessages] = useState([]);
+  const [chatActive, setChatActive] = useState(0);
   const [newMessage, setNewMessage] = useState("");
   const [currentChat, setCurrentChat] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -61,7 +62,8 @@ export default function Messenger({ history, match }) {
     dispatch(getUserFriends(userInfo?._id));
   }, []);
 
-  const handleMessage = (c) => {
+  const handleMessage = (c, idx) => {
+    setChatActive(idx);
     setCurrentChat(c);
     history.push(`/messenger/${c._id}`);
   };
@@ -83,9 +85,13 @@ export default function Messenger({ history, match }) {
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input placeholder="Search for friends" className="chatMenuInput" />
-            {conversations.map((c) => (
-              <div key={c._id} onClick={() => handleMessage(c)}>
-                <Conversation conversation={c} />
+            {conversations.map((c, idx) => (
+              <div key={c._id} onClick={() => handleMessage(c, idx)}>
+                <Conversation
+                  chatActive={chatActive}
+                  idx={idx}
+                  conversation={c}
+                />
               </div>
             ))}
           </div>
@@ -99,8 +105,8 @@ export default function Messenger({ history, match }) {
                 </span>
               )}
 
-              {messages.map((m) => (
-                <div ref={messRef}>
+              {messages.map((m, index) => (
+                <div key={index} ref={messRef}>
                   <Message message={m} own={userInfo._id === m.sender._id} />
                 </div>
               ))}

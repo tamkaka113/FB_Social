@@ -1,5 +1,4 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./chatOnline.css";
 import { createConversation } from "../../actions/messageActions";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +7,6 @@ import { CREATE_CONVERSATION_RESET } from "../../constants/messageContants";
 export default function ChatOnline({ users, conversations }) {
   const dispatch = useDispatch();
   const history = useHistory();
-
   const { userInfo } = useSelector((state) => state.userLogin);
   const { success: createConversationSuccess, conversation } = useSelector(
     (state) => state.createConversation
@@ -27,7 +25,7 @@ export default function ChatOnline({ users, conversations }) {
       history.push(`/messenger/${conversation._id}`);
       dispatch({ type: CREATE_CONVERSATION_RESET });
     }
-  }, [createConversationSuccess]);
+  }, [createConversationSuccess, dispatch, history, conversation._id]);
 
   const handleStartConversation = (user) => {
     if (!showedUsers.includes(user._id)) {
@@ -44,6 +42,7 @@ export default function ChatOnline({ users, conversations }) {
     <div className="chatOnline">
       {users?.map((user) => (
         <div
+          key={user._id}
           className="chatOnlineFriend"
           onClick={() => {
             handleStartConversation(user);

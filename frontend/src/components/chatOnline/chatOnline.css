@@ -16,14 +16,14 @@
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: 1px solid white;
+  border: 1px solid var(--clr-primary-1);
 }
 
 .chatOnlineBadge {
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background-color: limegreen;
+  background-color: var( --lime-green-color);
   position: absolute;
   top: 2px;
   right: 2px;

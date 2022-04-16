@@ -1,12 +1,6 @@
 import "./share.css";
 import { useEffect, useState } from "react";
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  ContactSupport,
-} from "@material-ui/icons";
+import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { createPost } from "../../actions/postActions";
@@ -16,7 +10,6 @@ export default function Share() {
   const [images, setImages] = useState();
   const [desc, setDesc] = useState("");
   const { user } = useSelector((state) => state.userDetail);
-  const { userInfo } = useSelector((state) => state.userLogin);
   const { success: createPostSuccess } = useSelector(
     (state) => state.createPost
   );
@@ -84,6 +77,7 @@ export default function Share() {
             {images?.map((image, idx) => {
               return (
                 <div
+                  key={idx}
                   className="shareImageContainer"
                   style={{ width: "50px", height: "50px" }}
                 >

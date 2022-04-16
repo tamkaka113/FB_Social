@@ -1,7 +1,7 @@
 .login {
   width: 100vw;
   height: 100vh;
-  background-color: #f0f2f5;
+  background-color: var( --clr-primary-3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -24,7 +24,7 @@
 .loginLogo {
   font-size: 50px;
   font-weight: 800;
-  color: #1775ee;
+  color: var( --clr-primary-1);
   margin-bottom: 10px;
 }
 
@@ -35,7 +35,7 @@
 .loginBox{
     height: 300px;
     padding: 20px;
-    background-color: white;
+    background-color: var(--white-color);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -45,7 +45,7 @@
 .loginInput{
     height: 50px;
     border-radius: 10px;
-    border: 1px solid gray;
+    border: 1px solid var( --gray-color);
     font-size: 18px;
     padding-left: 20px;
 }
@@ -54,23 +54,23 @@
     outline: none;
 }
 
-.loginButton{
+.loginBtn{
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: #1775ee;
-    color: white;
+    background-color: var(--clr-primary-1);
+    color: var(--white-color);
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
 }
-.loginButton:hover {
-  background-color: #1774eedf
+.loginBtn:hover {
+  background-color: var(--clr-primary-1-hover)
 }
 
 .loginForgot{
     text-align: center;
-    color: #1775ee;
+    color: var(--clr-primary-1);
 }
 
 .loginRegisterButton{
@@ -79,12 +79,12 @@
     height: 50px;
     border-radius: 10px;
     border: none;
-    background-color: #42b72a;
-    color: white;
+    background-color: var( --lime-green-color);
+    color: var(--white-color);
     font-size: 20px;
     font-weight: 500;
     cursor: pointer;
 }
 .loginRegisterButton:hover {
-  background-color: #42b72ade;
+  background-color: var( --lime-green-color-hover);
 }

@@ -55,7 +55,7 @@
 .rightbarInfoKey{
   font-weight: 500;
   margin-right: 15px;
-  color: #555;
+  color: var(--gray-colo);
 }
 
 .rightbarInfoValue{
@@ -86,8 +86,8 @@
   margin-top: 30px;
   margin-bottom: 10px;
   border: none;
-  background-color: #1872f2;
-  color: white;
+  background-color: var(--clr-primary-1);
+  color: var(--white-color);
   border-radius: 5px;
   padding: 5px 10px;
   display: flex;
@@ -98,7 +98,7 @@
 }
 
 .rightbarFollowButton:hover {
-  background-color: #1873f2d8;
+  background-color: var(--clr-primary-1-hover);
 }
 
 .rightbarFollowButton:focus{

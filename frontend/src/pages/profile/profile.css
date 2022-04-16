@@ -24,7 +24,7 @@
     z-index: 999;
 }
 .profileCoverIcon {
-    color: rgb(79, 77, 77);
+    color: var(--gray-color);
     position: absolute;
     margin: 0 auto;
     cursor: pointer;
@@ -44,7 +44,7 @@
     right: 0;
     margin: auto;
     top: 150px;
-    border: 3px solid white;
+    border: 3px solid var(--white-color);
 }
 .profileUserInput {
    position: absolute;
@@ -60,7 +60,7 @@
 
 }
 .profileUserIcon {
-    color: rgb(79, 77, 77);
+    color: var(--gray-color);
     position: absolute;
    
 
@@ -69,7 +69,7 @@
     
 }
 .profileUserIcon:hover {
-    color: rgba(79, 77, 77, 0.781);
+    color: var( --gray-color-hover)
  
 }
 

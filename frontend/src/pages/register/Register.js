@@ -18,30 +18,30 @@ export default function Register({ history }) {
     dispatch(register(username, email, password));
   };
   return (
-    <div className="login">
-      <div className="loginWrapper">
-        <div className="loginLeft">
-          <h3 className="loginLogo">Lamasocial</h3>
-          <span className="loginDesc">
+    <div className="register">
+      <div className="registerWrapper">
+        <div className="registerLeft">
+          <h3 className="registerLogo">Lamasocial</h3>
+          <span className="registerDesc">
             Connect with friends and the world around you on Lamasocial.
           </span>
         </div>
-        <div className="loginRight">
-          <div className="loginBox">
+        <div className="registerRight">
+          <div className="registerBox">
             <input
               placeholder="Username"
-              className="loginInput"
+              className="registerInput"
               onChange={(e) => setUsername(e.target.value)}
             />
             <input
               placeholder="Email"
-              className="loginInput"
+              className="registerInput"
               onChange={(e) => setEmail(e.target.value)}
             />
             <input
               type="password"
               placeholder="Password"
-              className="loginInput"
+              className="registerInput"
               onChange={(e) => setPassword(e.target.value)}
             />
             {error && (
@@ -51,10 +51,15 @@ export default function Register({ history }) {
                 {error}
               </p>
             )}
-            <button className="loginButton" onClick={handleRegister}>
+            <button className="registerButton" onClick={handleRegister}>
               Sign Up
             </button>
-            <button className="loginRegisterButton">Log into Account</button>
+            <button
+              onClick={() => history.push("/login")}
+              className="loginButton"
+            >
+              Log into Account
+            </button>
           </div>
         </div>
       </div>

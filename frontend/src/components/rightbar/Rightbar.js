@@ -8,18 +8,12 @@ export default function Rightbar({ profile, paramsId }) {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.userFriends);
   const { userInfo } = useSelector((state) => state.userLogin);
-
   const [user, setUser] = useState(userInfo);
-
   const [followed, setFollowed] = useState(false);
 
-  console.log(followed);
-
   useEffect(() => {
-    setFollowed(userInfo.following.includes(paramsId));
-  }, [paramsId, userInfo.following]);
-
-  console.log();
+    setFollowed(userInfo?.following.includes(paramsId));
+  }, [paramsId, userInfo?.following]);
 
   useEffect(() => {
     localStorage.setItem("userInfo", JSON.stringify(user));
@@ -34,12 +28,10 @@ export default function Rightbar({ profile, paramsId }) {
             <b>Pola Foster</b> and <b>3 other friends</b> have a birhday today.
           </span>
         </div>
-        <img className="rightbarAd" src="assets/ad.png" alt="" />
+        <img className="rightbarAd" src="assets/ad.jpg" alt="" />
         <h4 className="rightbarTitle">Your Friends</h4>
         <ul className="rightbarFriendList">
-          {users?.map((u) => (
-            <Online key={u.id} user={u} />
-          ))}
+          {users && users?.map((u) => <Online key={u._id} user={u} />)}
         </ul>
       </>
     );
@@ -93,6 +85,7 @@ export default function Rightbar({ profile, paramsId }) {
             users?.map((user) => {
               return (
                 <div
+                  key={user._id}
                   onClick={() => history.push(`/profile/${user?._id}`)}
                   className="rightbarFollowing"
                 >

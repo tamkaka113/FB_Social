@@ -47,7 +47,7 @@ export default function Login({ history }) {
                 {error}
               </p>
             )}
-            <button className="loginButton" onClick={handleLogin}>
+            <button className="loginBtn" onClick={handleLogin}>
               Log In
             </button>
             <span className="loginForgot">Forgot Password?</span>

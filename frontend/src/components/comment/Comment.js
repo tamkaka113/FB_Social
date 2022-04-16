@@ -114,9 +114,14 @@ const Comment = ({ comment, commentUser, index, post }) => {
     dispatch(likeComment(id));
   };
 
-  const handleReply = (postId, commentId) => {
+  const handleReplyBtn = (name) => {
+    setReply(...reply, name);
+    setReplyDisplay(true);
+  };
+
+  const handleReply = (postId, comment) => {
     dispatch(
-      replyComment(commentId, { postId, content: reply, user: userInfo._id })
+      replyComment(comment._id, { postId, content: reply, user: userInfo._id })
     );
   };
 
@@ -181,7 +186,9 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   </span>
                   <span
                     className="replyComment"
-                    onClick={() => setReplyDisplay(true)}
+                    onClick={() => {
+                      handleReplyBtn(comment.user.username);
+                    }}
                   >
                     Reply
                   </span>
@@ -194,13 +201,14 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   <div className="replyInput">
                     <input
                       ref={replyRef}
+                      value={reply}
                       onChange={(e) => {
                         setReply(e.target.value);
                       }}
                       className="commentInput"
                     />
                     <button
-                      onClick={() => handleReply(post._id, comment._id)}
+                      onClick={() => handleReply(post._id, comment)}
                       className="replyBtn"
                     >
                       Send
@@ -249,7 +257,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
         )}
         {comment.reply?.map((reply, index) => {
           return (
-            <div className="replyWrapper">
+            <div key={index} className="replyWrapper">
               <div className="replyEditWrapper">
                 <div
                   className="editIcon"
