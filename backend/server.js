@@ -3,7 +3,7 @@ import express from "express";
 import morgan from "morgan";
 import fileUpload from "express-fileupload";
 import { v2 as cloudinary } from "cloudinary";
-import connectDB from "./db/ConnectDB.js";
+import connectDB from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import userRouter from "./routes/userRouter.js";
 import postRouter from "./routes/postRouter.js";
@@ -17,11 +17,11 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 
 dotenv.config();
+
 connectDB();
 
 const app = express();
-app.use(express.json());
-app.use(morgan("dev"));
+const __dirname = path.resolve();
 
 app.use(fileUpload({ useTempFiles: true }));
 cloudinary.config({
@@ -41,7 +41,9 @@ io.on("connection", (socket) => {
   console.log("a user connected.");
   SocketServer(socket);
 }); */
-const __dirname = path.resolve();
+app.use(express.json());
+app.use(morgan("dev"));
+
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/comments", commentRouter);
