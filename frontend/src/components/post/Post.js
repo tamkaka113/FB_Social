@@ -49,13 +49,15 @@ export default function Post({
     }
   }, [updatePostSuccess, dispatch, likePostSuccess]);
   const handleComment = (postId) => {
-    dispatch(
-      createComment({
-        content,
-        postId,
-        user: userInfo._id,
-      })
-    );
+    if (content) {
+      dispatch(
+        createComment({
+          content,
+          postId,
+          user: userInfo._id,
+        })
+      );
+    }
 
     dispatch({ type: CREATE_COMMENT_RESET });
 

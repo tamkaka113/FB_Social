@@ -178,9 +178,9 @@
 .adjustPost {
   display: flex;
   flex-direction: column;
-  font-size: 10px;
-  width: 55px;
-  height: 48px;
+  font-size: 14px;
+  width: 60px;
+  height: 55px;
   background-color: var(--clr-primary-2);
   border-radius: 10px;
   position: absolute;;
@@ -214,15 +214,21 @@ background-color: var(--clr-primary-2-hover);
  @media (min-width:740px) and (max-width:1023px) {
   .post{
      max-width: 780px;
+     padding: 5px;
   }
 }
 
 @media  (max-width:739px) {
   .post {
-    min-width: 358px;
+    min-width: 360px;
+    padding: 4px;
     overflow-x: hidden;
   }
   .postText {
     font-size: 18px;
+  }
+  
+  .postWrapper {
+    padding: 0px;
   }
 }

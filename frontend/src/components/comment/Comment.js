@@ -121,9 +121,15 @@ const Comment = ({ comment, commentUser, index, post }) => {
   };
 
   const handleReply = (postId, comment) => {
-    dispatch(
-      replyComment(comment._id, { postId, content: reply, user: userInfo._id })
-    );
+    if (reply) {
+      dispatch(
+        replyComment(comment._id, {
+          postId,
+          content: reply,
+          user: userInfo._id,
+        })
+      );
+    }
   };
 
   return (
@@ -151,16 +157,6 @@ const Comment = ({ comment, commentUser, index, post }) => {
         ) : (
           <div className="commentMain">
             <div className="commentWrapper">
-              {comment.likes.length > 0 && (
-                <div className="commentLikeIcon">
-                  <ThumbUpAltRounded
-                    style={{ color: "#1877f2", fontSize: "20px" }}
-                  />
-                  <span style={{ fontSize: "14px", marginLeft: "5px" }}>
-                    {comment.likes.length}
-                  </span>
-                </div>
-              )}
               <div className="commentProfile">
                 <img
                   style={{ width: "40px", height: "40px" }}
@@ -177,26 +173,39 @@ const Comment = ({ comment, commentUser, index, post }) => {
               <div className="likeWrapper">
                 <span className="postComment">{comment.content}</span>
                 <div className="commentLike">
-                  <span
-                    onClick={() => {
-                      handleLike(comment._id, comment.likes);
-                    }}
-                    className={isLiked ? "likeComment active" : "likeComment"}
-                  >
-                    Like
-                  </span>
-                  <span
-                    className="replyComment"
-                    onClick={() => {
-                      handleReplyBtn(comment.user.username);
-                    }}
-                  >
-                    Reply
-                  </span>
+                  <div className="commentLikeWrapper">
+                    <span
+                      onClick={() => {
+                        handleLike(comment._id, comment.likes);
+                      }}
+                      className={isLiked ? "likeComment active" : "likeComment"}
+                    >
+                      Like
+                    </span>
+                    <span
+                      className="replyComment"
+                      onClick={() => {
+                        handleReplyBtn(comment.user.username);
+                      }}
+                    >
+                      Reply
+                    </span>
 
-                  <span className="timeComment">
-                    {moment(comment.createdAt).fromNow()}
-                  </span>
+                    <span className="timeComment">
+                      {moment(comment.createdAt).fromNow()}
+                    </span>
+                  </div>
+
+                  {comment.likes.length > 0 && (
+                    <div className="commentLikeIcon">
+                      <ThumbUpAltRounded
+                        style={{ color: "#1877f2", fontSize: "20px" }}
+                      />
+                      <span style={{ fontSize: "14px", marginLeft: "5px" }}>
+                        {comment.likes.length}
+                      </span>
+                    </div>
+                  )}
                 </div>
                 {replyDisplay && (
                   <div className="replyInput">
@@ -239,7 +248,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   onClick={() => {
                     handlUpdate(comment.content);
                   }}
-                  className="adjustEdit"
+                  className="adjustEditComment"
                 >
                   Edit
                 </span>
@@ -248,7 +257,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   onClick={() => {
                     handleDeleteComment(comment._id);
                   }}
-                  className="adjustEdit"
+                  className="adjustEditComment"
                 >
                   Remove
                 </span>
@@ -275,10 +284,10 @@ const Comment = ({ comment, commentUser, index, post }) => {
                       : "adjustReply"
                   }
                 >
-                  <span className="adjustEdit">Edit</span>
+                  <span className="adjustEditComment">Edit</span>
 
                   <span
-                    className="adjustEdit"
+                    className="adjustEditComment"
                     onClick={() => {
                       handleDeleteComment(reply._id);
                     }}
