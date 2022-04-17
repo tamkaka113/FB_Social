@@ -86,7 +86,7 @@
   
   @media (min-width:740px) and (max-width:1023px) {
     .messenger {
-      height: 600px;
+      height: 750px;
       min-width: 820px;
 
     }
@@ -117,6 +117,7 @@
     .messenger {
     min-width: 370px;
      height: 600px;
+     overflow: hidden;
     }
     .chatOnline {
   
@@ -135,6 +136,7 @@
     }
     .chatMessageInput {
       width: 100%;
+      height: 80px;
       font-size: 22px;
     }
     .chatSubmitButton {
@@ -152,6 +154,9 @@
       height: 100%;
       overflow-y: scroll;
       padding-right: 10px;
+   }
+   .chatBoxBottom {
+     height:28% ;
    }
 
   }

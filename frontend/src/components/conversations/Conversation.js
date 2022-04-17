@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./conversation.css";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import axios from "axios";
 export default function Conversation({ chatActive, idx, conversation }) {
   const [user, setUser] = useState(null);

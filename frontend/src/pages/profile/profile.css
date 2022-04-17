@@ -91,3 +91,13 @@
 .profileRightBottom{
     display: flex;
 }
+
+
+
+@media  (max-width:739px) {
+  .profile {
+
+    overflow-x: hidden;
+  }
+
+}

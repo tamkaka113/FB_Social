@@ -74,6 +74,8 @@ width: 100%;
 }
 .topbarMenuIcon {
   display: none;
+
+  
 }
 
 .topbarProfile {
@@ -126,6 +128,9 @@ justify-content: space-between;
   object-fit: cover;
   cursor: pointer;
 }
+.burgerNavbar {
+  display: none;
+}
 
 
 @media (min-width:740px) and (max-width:1023px) {
@@ -148,7 +153,9 @@ justify-content: space-between;
 
 @media  (max-width:739px) {
 
-
+.topbarContainer {
+ padding-bottom: 5px;
+}
   .searchbar {
     display: none;
   }
@@ -157,7 +164,7 @@ justify-content: space-between;
     display: none;
   }
   .topbarRight {
-    flex: 12;
+    flex: 10;
   }
   .topbarIconItem {
     padding-left: 10px;
@@ -166,14 +173,21 @@ justify-content: space-between;
   .topbarCenter{
     flex: 0;
   }
+  .topbarLeft {
+    flex:2;
+    margin-left: 12px;
+  }
   .logo {
     font-size: 22px;
-    margin-left: 4px;
+   
   }
   .topbarProfile {
     display: none;
   }
   .topbarMenuIcon {
     display: flex;
+  }
+  .burgerNavbar {
+    display: block;
   }
 }

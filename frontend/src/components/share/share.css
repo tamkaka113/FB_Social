@@ -162,5 +162,8 @@ input[type='file']{
     .shareOption:nth-child(2) {
       display: none;
     }
+    .shareInput {
+      font-size: 20px;
+    }
 }
 

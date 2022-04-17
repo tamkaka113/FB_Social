@@ -5,16 +5,16 @@
 .burgerContent {
   display: flex;
   flex-direction: column;
-align-items: center;
+ align-items: center;
   position: fixed;
     top: 0;
-    right: 0;
+    left: 0;
     bottom: 0;
     z-index: 999;
     height: 100%;
     width: 70%;
     padding: 10px 15px;
-    transform: translateX(-100%);
+    transform: translateX(150%);
 
     background-color:var( --clr-primary-1-hover);
 
@@ -22,11 +22,15 @@ align-items: center;
 }
 
 .burgerContent.active {
-  transform: translateX(0);
+  transform: translateX(30%);
 }
 
 .burgerContainer {
   width: 100%;
+}
+.onlineFriends {
+  display: flex;
+  flex-direction: column;
 }
 
 .onlineFriend {
@@ -40,7 +44,7 @@ align-items: center;
   cursor: pointer;
 }
 .burgerOverlay {
-  z-index: 9999;
+  z-index: 20;
   position: fixed;
   top: 0;
   left: 0;
@@ -59,10 +63,15 @@ align-items: center;
 
 
 .profileBugerWrapper {
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+margin-bottom: 5px;
+}
+.profileBuger {
   display: flex;
 align-items: center;
-justify-content: space-around;
-margin-bottom: 5px;
+justify-content: space-evenly;
 }
 .profileBugerWrapper span {
   font-size: 20px;
@@ -77,12 +86,22 @@ margin-bottom: 5px;
   object-fit: cover;
   cursor: pointer;
 }
+.bugerLogoutBtn {
+  background-color: var( --clr-primary-1-hover);
+  border: none;
+  color: var(--white-color);
+  cursor: pointer;
+  margin-left: 4px;
+  font-size: 22px;
 
+  margin-top: 10px;
+}
 .burgerCoversations {
   color: var(--white-color);
   font-size: 28px;
   text-align: center;
   font-weight: 500;
+  margin-top: 10px;
 }
 
 .profileFriendWrapper {

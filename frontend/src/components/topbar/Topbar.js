@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./topbar.css";
 import { Search, Person, Chat, Notifications, Menu } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,9 +10,10 @@ export default function Topbar({ paramsId }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.userLogin);
+  const [openNv, setOpenNav] = useState(false);
   const { user } = useSelector((state) => state.userDetail);
   const { conversations } = useSelector((state) => state.getConversation);
-
+  console.log(openNv);
   useEffect(() => {
     if (userInfo?.username) {
       dispatch(getUserDetails(userInfo?._id));
@@ -28,6 +29,7 @@ export default function Topbar({ paramsId }) {
       history.push("/login");
     }
   };
+
   return (
     <>
       <div className="topbarContainer">
@@ -65,7 +67,12 @@ export default function Topbar({ paramsId }) {
               <span className="topbarIconBadge">1</span>
             </div>
           </div>
-          <div className="topbarMenuIcon">
+          <div
+            className="topbarMenuIcon"
+            onClick={() => {
+              setOpenNav(true);
+            }}
+          >
             <Menu style={{ fontSize: "32px" }} />
           </div>
           <div className="topbarProfile">
@@ -74,7 +81,7 @@ export default function Topbar({ paramsId }) {
                 <span>{userInfo?.username}</span>
                 <img
                   src={
-                    !paramsId || (paramsId && paramsId === userInfo._id)
+                    !paramsId || (paramsId && paramsId === userInfo?._id)
                       ? user?.profilePicture
                       : userInfo?.profilePicture
                   }
@@ -83,18 +90,20 @@ export default function Topbar({ paramsId }) {
                 />
               </div>
             </Link>
-            <button
-              onClick={() => {
-                handleLogout();
-              }}
-              className="logoutBtn"
-            >
+            <button onClick={handleLogout} className="logoutBtn">
               Log out
             </button>
           </div>
         </div>
-        <div>
-          <BurgerNavbar user={user} userInfo={userInfo} paramsId={paramsId} />
+        <div className="burgerNavbar">
+          <BurgerNavbar
+            openNv={openNv}
+            setOpenNav={setOpenNav}
+            user={user}
+            userInfo={userInfo}
+            paramsId={paramsId}
+            handleLogout={handleLogout}
+          />
         </div>
       </div>
     </>

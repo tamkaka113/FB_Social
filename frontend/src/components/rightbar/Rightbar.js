@@ -59,7 +59,7 @@ export default function Rightbar({ profile, paramsId }) {
 
     return (
       <>
-        {paramsId !== userInfo._id && (
+        {paramsId !== userInfo?._id && (
           <button className="rightbarFollowButton" onClick={handleFollow}>
             {followed ? "Unfollow" : "Follow"}
           </button>

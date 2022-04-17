@@ -104,3 +104,80 @@
 .loginButton:hover {
   background-color: var(--lime-green-color-hover);
 }
+
+@media (min-width:740px) and (max-width:1023px) {
+  .registerWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 85%;
+  }
+  .registerLeft {
+    flex:4;
+    width: 100%;
+  }
+  .registerRight {
+    flex: 8;
+    margin-right: 30px;
+    width: 120%;
+   
+  }
+  .registerLogo {
+    font-size: 70px;
+  }
+  .registerDesc {
+    font-size: 45px;
+  }
+  .registerBox {
+    width: 100%;
+    padding: 20px;
+    height: 450px;
+   margin-bottom: 200px;
+ 
+  }
+  .registerInput{
+    height: 80px;
+    font-size: 30px;
+
+}
+
+.registerBtn{ 
+  height: 80px;
+
+}
+.registerButton {
+  height: 80px;
+}
+.loginButton {
+  height: 80px;
+
+}
+
+}
+
+@media  (max-width:739px) {
+ 
+  .registerWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100;
+    height: 100%;
+  }
+  .registerLeft {
+    flex:4;
+    width: 100%;
+  }
+  .registerRight {
+    flex: 8;
+    margin-right: 30px;
+  }
+  .registerBox {
+    width: 100%;
+    padding: 20px;
+   margin-bottom: 200px;
+ 
+  }
+}

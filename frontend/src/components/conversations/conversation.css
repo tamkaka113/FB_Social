@@ -11,7 +11,7 @@
 }
 
 .conversation.active {
-  background-color: var( --light-color-hover);
+  background-color: #1876f288;
 }
 .conversationImg {
   width: 40px;
@@ -23,10 +23,9 @@
 
 .conversationName {
   font-weight: 500;
+  color: var(--white-color);
 }
 
 @media screen and (max-width: 768px) {
-  .conversationName {
-    display: none;
-  }
+
 }

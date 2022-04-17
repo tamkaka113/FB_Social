@@ -21,7 +21,7 @@ export default function Register({ history }) {
     <div className="register">
       <div className="registerWrapper">
         <div className="registerLeft">
-          <h3 className="registerLogo">Lamasocial</h3>
+          <h3 className="registerLogo">FB Social</h3>
           <span className="registerDesc">
             Connect with friends and the world around you on Lamasocial.
           </span>
