@@ -69,13 +69,15 @@ export default function Messenger({ history, match }) {
   };
 
   const handleSubmit = () => {
-    dispatch(
-      createMessages({
-        conversationId: id,
-        sender: userInfo._id,
-        text: newMessage,
-      })
-    );
+    if (newMessage) {
+      dispatch(
+        createMessages({
+          conversationId: id,
+          sender: userInfo._id,
+          text: newMessage,
+        })
+      );
+    }
   };
 
   return (

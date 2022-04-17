@@ -1,5 +1,5 @@
 .post {
-  width: 100%;
+  max-width: 100%;
   border-radius: 10px;
   -webkit-box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
   box-shadow: 0px 0px 16px -8px rgba(0, 0, 0, 0.68);
@@ -86,75 +86,6 @@
 
 
 
-.commentContainer {
-  display: flex;
-  width: 100%;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.commentInput {
-  border: none;
-  flex: 6;
-  height: 36px;
-  margin: 10px 0 7px 0;
-  border-radius: 20px;
-  outline: none;
-  text-decoration: none;
-  padding: 0 6px;
-  font-size: 15px;
-}
-
-.commentInput:focus {
-  border: 1px solid var(--clr-primary-1);
-}
-
-.commentBtn {
-  flex: 1;
-  list-style: none;
-  background-color: var(--clr-primary-1);
-  border: none;
-  border-radius: 20px;
-  height: 40px;
-  color: var(--white-color);
-  margin: 9px 0 0 4px;
-  cursor: pointer;
-  
-}
-
-
-.commentBtn:hover {
-  background-color:var(--clr-primary-1-hover);
-}
-
-.commentProfile {
-  display: flex;
-  align-items: center;
-  
-}
-
-.commentMain {
-  display: flex;
-  background-color: var(--clr-primary-2);
-  width: 98%;
-  padding: 5px;
-  border-radius: 20px;
-  justify-content: center;
-  align-self: start;
-  margin-top: 8px;
-  position: relative;
-}
-
-.commentLikeIcon {
-  position: absolute;
-  bottom: 0;
-  right: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  
-}
 
 .commentWrapper {
   display: flex;
@@ -278,3 +209,16 @@ background-color: var(--clr-primary-2-hover);
 
 
  }
+
+
+ @media (min-width:740px) and (max-width:1023px) {
+  .post{
+     max-width: 780px;
+  }
+}
+
+@media  (max-width:739px) {
+  .post {
+    min-width: 358px;
+  }
+}

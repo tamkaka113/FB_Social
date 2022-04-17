@@ -2,3 +2,16 @@
     display: flex;
     width: 100%;
 }
+
+
+@media (min-width:740px) and (max-width:1023px) {
+    .homeWrapper{
+       overflow-x: hidden;
+    }
+  }
+  
+  @media  (max-width:739px) {
+    .homeWrapper{
+        overflow-x: hidden;
+     }
+  }

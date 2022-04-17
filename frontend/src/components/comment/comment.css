@@ -94,7 +94,7 @@
   margin: 0 0 5px 40px;
   font-size: 17px;
    display: block;
-   width: 150%;
+   width: 100%;
 }
 
 
@@ -173,7 +173,7 @@
 }
 
 .replyWrapper {
-  width: 500px;
+  width: 90%;
   margin:10px 0 0 40px;
   background-color: var(--clr-primary-2);
   border-radius: 20px;
@@ -258,3 +258,18 @@ background-color: var(--clr-primary-2-hover);
 
  }
 
+
+
+ @media (min-width:740px) and (max-width:1023px) {
+ 
+.replyWrapper {
+  width: 93%;
+  
+}
+}
+@media  (max-width:739px) {
+  .replyWrapper {
+    width: 89%;
+    
+  }
+}

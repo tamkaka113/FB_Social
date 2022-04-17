@@ -21,13 +21,13 @@ export default function Home({ history }) {
   }, [followSuccess, userInfo?._id, dispatch]);
 
   return (
-    <>
+    <div className="homeWrapper">
       <Topbar />
       <div className="homeContainer">
         <Sidebar />
         <Feed />
         <Rightbar />
       </div>
-    </>
+    </div>
   );
 }
