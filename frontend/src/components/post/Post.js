@@ -1,6 +1,6 @@
 import "./post.css";
 import { MoreVert } from "@material-ui/icons";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { likePost, deletePost } from "../../actions/postActions";
 import { useDispatch, useSelector } from "react-redux";
 import { createComment } from "../../actions/commentActions";

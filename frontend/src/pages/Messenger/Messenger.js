@@ -50,6 +50,7 @@ export default function Messenger({ history, match }) {
     createMessageSuccess,
     currentChat,
     createConversationSuccess,
+    dispatch,
   ]);
 
   useEffect(() => {

@@ -14,7 +14,6 @@ import {
   DELETE_POST_REQUEST,
   DELETE_POST_SUCCESS,
   DELETE_POST_FAIL,
-  UPLOAD_IMAGE_REQUEST,
 } from "../constants/postConstants";
 
 import axios from "axios";

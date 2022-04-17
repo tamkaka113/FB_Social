@@ -1,14 +1,11 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect } from "react";
 import "./sidebar.css";
 import {
   RssFeed,
   Chat,
   PlayCircleFilledOutlined,
   Group,
-  Bookmark,
-  HelpOutline,
   WorkOutline,
-  Event,
   School,
 } from "@material-ui/icons";
 import CloseFriend from "../closeFriend/CloseFriend";
@@ -24,7 +21,7 @@ export default function Sidebar() {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getRecommendedFriends());
-  }, [followSuccess]);
+  }, [followSuccess, dispatch]);
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">

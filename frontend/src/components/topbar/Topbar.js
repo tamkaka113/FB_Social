@@ -13,7 +13,6 @@ export default function Topbar({ paramsId }) {
   const [openNv, setOpenNav] = useState(false);
   const { user } = useSelector((state) => state.userDetail);
   const { conversations } = useSelector((state) => state.getConversation);
-  console.log(openNv);
   useEffect(() => {
     if (userInfo?.username) {
       dispatch(getUserDetails(userInfo?._id));
@@ -22,7 +21,7 @@ export default function Topbar({ paramsId }) {
 
   useEffect(() => {
     dispatch(getConversations(userInfo?._id));
-  }, []);
+  }, [dispatch]);
   const handleLogout = () => {
     if (userInfo?.username) {
       dispatch(logout());

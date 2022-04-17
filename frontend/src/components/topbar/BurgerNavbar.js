@@ -7,7 +7,7 @@ export default function BurgerNavbar(props) {
   const history = useHistory();
   const [chatActive, setChatActive] = useState(0);
   const { user, paramsId, userInfo, openNv, setOpenNav, handleLogout } = props;
-  const { users } = useSelector((state) => state.userFriends);
+
   const { conversations } = useSelector((state) => state.getConversation);
 
   const handleConversation = (c, idx) => {

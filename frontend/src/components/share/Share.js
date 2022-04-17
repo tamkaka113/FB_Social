@@ -23,7 +23,7 @@ export default function Share() {
         dispatch({ type: CREATE_POST_RESET });
       }, 1000);
     }
-  }, [createPostSuccess]);
+  }, [createPostSuccess, dispatch]);
   const handleImage = async (e) => {
     const files = Array.from(e.target.files);
 

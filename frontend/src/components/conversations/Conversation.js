@@ -29,7 +29,7 @@ export default function Conversation({ chatActive, idx, conversation }) {
       }
     };
     getUser();
-  }, [userInfo]);
+  }, [userInfo, conversation.members]);
   return (
     <div
       className={chatActive === idx ? "conversation active" : "conversation"}

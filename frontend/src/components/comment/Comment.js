@@ -43,7 +43,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
   }
   useEffect(() => {
     setIsLiked(likesId.includes(userInfo?._id));
-  }, [userInfo?._id, comment.likes.length]);
+  }, [userInfo?._id, comment.likes.length, likesId]);
 
   useEffect(() => {
     if (update) {
@@ -82,6 +82,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
     replyDisplay,
     replySuccess,
     deleteSuccess,
+    dispatch,
   ]);
   const handleEdit = (index, type) => {
     if (type === "replyPost") {

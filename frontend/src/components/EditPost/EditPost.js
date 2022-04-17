@@ -2,13 +2,7 @@ import React, { useState } from "react";
 import { updatePost } from "../../actions/postActions";
 import "./edit.css";
 import { useDispatch } from "react-redux";
-import {
-  PermMedia,
-  Label,
-  Room,
-  EmojiEmotions,
-  ContactSupport,
-} from "@material-ui/icons";
+import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons";
 import axios from "axios";
 
 export default function EditPost({ post }) {
@@ -85,6 +79,7 @@ export default function EditPost({ post }) {
                     src={img}
                     style={{ width: "100%", height: "100%" }}
                     className="editPostShowImage"
+                    alt="edit-image"
                   />
                 </div>
               );
