@@ -1,12 +1,12 @@
 import "./closeFriend.css";
 import { followUser } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
-import {FOLLOW_USER_RESET} from '../../constants/userConstants'
+import { FOLLOW_USER_RESET } from "../../constants/userConstants";
 export default function CloseFriend({ user }) {
   const dispatch = useDispatch();
   const handleFollowUser = (id) => {
     dispatch(followUser(id));
-    dispatch({type:FOLLOW_USER_RESET})
+    dispatch({ type: FOLLOW_USER_RESET });
   };
   return (
     <li className="sidebarFriend">
@@ -24,8 +24,7 @@ export default function CloseFriend({ user }) {
         }}
         className="sidebarFriendBtn"
       >
-        {" "}
-        Following{" "}
+        Following
       </button>
     </li>
   );
