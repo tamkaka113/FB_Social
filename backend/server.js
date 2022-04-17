@@ -10,17 +10,17 @@ import postRouter from "./routes/postRouter.js";
 import commentRouter from "./routes/commentRouter.js";
 import conversationRouter from "./routes/conversationRouter.js";
 import messageRouter from "./routes/messageRouter.js";
-import cors from "cors";
+
 import path from "path";
 import SocketServer from "./socketServer.js";
 import { createServer } from "http";
 import { Server } from "socket.io";
 
 dotenv.config();
+connectDB();
 
 const app = express();
 app.use(express.json());
-connectDB();
 app.use(morgan("dev"));
 
 app.use(fileUpload({ useTempFiles: true }));
@@ -29,7 +29,7 @@ cloudinary.config({
   api_key: process.env.CLOUD_API_KEY,
   api_secret: process.env.CLOUD_API_SECRET,
 });
-const server = createServer(app);
+/* const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["http://localhost:3000"],
@@ -40,7 +40,7 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
   console.log("a user connected.");
   SocketServer(socket);
-});
+}); */
 const __dirname = path.resolve();
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/posts", postRouter);
@@ -64,4 +64,4 @@ app.use(notFound);
 app.use(errorHandler);
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, console.log(`Server is running on port ${PORT}`));
+app.listen(PORT, console.log(`Server is running on port ${PORT}`));

@@ -12,8 +12,6 @@ import {
   createMessages,
 } from "../../actions/messageActions";
 import { getUserFriends } from "../../actions/userActions";
-import { io } from "socket.io-client";
-import { API_URL } from "../../utils/config";
 import { CREATE_MESSAGE_RESET } from "../../constants/messageContants";
 
 export default function Messenger({ history, match }) {
