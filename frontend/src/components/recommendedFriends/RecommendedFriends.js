@@ -1,8 +1,8 @@
-import "./closeFriend.css";
+import "./recommendedFriends.css";
 import { followUser } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
 import { FOLLOW_USER_RESET } from "../../constants/userConstants";
-export default function CloseFriend({ user }) {
+export default function RecommendedFriends({ user, mobile }) {
   const dispatch = useDispatch();
   const handleFollowUser = (id) => {
     dispatch(followUser(id));
@@ -16,13 +16,17 @@ export default function CloseFriend({ user }) {
           src={user.profilePicture || "../../assets/person/noUser.jpg"}
           alt=""
         />
-        <span className="sidebarFriendName">{user.username}</span>
+        <span
+          className={mobile ? " sidebarFriendName mobile" : "sidebarFriendName"}
+        >
+          {user.username}
+        </span>
       </div>
       <button
         onClick={() => {
           handleFollowUser(user._id);
         }}
-        className="sidebarFriendBtn"
+        className={mobile ? "sidebarFriendBtn mobile" : "sidebarFriendBtn"}
       >
         Following
       </button>

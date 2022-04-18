@@ -70,7 +70,7 @@ export default function Feed({ paramsId }) {
         {(!paramsId || paramsId === userInfo?._id) && <Share />}
         {posts?.map((p, idx) => (
           <Post
-            key={p._id}
+            key={idx}
             post={p}
             updatePostSuccess={updatePostSuccess}
             idx={idx}

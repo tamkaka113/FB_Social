@@ -33,6 +33,18 @@
  width: 90px;
 }
 
+.sidebarFriendBtn.mobile {
+  background-color: var( --lime-green-color);
+}
+
+.sidebarFriendBtn.mobile:hover {
+  background-color: var( --lime-green-color-hover);
+}
+
 .sidebarFriendBtn:hover {
   background-color: var(--clr-primary-1-hover);
+}
+
+.sidebarFriendName.mobile {
+  color: var( --white-color);
 }

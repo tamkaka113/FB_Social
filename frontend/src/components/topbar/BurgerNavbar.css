@@ -1,5 +1,5 @@
 .burgerNav {
-  margin-top: 50px;
+  margin-top: 20px;
 
 }
 .burgerContent {
@@ -31,6 +31,9 @@
 .onlineFriends {
   display: flex;
   flex-direction: column;
+  height: 240px;
+  overflow-y: scroll;
+ margin: 5px 0;
 }
 
 .onlineFriend {
@@ -87,10 +90,12 @@ justify-content: space-evenly;
   cursor: pointer;
 }
 .bugerLogoutBtn {
-  background-color: var( --clr-primary-1-hover);
+  background-color: var(--green-color);
   border: none;
+  border-radius: 20px;
   color: var(--white-color);
   cursor: pointer;
+  padding: 5px 10px;
   margin-left: 4px;
   font-size: 22px;
 
@@ -98,10 +103,11 @@ justify-content: space-evenly;
 }
 .burgerCoversations {
   color: var(--white-color);
-  font-size: 28px;
+  font-size: 24px;
   text-align: center;
   font-weight: 500;
   margin-top: 10px;
+  
 }
 
 .profileFriendWrapper {

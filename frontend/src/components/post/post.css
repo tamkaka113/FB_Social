@@ -216,6 +216,13 @@ background-color: var(--clr-primary-2-hover);
      max-width: 780px;
      padding: 5px;
   }
+  .postImg{
+    margin-top: 20px;
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+}
+
 }
 
 @media  (max-width:739px) {

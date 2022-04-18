@@ -4,7 +4,7 @@ import { createConversation } from "../../actions/messageActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CREATE_CONVERSATION_RESET } from "../../constants/messageContants";
-export default function ChatOnline({ users, conversations }) {
+export default function ChatOnline({ users, conversations, mobile }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { userInfo } = useSelector((state) => state.userLogin);
@@ -39,7 +39,7 @@ export default function ChatOnline({ users, conversations }) {
   };
 
   return (
-    <div className="chatOnline">
+    <div className={"chatOnlineFriends"}>
       {users?.map((user) => (
         <div
           key={user._id}

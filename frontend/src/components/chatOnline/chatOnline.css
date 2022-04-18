@@ -6,6 +6,10 @@
   margin-top: 10px;
 }
 
+.chatOnline.none {
+  display: none;
+}
+
 .chatOnlineImgContainer {
   position: relative;
   margin-right: 10px;
@@ -33,8 +37,6 @@
  
 
 }
-@media  (max-width:739px) {
-    .chatOnlineFriend{
-      display: none;
-    }
-}
+ @media  (max-width:739px) {
+
+} 

@@ -8,7 +8,7 @@ import {
   WorkOutline,
   School,
 } from "@material-ui/icons";
-import CloseFriend from "../closeFriend/CloseFriend";
+import RecommendedFriends from "../recommendedFriends/RecommendedFriends";
 import { getRecommendedFriends } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import { SpinnerDotted } from "spinners-react";
@@ -61,7 +61,7 @@ export default function Sidebar() {
         )}
         <ul className="sidebarFriendList">
           {newUsers?.map((u) => (
-            <CloseFriend key={u._id} user={u} />
+            <RecommendedFriends key={u._id} user={u} />
           ))}
         </ul>
       </div>

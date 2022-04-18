@@ -31,7 +31,7 @@ export default function Rightbar({ profile, paramsId }) {
         <img className="rightbarAd" src="assets/ad.jpg" alt="" />
         <h4 className="rightbarTitle">Your Friends</h4>
         <ul className="rightbarFriendList">
-          {users && users?.map((u) => <Online key={u._id} user={u} />)}
+          {users && users?.map((u, idx) => <Online key={idx} user={u} />)}
         </ul>
       </>
     );

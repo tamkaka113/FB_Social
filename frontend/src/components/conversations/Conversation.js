@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import "./conversation.css";
 import { useSelector } from "react-redux";
 import axios from "axios";
-export default function Conversation({ chatActive, idx, conversation }) {
+export default function Conversation({
+  chatActive,
+  idx,
+  conversation,
+  mobile,
+}) {
   const [user, setUser] = useState(null);
   const { userInfo } = useSelector((state) => state.userLogin);
 
@@ -35,7 +40,9 @@ export default function Conversation({ chatActive, idx, conversation }) {
       className={chatActive === idx ? "conversation active" : "conversation"}
     >
       <img className="conversationImg" src={user?.profilePicture} alt="" />
-      <span className="conversationName">{user?.username}</span>
+      <span className={mobile ? "conversationName mobile" : "conversationName"}>
+        {user?.username}
+      </span>
     </div>
   );
 }
