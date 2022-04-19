@@ -114,7 +114,7 @@ export default function Rightbar({ profile, paramsId }) {
         {profile ? <ProfileRightbar /> : <HomeRightbar />}
         <div className="rightbarNewFriends">
           <h4 className="rightbarTitle">Friends You May Know</h4>
-          {newFriends.map((newFriend, idx) => {
+          {newFriends?.map((newFriend, idx) => {
             return (
               <div key={idx}>
                 <RecommendedFriends user={newFriend} />

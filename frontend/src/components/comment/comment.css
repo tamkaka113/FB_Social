@@ -284,7 +284,8 @@ background-color: var(--clr-primary-2-hover);
   }
   .postComment {
     display: block;
-    width: 260px;
+    width: 295px;
+    padding: 5px 0;
   }
   .commentLike {
     display: flex;

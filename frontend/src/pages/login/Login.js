@@ -52,7 +52,10 @@ export default function Login({ history }) {
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button
-              onClick={() => !userInfo && history.push("/register")}
+              onClick={() =>
+                (!userInfo || userInfo === undefined) &&
+                history.push("/register")
+              }
               className="loginRegisterButton"
             >
               Create a New Account
