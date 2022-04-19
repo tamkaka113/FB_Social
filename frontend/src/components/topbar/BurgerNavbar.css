@@ -31,7 +31,7 @@
 .onlineFriends {
   display: flex;
   flex-direction: column;
-  height: 200px;
+  height: 280px;
   overflow-y: scroll;
  margin: 5px 0;
 }
