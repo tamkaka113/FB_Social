@@ -49,7 +49,7 @@ export default function BurgerNavbar(props) {
           <hr />
           <p className="burgerCoversations">Online Friends</p>
           <div className="onlineFriends">
-            <FriendOnline users={userFriends} />
+            <FriendOnline users={userFriends} setOpenNav={setOpenNav} />
           </div>
           <p className="burgerCoversations">
             {location ? "Conversation" : "Friends You May Know"}

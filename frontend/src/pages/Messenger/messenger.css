@@ -134,12 +134,12 @@
       display: none;
     }
     .chatMessageInput {
-      width: 100%;
+      width: 90%;
       height: 80px;
       font-size: 22px;
     }
     .chatSubmitButton {
-      margin-left: 4px;
+      margin: 0 4px;
       width: 85px;
       height: 55px;
       font-size: 20px;

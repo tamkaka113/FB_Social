@@ -1,11 +1,17 @@
 import "./online.css";
 import { useHistory } from "react-router-dom";
-export default function Online({ user, mobile }) {
+export default function Online({ user, mobile, setOpenNav }) {
   const history = useHistory();
+  const handleOnlineFriend = () => {
+    history.push(`/profile/${user._id}`);
+    setOpenNav(false);
+  };
   return (
     <li
       className="rightbarFriend"
-      onClick={() => history.push(`/profile/${user._id}`)}
+      onClick={() => {
+        handleOnlineFriend();
+      }}
     >
       <div className="rightbarProfileImgContainer">
         <img className="rightbarProfileImg" src={user.profilePicture} alt="" />
