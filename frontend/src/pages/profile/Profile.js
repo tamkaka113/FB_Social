@@ -21,6 +21,7 @@ import {
   CREATE_CONVERSATION_RESET,
   GET_CON_BYID_RESET,
 } from "../../constants/messageContants";
+import { handleUserIdByCon } from "../../utils/helpler";
 export default function Profile({ match, history }) {
   const id = match.params.id;
   const dispatch = useDispatch();
@@ -30,16 +31,12 @@ export default function Profile({ match, history }) {
   const { success: createConversationSuccess, conversation } = useSelector(
     (state) => state.createConversation
   );
-
   const { user } = useSelector((state) => state.userDetail);
   const { success: updateProfileSuccess } = useSelector(
     (state) => state.userUpdateProfile
   );
-
   const { success: getConversationSuccess, conversation: conversationById } =
     useSelector((state) => state.getConversationById);
-
-  console.log(getConversationSuccess);
   const { userInfo } = useSelector((state) => state.userLogin);
   const { success: followSuccess } = useSelector((state) => state.followUser);
 
@@ -84,14 +81,6 @@ export default function Profile({ match, history }) {
     user?._id,
   ]);
 
-  let newUsers = [];
-  for (const c of conversations) {
-    const userId = c.members.find((m) => m !== userInfo._id);
-
-    newUsers.push(userId);
-  }
-  const showedUsers = [...new Set(newUsers)];
-
   useEffect(() => {
     if (createConversationSuccess) {
       history.push(`/messenger/${conversation?._id}`);
@@ -110,6 +99,7 @@ export default function Profile({ match, history }) {
     getConversationSuccess,
   ]);
 
+  const showedUsers = handleUserIdByCon(conversations, userInfo._id);
   const handleStartConversation = () => {
     if (!showedUsers.includes(id)) {
       dispatch(

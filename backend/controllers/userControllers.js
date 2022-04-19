@@ -145,7 +145,7 @@ export const followUser = asyncHandler(async (req, res) => {
 
     let currentUser = await User.findById(req.user._id);
 
-    if (!user.followers.includes(req.user.userId)) {
+    if (!currentUser.following.includes(req.params.id)) {
       await user.updateOne({ $push: { followers: req.user._id } });
       await currentUser.updateOne({ $push: { following: req.params.id } });
 
@@ -164,7 +164,7 @@ export const unFollowUser = asyncHandler(async (req, res) => {
 
     const currentUser = await User.findById(req.user._id);
 
-    if (user.followers.includes(req.user._id)) {
+    if (currentUser.following.includes(req.params.id)) {
       await user.updateOne({ $pull: { followers: req.user._id } });
       await currentUser.updateOne({ $pull: { following: req.params.id } });
 

@@ -17,7 +17,6 @@ export default function BurgerNavbar(props) {
 
   const { users: userFriends } = useSelector((state) => state.userFriends);
   const newUsers = users?.filter((user) => user._id !== userInfo?._id);
-
   const handleConversation = (c, idx) => {
     setChatActive(idx);
     history.push(`/messenger/${c._id}`);

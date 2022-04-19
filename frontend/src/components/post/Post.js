@@ -12,12 +12,8 @@ import {
 import moment from "moment";
 import Comment from "../comment/Comment";
 import EditPost from "../EditPost/EditPost";
-export default function Post({
-  post,
-  idx,
-  updatePostSuccess,
-  likePostSuccess,
-}) {
+export default function Post(props) {
+  const { post, idx, updatePostSuccess, likePostSuccess } = props;
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [like, setLike] = useState(post.likes.length);

@@ -5,9 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { createPost } from "../../actions/postActions";
 import { CREATE_POST_RESET } from "../../constants/postConstants";
+import { handleImages } from "../../utils/helpler";
 export default function Share() {
   const dispatch = useDispatch();
-  const [images, setImages] = useState();
+  const [images, setImages] = useState([]);
   const [desc, setDesc] = useState("");
   const { user } = useSelector((state) => state.userDetail);
   const { success: createPostSuccess } = useSelector(
@@ -24,27 +25,6 @@ export default function Share() {
       }, 1000);
     }
   }, [createPostSuccess, dispatch]);
-  const handleImage = async (e) => {
-    const files = Array.from(e.target.files);
-
-    try {
-      const requests = files.map((file) => {
-        const formData = new FormData();
-        formData.append("image", file);
-        return axios.post(`/api/v1/posts/uploads`, formData);
-      });
-
-      const responses = await Promise.all(requests);
-
-      const data = responses.map((response) => {
-        return response.data;
-      });
-
-      setImages(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
 
   const handleRemoveImg = (idx) => {
     const newImage = images?.filter((_, index) => index !== idx);
@@ -102,7 +82,7 @@ export default function Share() {
                   className="shareOptionInput"
                   multiple
                   type="file"
-                  onChange={(e) => handleImage(e)}
+                  onChange={(e) => handleImages(e, setImages)}
                 />
                 <span className="shareOptionText">Photo or Video</span>
               </div>

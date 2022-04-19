@@ -3,9 +3,15 @@ import { followUser } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
 import { FOLLOW_USER_RESET } from "../../constants/userConstants";
 import { useHistory } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { handleUserId } from "../../utils/helpler";
 export default function RecommendedFriends({ user, mobile }) {
+  const { users: userFriends } = useSelector((state) => state.userFriends);
+
   const history = useHistory();
   const dispatch = useDispatch();
+  const newUsers = handleUserId(userFriends);
+
   const handleFollowUser = (id) => {
     dispatch(followUser(id));
     dispatch({ type: FOLLOW_USER_RESET });

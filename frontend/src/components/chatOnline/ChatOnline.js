@@ -4,6 +4,7 @@ import { createConversation } from "../../actions/messageActions";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { CREATE_CONVERSATION_RESET } from "../../constants/messageContants";
+import { handleUserIdByCon } from "../../utils/helpler";
 export default function ChatOnline({ users, conversations, mobile }) {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -12,13 +13,7 @@ export default function ChatOnline({ users, conversations, mobile }) {
     (state) => state.createConversation
   );
 
-  let newUsers = [];
-  for (const c of conversations) {
-    const userId = c.members.find((m) => m !== userInfo._id);
-
-    newUsers.push(userId);
-  }
-  const showedUsers = [...new Set(newUsers)];
+  const showedUsers = handleUserIdByCon(conversations, userInfo._id);
 
   useEffect(() => {
     if (createConversationSuccess) {
