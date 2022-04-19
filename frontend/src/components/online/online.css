@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    cursor: pointer;
   }
   
   .rightbarProfileImgContainer {
@@ -30,3 +31,7 @@
   .rightbarUsername{
       font-weight: 500;
   }
+
+  .rightbarUsername.mobile{
+    color: var(--white-color);
+}

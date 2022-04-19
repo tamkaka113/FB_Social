@@ -25,11 +25,13 @@
     color: var( --white-color);
     max-width: 300px;
     height: auto;
+    margin: 0;
 }
 
 .messageBottom{
     font-size: 12px;
-    margin-top: 10px;
+    margin: 5px;
+
 }
 
 .message.own{

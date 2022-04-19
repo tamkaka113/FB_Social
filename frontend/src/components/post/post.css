@@ -213,8 +213,9 @@ background-color: var(--clr-primary-2-hover);
 
  @media (min-width:740px) and (max-width:1023px) {
   .post{
-     max-width: 780px;
+     max-width: 580px;
      padding: 5px;
+     height: auto;
   }
   .postImg{
     margin-top: 20px;

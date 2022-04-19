@@ -35,6 +35,8 @@
 
 .sidebarFriendBtn.mobile {
   background-color: var( --lime-green-color);
+  width: 80px;
+  margin-right: 4px;
 }
 
 .sidebarFriendBtn.mobile:hover {
@@ -47,4 +49,23 @@
 
 .sidebarFriendName.mobile {
   color: var( --white-color);
+}
+
+@media (min-width:740px) and (max-width:1023px) {
+  .sidebarFriendBtn {
+ 
+    width: 75px;
+    height: 30px;
+    margin-left: 10px;
+   }
+   .sidebarFriendName{
+     font-size: 18px;
+     color: var(--black-color);
+     font-weight: 400;
+   }
+   .sidebarFriend {
+     display: flex;
+     align-items: center;
+     justify-content:flex-end;
+   }
 }

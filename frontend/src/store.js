@@ -19,7 +19,6 @@ import {
   createPostReducer,
   updatePostReducer,
   deletePostReducer,
-
 } from "./reducers/postReducers";
 
 import {
@@ -34,7 +33,8 @@ import {
   createConversationReducer,
   createMessageReducer,
   getMessageReducer,
-  getConversationReducer
+  getConversationReducer,
+  getConversationByIdReducer,
 } from "./reducers/messageReducers";
 const middleware = [thunk];
 
@@ -42,8 +42,8 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
   userDetail: userDetailsReducer,
-  userFriends:userFriendsReducer,
-  usersInfo:usersInfoReducer,
+  userFriends: userFriendsReducer,
+  usersInfo: usersInfoReducer,
   getAllPosts: getAllPostsReducer,
   likePost: likePostsReducer,
   createComment: createCommentReducer,
@@ -57,12 +57,12 @@ const reducer = combineReducers({
   recommendedFriends: recommendedFriendsReducer,
   followUser: followUserReducer,
   unfollowUser: unfollowUserReducer,
-  userUpdateProfile:userUpdateProfileReducer,
-  createConversation:createConversationReducer,
-  getConversation:getConversationReducer,
-  createMessage:createMessageReducer,
-  getMessages:getMessageReducer,
-
+  userUpdateProfile: userUpdateProfileReducer,
+  createConversation: createConversationReducer,
+  getConversation: getConversationReducer,
+  getConversationById: getConversationByIdReducer,
+  createMessage: createMessageReducer,
+  getMessages: getMessageReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

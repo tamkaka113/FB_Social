@@ -13,6 +13,10 @@ import {
   GET_CONVERSATION_SUCCESS,
   GET_CONVERSATION_FAIL,
   CREATE_MESSAGE_RESET,
+  GET_CON_BYID_SUCCESS,
+  GET_CON_BYID_FAIL,
+  GET_CON_BYID_REQUEST,
+  GET_CON_BYID_RESET,
 } from "../constants/messageContants";
 
 export const createConversationReducer = (
@@ -60,6 +64,30 @@ export const getConversationReducer = (
       };
     case GET_CONVERSATION_FAIL:
       return { ...state, loading: false, error: action.payload };
+
+    default:
+      return state;
+  }
+};
+
+export const getConversationByIdReducer = (
+  state = { conversation: [] },
+  action
+) => {
+  switch (action.type) {
+    case GET_CON_BYID_REQUEST:
+      return { ...state, loading: true };
+    case GET_CON_BYID_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        success: true,
+        conversation: action.payload,
+      };
+    case GET_CON_BYID_FAIL:
+      return { ...state, loading: false, error: action.payload };
+    case GET_CON_BYID_RESET:
+      return {};
 
     default:
       return state;

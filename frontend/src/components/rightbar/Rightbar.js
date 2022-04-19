@@ -4,10 +4,15 @@ import Online from "../online/Online";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { followUser, unFollowUser } from "../../actions/userActions";
+import FollowingButton from "../followingButton/FollowingButton";
+import RecommendedFriends from "../recommendedFriends/RecommendedFriends";
 export default function Rightbar({ profile, paramsId }) {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.userFriends);
   const { userInfo } = useSelector((state) => state.userLogin);
+  const { users: newFriends } = useSelector(
+    (state) => state.recommendedFriends
+  );
   const [user, setUser] = useState(userInfo);
   const [followed, setFollowed] = useState(false);
 
@@ -18,6 +23,25 @@ export default function Rightbar({ profile, paramsId }) {
   useEffect(() => {
     localStorage.setItem("userInfo", JSON.stringify(user));
   }, [user, paramsId]);
+
+  const history = useHistory();
+
+  const handleFollow = () => {
+    if (followed) {
+      dispatch(unFollowUser(paramsId));
+      setUser({
+        ...user,
+        following: user.following.filter((f) => f !== paramsId),
+      });
+    } else {
+      dispatch(followUser(paramsId));
+      setUser({
+        ...user,
+        following: [...user.following, paramsId],
+      });
+    }
+    setFollowed(!followed);
+  };
 
   const HomeRightbar = () => {
     return (
@@ -38,31 +62,10 @@ export default function Rightbar({ profile, paramsId }) {
   };
 
   const ProfileRightbar = () => {
-    const history = useHistory();
-
-    const handleFollow = () => {
-      if (followed) {
-        dispatch(unFollowUser(paramsId));
-        setUser({
-          ...user,
-          following: user.following.filter((f) => f !== paramsId),
-        });
-      } else {
-        dispatch(followUser(paramsId));
-        setUser({
-          ...user,
-          following: [...user.following, paramsId],
-        });
-      }
-      setFollowed(!followed);
-    };
-
     return (
       <>
         {paramsId !== userInfo?._id && (
-          <button className="rightbarFollowButton" onClick={handleFollow}>
-            {followed ? "Unfollow" : "Follow"}
-          </button>
+          <FollowingButton followed={followed} handleFollow={handleFollow} />
         )}
         <h4 className="rightbarTitle">User information</h4>
         <div className="rightbarInfo">
@@ -109,6 +112,16 @@ export default function Rightbar({ profile, paramsId }) {
     <div className="rightbar">
       <div className="rightbarWrapper">
         {profile ? <ProfileRightbar /> : <HomeRightbar />}
+        <div className="rightbarNewFriends">
+          <h4 className="rightbarTitle">Friends You May Know</h4>
+          {newFriends.map((newFriend, idx) => {
+            return (
+              <div key={idx}>
+                <RecommendedFriends user={newFriend} />
+              </div>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

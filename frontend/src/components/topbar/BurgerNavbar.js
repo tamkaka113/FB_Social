@@ -45,9 +45,6 @@ export default function BurgerNavbar(props) {
                 className="burgerImg"
               />
             </div>
-            <button onClick={handleLogout} className="bugerLogoutBtn">
-              Log out
-            </button>
           </div>
           <hr />
           <p className="burgerCoversations">Online Friends</p>
@@ -85,6 +82,9 @@ export default function BurgerNavbar(props) {
                   );
                 })}
           </div>
+          <button onClick={handleLogout} className="bugerLogoutBtn">
+            Log out
+          </button>
         </div>
       </div>
       <div

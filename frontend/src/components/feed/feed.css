@@ -15,10 +15,9 @@
 }
 
 @media (min-width:740px) and (max-width:1023px) {
-    .feed{
-        flex:12
-    }
+    
 }
+
 
 @media  (max-width:739px) {
     .feedWrapper{

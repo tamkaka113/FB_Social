@@ -2,7 +2,9 @@ import "./recommendedFriends.css";
 import { followUser } from "../../actions/userActions";
 import { useDispatch } from "react-redux";
 import { FOLLOW_USER_RESET } from "../../constants/userConstants";
+import { useHistory } from "react-router-dom";
 export default function RecommendedFriends({ user, mobile }) {
+  const history = useHistory();
   const dispatch = useDispatch();
   const handleFollowUser = (id) => {
     dispatch(followUser(id));
@@ -10,7 +12,10 @@ export default function RecommendedFriends({ user, mobile }) {
   };
   return (
     <li className="sidebarFriend">
-      <div className="sidebarFriendWrapper">
+      <div
+        className="sidebarFriendWrapper"
+        onClick={() => history.push(`/profile/${user._id}`)}
+      >
         <img
           className="sidebarFriendImg"
           src={user.profilePicture || "../../assets/person/noUser.jpg"}

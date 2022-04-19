@@ -82,33 +82,31 @@
   border-radius: 5px;
 }
 
-.rightbarFollowButton{
-  margin-top: 30px;
-  margin-bottom: 10px;
-  border: none;
-  background-color: var(--clr-primary-1);
-  color: var(--white-color);
-  border-radius: 5px;
-  padding: 5px 10px;
-  display: flex;
-  align-items: center;
-  font-size: 16px;
-  font-weight: 500;
-  cursor: pointer;
-}
-
-.rightbarFollowButton:hover {
-  background-color: var(--clr-primary-1-hover);
-}
-
-.rightbarFollowButton:focus{
-  outline: none;
+.rightbarNewFriends{
+  display: none;
 }
 
 
 @media (min-width:740px) and (max-width:1023px) {
-  .rightbar{
-     display: none;
+  .rightbar {
+    flex: 4.5;
+  }
+  .rightbarWrapper {
+    width: 180px;
+  }
+  .rightbarFriendList {
+    height: 300px;
+    overflow-y: scroll;
+  }
+.rightbarNewFriends{
+  display: block;
+}
+  .rightbarFollowings {
+    height: 520px;
+    overflow-y: scroll;
+  }
+  .rightbarTitle {
+    margin-top: 20px;
   }
 }
 

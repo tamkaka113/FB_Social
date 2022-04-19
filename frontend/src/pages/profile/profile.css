@@ -92,12 +92,39 @@
     display: flex;
 }
 
+.profileInfoBtns {
+    display: none;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 250px;
+}
 
+ .profileInfoBtns button {
+    font-size: 24px;
+} 
 
+@media (min-width:740px) and (max-width:1023px) {
+    .profileInfoBtns {
+        display: flex;
+    }
+  
+}
 @media  (max-width:739px) {
   .profile {
 
     overflow-x: hidden;
-  }
+}
+
+  .profileInfo{
+ height: 60%;
+}
+.profileInfoName {
+    height: 18px;
+    margin: 0 0 20px 0;
+}
+.profileInfoBtns {
+    display: flex;
+}
 
 }

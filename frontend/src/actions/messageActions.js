@@ -12,6 +12,9 @@ import {
   GET_CONVERSATION_REQUEST,
   GET_CONVERSATION_SUCCESS,
   GET_CONVERSATION_FAIL,
+  GET_CON_BYID_SUCCESS,
+  GET_CON_BYID_REQUEST,
+  GET_CON_BYID_FAIL,
 } from "../constants/messageContants";
 
 export const createConversation =
@@ -75,6 +78,38 @@ export const getConversations = (id) => async (dispatch, getState) => {
   }
 };
 
+export const getConversationById =
+  (currentId, id) => async (dispatch, getState) => {
+    try {
+      dispatch({
+        type: GET_CON_BYID_REQUEST,
+      });
+
+      const {
+        userLogin: { userInfo },
+      } = getState();
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${userInfo.token}`,
+        },
+      };
+      const { data } = await axios.get(
+        `/api/v1/conversations/${currentId}/c/${id}`,
+        config
+      );
+      dispatch({
+        type: GET_CON_BYID_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: GET_CON_BYID_FAIL,
+        payload: error.response?.data.message || error.message,
+      });
+    }
+  };
+
 export const createMessages = (message) => async (dispatch, getState) => {
   try {
     dispatch({
@@ -103,7 +138,7 @@ export const createMessages = (message) => async (dispatch, getState) => {
   }
 };
 
-export const getMessages = (id, setMessages) => async (dispatch, getState) => {
+export const getMessages = (id) => async (dispatch, getState) => {
   try {
     dispatch({
       type: GET_MESSAGES_REQUEST,
@@ -119,7 +154,7 @@ export const getMessages = (id, setMessages) => async (dispatch, getState) => {
       },
     };
     const { data } = await axios.get(`/api/v1/messages/${id}`, config);
-    setMessages(data);
+
     dispatch({
       type: GET_MESSAGES_SUCCESS,
       payload: data,

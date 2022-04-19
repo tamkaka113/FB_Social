@@ -25,7 +25,7 @@ export default function ChatOnline({ users, conversations, mobile }) {
       history.push(`/messenger/${conversation._id}`);
       dispatch({ type: CREATE_CONVERSATION_RESET });
     }
-  }, [createConversationSuccess, dispatch, history, conversation._id]);
+  }, [createConversationSuccess, dispatch, history, conversation?._id]);
 
   const handleStartConversation = (user) => {
     if (!showedUsers.includes(user._id)) {
@@ -40,9 +40,9 @@ export default function ChatOnline({ users, conversations, mobile }) {
 
   return (
     <div className={"chatOnlineFriends"}>
-      {users?.map((user) => (
+      {users?.map((user, idx) => (
         <div
-          key={user._id}
+          key={idx}
           className="chatOnlineFriend"
           onClick={() => {
             handleStartConversation(user);

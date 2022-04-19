@@ -26,3 +26,15 @@ export const getConversations = asyncHandler(async (req, res) => {
 
   res.status(200).json(conversation);
 });
+
+export const getConversationByUserId = asyncHandler(async (req, res) => {
+  const c = await Conversation.findOne({
+    members: { $all: [req.params.currentId, req.params.id] },
+  });
+
+  if (!c) {
+    throw new Error("No conversation found");
+  }
+
+  res.status(200).json(c);
+});

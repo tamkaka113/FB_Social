@@ -37,11 +37,11 @@ export default function Messenger({ history, match }) {
     if (userInfo) {
       dispatch(getConversations(userInfo?._id));
     }
-    dispatch(getMessages(id, setMessages));
+    dispatch(getMessages(id));
 
     if (createMessageSuccess) {
       dispatch({ type: CREATE_MESSAGE_RESET });
-      dispatch(getMessages(id, setMessages));
+      dispatch(getMessages(id));
       setNewMessage("");
     }
   }, [
@@ -87,7 +87,7 @@ export default function Messenger({ history, match }) {
           <div className="chatMenuWrapper">
             <input placeholder="Search for friends" className="chatMenuInput" />
             {conversations.map((c, idx) => (
-              <div key={c._id} onClick={() => handleMessage(c, idx)}>
+              <div key={idx} onClick={() => handleMessage(c, idx)}>
                 <Conversation
                   chatActive={chatActive}
                   idx={idx}
@@ -106,7 +106,7 @@ export default function Messenger({ history, match }) {
                 </span>
               )}
 
-              {messages.map((m, index) => (
+              {newMessages.map((m, index) => (
                 <div key={index} ref={messRef}>
                   <Message message={m} own={userInfo._id === m.sender._id} />
                 </div>

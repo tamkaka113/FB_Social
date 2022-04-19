@@ -12,16 +12,35 @@ import {
   getUserFriends,
   updateUserProfile,
 } from "../../actions/userActions";
+import {
+  createConversation,
+  getConversationById,
+} from "../../actions/messageActions";
 import { useDispatch, useSelector } from "react-redux";
-export default function Profile({ match }) {
+import {
+  CREATE_CONVERSATION_RESET,
+  GET_CON_BYID_RESET,
+} from "../../constants/messageContants";
+export default function Profile({ match, history }) {
   const id = match.params.id;
   const dispatch = useDispatch();
   const [image, setImage] = useState("");
   const [cover, setCover] = useState("");
+  const { conversations } = useSelector((state) => state.getConversation);
+  const { success: createConversationSuccess, conversation } = useSelector(
+    (state) => state.createConversation
+  );
+
   const { user } = useSelector((state) => state.userDetail);
   const { success: updateProfileSuccess } = useSelector(
     (state) => state.userUpdateProfile
   );
+
+  const { success: getConversationSuccess, conversation: conversationById } =
+    useSelector((state) => state.getConversationById);
+
+  console.log(getConversationSuccess);
+  const { userInfo } = useSelector((state) => state.userLogin);
   const { success: followSuccess } = useSelector((state) => state.followUser);
 
   const handleImage = async (e, type) => {
@@ -62,13 +81,54 @@ export default function Profile({ match }) {
     updateProfileSuccess,
     cover,
     followSuccess,
-    user._id,
+    user?._id,
   ]);
+
+  let newUsers = [];
+  for (const c of conversations) {
+    const userId = c.members.find((m) => m !== userInfo._id);
+
+    newUsers.push(userId);
+  }
+  const showedUsers = [...new Set(newUsers)];
+
+  useEffect(() => {
+    if (createConversationSuccess) {
+      history.push(`/messenger/${conversation?._id}`);
+      dispatch({ type: CREATE_CONVERSATION_RESET });
+    }
+
+    if (getConversationSuccess) {
+      history.push(`/messenger/${conversationById?._id}`);
+      dispatch({ type: GET_CON_BYID_RESET });
+    }
+  }, [
+    createConversationSuccess,
+    dispatch,
+    history,
+    conversation?._id,
+    getConversationSuccess,
+  ]);
+
+  const handleStartConversation = () => {
+    if (!showedUsers.includes(id)) {
+      dispatch(
+        createConversation({
+          senderId: userInfo._id,
+          recieverId: id,
+        })
+      );
+    } else {
+      dispatch(getConversationById(userInfo._id, id));
+    }
+  };
+
   return (
     <>
       <Topbar paramsId={id} />
       <div className="profile">
         <Sidebar />
+
         <div className="profileRight">
           <div className="profileRightTop">
             <div className="profileCover">
@@ -104,6 +164,16 @@ export default function Profile({ match }) {
             <div className="profileInfo">
               <h4 className="profileInfoName">{user?.username}</h4>
               <span className="profileInfoDesc">Hello my friends!</span>
+              {id !== userInfo._id && (
+                <button
+                  onClick={() => {
+                    handleStartConversation();
+                  }}
+                  className="followingBtn"
+                >
+                  Message
+                </button>
+              )}
             </div>
           </div>
           <div className="profileRightBottom">
