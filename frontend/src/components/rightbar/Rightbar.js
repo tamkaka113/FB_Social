@@ -17,7 +17,7 @@ export default function Rightbar({ profile, paramsId }) {
   const [followed, setFollowed] = useState(false);
 
   useEffect(() => {
-    setFollowed(userInfo?.following.includes(paramsId));
+    setFollowed(userInfo?.following?.includes(paramsId));
   }, [paramsId, userInfo?.following]);
 
   useEffect(() => {

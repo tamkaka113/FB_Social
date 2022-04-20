@@ -8,15 +8,17 @@ import { CREATE_COMMENT_RESET } from "../../constants/commentContants";
 import {
   LIKE_POST_RESET,
   UPDATE_POST_RESET,
+  DELETE_POST_RESET,
 } from "../../constants/postConstants";
 import moment from "moment";
 import Comment from "../comment/Comment";
 import EditPost from "../EditPost/EditPost";
 export default function Post(props) {
-  const { post, idx, updatePostSuccess, likePostSuccess } = props;
+  const { post, idx, updatePostSuccess, likePostSuccess, deletePostSuccess } =
+    props;
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
-  const [like, setLike] = useState(post.likes.length);
+  const [like, setLike] = useState(0);
   const [isLiked, setIsLiked] = useState(false);
   const [edit, setEdit] = useState(null);
   const [editPost, setEditPost] = useState(false);
@@ -24,9 +26,13 @@ export default function Post(props) {
   const [display, setDisplay] = useState(false);
   const { user, comments } = post;
   const { userInfo } = useSelector((state) => state.userLogin);
+
+  console.log(like, post.likes.length);
   useEffect(() => {
     setIsLiked(post.likes.includes(userInfo?._id));
+    setLike(post.likes.length);
   }, [userInfo?._id, post.likes]);
+
   const likeHandler = (id) => {
     setLike(isLiked ? like - 1 : like + 1);
     setIsLiked(!isLiked);
@@ -43,7 +49,11 @@ export default function Post(props) {
     if (likePostSuccess) {
       dispatch({ type: LIKE_POST_RESET });
     }
-  }, [updatePostSuccess, dispatch, likePostSuccess]);
+
+    if (deletePostSuccess) {
+      dispatch({ type: DELETE_POST_RESET });
+    }
+  }, [updatePostSuccess, dispatch, likePostSuccess, deletePostSuccess]);
   const handleComment = (postId) => {
     if (content) {
       dispatch(

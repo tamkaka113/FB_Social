@@ -134,3 +134,21 @@ input[type='file']{
 .editPostButton:hover {
     background-color: var( --green-color-hover);
 }
+
+
+@media  (max-width:739px) {
+    .editPost {
+        width: 100%;
+    }
+
+    .editPostWrapper{
+        width: 350px;
+    }
+    .editPostOptionInput {
+        width: 80%;
+    }
+
+    .editPostOption:nth-child(2) {
+        display: none;
+      }
+}

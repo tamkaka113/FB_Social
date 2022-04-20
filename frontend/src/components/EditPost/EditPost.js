@@ -3,38 +3,15 @@ import { updatePost } from "../../actions/postActions";
 import "./edit.css";
 import { useDispatch } from "react-redux";
 import { PermMedia, Label, Room, EmojiEmotions } from "@material-ui/icons";
-import axios from "axios";
-
+import { handleImages } from "../../utils/helpler";
 export default function EditPost({ post }) {
   const dispatch = useDispatch();
-
   const [desc, setDesc] = useState(post.desc);
   const [images, setImages] = useState(post.image);
   const handleUpdatePost = (id) => {
     dispatch(updatePost(id, { desc, image: images }));
   };
 
-  const handleImage = async (e) => {
-    const files = Array.from(e.target.files);
-
-    try {
-      const requests = files.map((file) => {
-        const formData = new FormData();
-        formData.append("image", file);
-        return axios.post(`/api/v1/posts/uploads`, formData);
-      });
-
-      const responses = await Promise.all(requests);
-
-      const data = responses.map((response) => {
-        return response.data;
-      });
-
-      setImages(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   const handleRemove = (idx) => {
     const newImages = images.filter((_, index) => index !== idx);
 
@@ -97,7 +74,7 @@ export default function EditPost({ post }) {
                   multiple
                   type="file"
                   onChange={(e) => {
-                    handleImage(e);
+                    handleImages(e, setImages);
                   }}
                 />
                 <span className="editPostOptionText">Photo or Video</span>
