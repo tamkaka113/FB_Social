@@ -75,7 +75,7 @@ export default function Feed({ paramsId }) {
             updatePostSuccess={updatePostSuccess}
             idx={idx}
             likePostSuccess={likePostSuccess}
-            deleteSuccess={deleteSuccess}
+            deletePostSuccess={deletePostSuccess}
           />
         ))}
       </div>

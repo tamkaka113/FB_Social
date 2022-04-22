@@ -10,6 +10,10 @@ export default function Rightbar({ profile, paramsId }) {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.userFriends);
   const { userInfo } = useSelector((state) => state.userLogin);
+
+  const { userInfo: userInfoRegister } = useSelector(
+    (state) => state.userRegister
+  );
   const { users: newFriends } = useSelector(
     (state) => state.recommendedFriends
   );

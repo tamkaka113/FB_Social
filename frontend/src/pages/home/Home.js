@@ -11,10 +11,10 @@ export default function Home({ history }) {
   const { userInfo } = useSelector((state) => state.userLogin);
   const { success: followSuccess } = useSelector((state) => state.followUser);
   useEffect(() => {
-    if (!userInfo?.username) {
+    if (!userInfo) {
       history.push("/login");
     }
-  }, [userInfo?.username]);
+  }, [userInfo]);
 
   useEffect(() => {
     dispatch(getUserFriends(userInfo?._id));

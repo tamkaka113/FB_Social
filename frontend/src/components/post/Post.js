@@ -27,7 +27,6 @@ export default function Post(props) {
   const { user, comments } = post;
   const { userInfo } = useSelector((state) => state.userLogin);
 
-  console.log(like, post.likes.length);
   useEffect(() => {
     setIsLiked(post.likes.includes(userInfo?._id));
     setLike(post.likes.length);

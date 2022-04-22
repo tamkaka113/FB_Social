@@ -10,7 +10,7 @@ export default function RecommendedFriends({ user, mobile }) {
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const newUsers = handleUserId(userFriends);
+  /*   const newUsers = handleUserId(userFriends); */
 
   const handleFollowUser = (id) => {
     dispatch(followUser(id));

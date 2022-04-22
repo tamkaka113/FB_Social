@@ -16,17 +16,19 @@ export const register = asyncHandler(async (req, res) => {
     password,
   });
 
-  if (user) {
-    res.status(200).json({
-      _id: user._id,
-      username: user.username,
-      email: user.email,
-      token: generateToken(user._id),
-      profilePicture: user.profilePicture,
-      following: user.following,
-      followers: user.followers,
-    });
+  if (!user) {
+    throw new Error("Invalid user data");
   }
+
+  res.status(201).json({
+    _id: user._id,
+    username: user.username,
+    email: user.email,
+    token: generateToken(user._id),
+    profilePicture: user.profilePicture,
+    following: user.following,
+    followers: user.followers,
+  });
 });
 
 export const login = asyncHandler(async (req, res) => {
@@ -35,10 +37,11 @@ export const login = asyncHandler(async (req, res) => {
     throw new Error("Invalid email and password");
   }
 
+  const newEmail = email.toLowerCase();
   const user = await User.findOne({ email });
 
   if (!user) {
-    throw new Error("Email do not match");
+    throw new Error("Email does not match");
   }
 
   if (user && (await user.matchPassword(password))) {
@@ -84,7 +87,6 @@ export const getUserProfile = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     ...others,
-    token: generateToken(user._id),
   });
 });
 

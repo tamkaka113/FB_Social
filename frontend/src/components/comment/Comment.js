@@ -162,16 +162,16 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   style={{ width: "40px", height: "40px" }}
                   className="commentProfileImg"
                   src={
-                    commentUser.profilePicture ||
+                    commentUser?.profilePicture ||
                     "../../assets/person/noUser.jpg"
                   }
                   alt=""
                 />
-                <span className="postUsername">{commentUser.username}</span>
+                <span className="postUsername">{commentUser?.username}</span>
               </div>
 
               <div className="likeWrapper">
-                <span className="postComment">{comment.content}</span>
+                <span className="postComment">{comment?.content}</span>
                 <div className="commentLike">
                   <div className="commentLikeWrapper">
                     <span
@@ -185,7 +185,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                     <span
                       className="replyComment"
                       onClick={() => {
-                        handleReplyBtn(comment.user.username);
+                        handleReplyBtn(comment?.user?.username);
                       }}
                     >
                       Reply

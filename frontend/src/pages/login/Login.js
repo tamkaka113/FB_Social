@@ -8,13 +8,12 @@ export default function Login({ history }) {
   const [password, setPassword] = useState("");
 
   const { userInfo, error } = useSelector((state) => state.userLogin);
-
   useEffect(() => {
-    if (userInfo?.username) {
-      dispatch(getUserDetails(userInfo?._id));
+    if (userInfo) {
       history.push("/");
+      dispatch(getUserDetails(userInfo?._id));
     }
-  }, [history, userInfo?.username]);
+  }, [history, userInfo]);
   const handleLogin = () => {
     dispatch(login(email, password));
   };
@@ -32,7 +31,7 @@ export default function Login({ history }) {
             <input
               placeholder="Email"
               className="loginInput"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value.toLocaleLowerCase())}
             />
             <input
               type="password"
@@ -52,10 +51,7 @@ export default function Login({ history }) {
             </button>
             <span className="loginForgot">Forgot Password?</span>
             <button
-              onClick={() =>
-                (!userInfo || userInfo === undefined) &&
-                history.push("/register")
-              }
+              onClick={() => !userInfo && history.push("/register")}
               className="loginRegisterButton"
             >
               Create a New Account

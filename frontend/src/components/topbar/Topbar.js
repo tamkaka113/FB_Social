@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logout, getUserDetails } from "../../actions/userActions";
 import { getConversations } from "../../actions/messageActions";
+import { USER_LOGOUT } from "../../constants/userConstants";
 import BurgerNavbar from "./BurgerNavbar";
 export default function Topbar({ paramsId }) {
   const history = useHistory();
@@ -23,10 +24,9 @@ export default function Topbar({ paramsId }) {
     dispatch(getConversations(userInfo?._id));
   }, [dispatch]);
   const handleLogout = () => {
-    if (userInfo?.username) {
-      dispatch(logout());
-      history.push("/login");
-    }
+    dispatch(logout());
+    history.push("/login");
+    dispatch({ type: USER_LOGOUT });
   };
 
   return (
@@ -89,7 +89,7 @@ export default function Topbar({ paramsId }) {
                 />
               </div>
             </Link>
-            <button onClick={handleLogout} className="logoutBtn">
+            <button onClick={() => handleLogout()} className="logoutBtn">
               Log out
             </button>
           </div>

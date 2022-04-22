@@ -4,7 +4,7 @@ export const handleUserId = (users) => {
   let newUsers = [];
 
   for (const user of users) {
-    newUsers.push(user._id);
+    newUsers.push(user?._id);
   }
 
   const showedUsers = [...new Set(newUsers)];

@@ -2,18 +2,22 @@ import "./register.css";
 import { useState, useEffect } from "react";
 import { register } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
+import { getUserDetails } from "../../actions/userActions";
 export default function Register({ history }) {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { userInfo, error } = useSelector((state) => state.userRegister);
+  const { userInfo, success, error } = useSelector(
+    (state) => state.userRegister
+  );
 
   useEffect(() => {
-    if (userInfo?.username) {
-      history.push("/");
+    if (success) {
+      alert("You have successfully register your account !");
+      history.push("/login");
     }
-  }, [history, userInfo?.token]);
+  }, [success]);
   const handleRegister = () => {
     dispatch(register(username, email, password));
   };
@@ -23,7 +27,7 @@ export default function Register({ history }) {
         <div className="registerLeft">
           <h3 className="registerLogo">FB Social</h3>
           <span className="registerDesc">
-            Connect with friends and the world around you on Lamasocial.
+            Connect with friends and the world around you.
           </span>
         </div>
         <div className="registerRight">
@@ -51,7 +55,7 @@ export default function Register({ history }) {
                 {error}
               </p>
             )}
-            <button className="registerButton" onClick={handleRegister}>
+            <button className="registerButton" onClick={() => handleRegister()}>
               Sign Up
             </button>
             <button
