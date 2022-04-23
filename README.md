@@ -1,15 +1,13 @@
 ## Features
 
-- Full featured shopping cart
-- Top products carousel
-- Product search feature
-- User profile with orders
-- Admin product management
-- Admin user management
-- Admin Order details page
-- Mark orders as delivered option
-- Checkout process (shipping, payment method, etc)
-- PayPal / credit card integration
+- Login, Register
+- Create posts, upload images, Like Posts
+- Reply comments,like comments
+- Follow, unfollow users
+- Update your profile
+- See other user's profile,
+- See other user's friends
+- Send message to friends,
 
 ## Usage
 
@@ -24,7 +22,6 @@ You can also install and setup Babel if you would like
 - NODE_ENV = development
 - PORT = 5000
 - MONGO_URI = your mongodb uri
-- PAYPAL_CLIENT_ID = your paypal client id
 - JWT_SECRET =aNdRgUkXp2s5u8x/A?D(G+KbPeShVmY
 - JWT_LIFETIME=30d
 - CLOUD_NAME= Cloudinary Name
@@ -65,7 +62,3 @@ npm run data:import
 npm run data:destroy
 
 ## Admin Logins
-
-- Go to /admin/login
-  admin113 (Admin)
-  123456
