@@ -92,7 +92,7 @@
   margin: 0 0 5px 40px;
   font-size: 17px;
    display: block;
-   width: 100%;
+   width: 150%;
 }
 
 
@@ -274,10 +274,6 @@ background-color: var(--clr-primary-2-hover);
   .commentBtn {
     font-size: 18px;
   }
-  .replyWrapper {
-    width: 89%;
-    
-  }
   .commentMain {
   width: 95%;
   margin-left: 4px;
@@ -302,13 +298,15 @@ background-color: var(--clr-primary-2-hover);
     height: 40px;
     width: 70px;
   }
-
+.commentContainer {
+  width: 362px;
+}
 .commentLikeWrapper{
 margin-left: 20px;
 }
 .replyWrapper {
-  width: 87%;
-margin-left: 34px
+  width: 92%;
+margin-left: 15px
 }
 .adjustEditComment {
   font-size: 13px;

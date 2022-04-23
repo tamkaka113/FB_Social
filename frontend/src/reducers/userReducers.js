@@ -33,6 +33,7 @@ import {
   USER_INFO_REQUEST,
   USER_INFO_SUCCESS,
   USER_INFO_FAIL,
+  USER_REGISTER_RESET,
 } from "../constants/userConstants";
 
 export const userLoginReducer = (state = {}, action) => {
@@ -58,6 +59,9 @@ export const userRegisterReducer = (state = {}, action) => {
       return { loading: false, success: true, userInfo: action.payload };
     case USER_REGISTER_FAIL:
       return { loading: false, error: action.payload };
+
+    case USER_REGISTER_RESET:
+      return {};
     default:
       return state;
   }

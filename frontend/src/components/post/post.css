@@ -78,30 +78,6 @@
     font-size: 15px;
 }
 
-.postCommentText{
-    cursor: pointer;
-    border-bottom: 1px dashed var(--gray-color);
-    font-size: 15px;
-}
-
-
-
-
-.commentWrapper {
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-
-
-}
-
-.postComment {
-  margin: 0 0 5px 40px;
-  font-size: 17px;
-   display: block;
-   width: 100%;
-}
-
 
 
 .likeWrapper {

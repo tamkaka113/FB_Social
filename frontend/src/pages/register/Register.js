@@ -2,7 +2,7 @@ import "./register.css";
 import { useState, useEffect } from "react";
 import { register } from "../../actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import { getUserDetails } from "../../actions/userActions";
+import { USER_REGISTER_RESET } from "../../constants/userConstants";
 export default function Register({ history }) {
   const dispatch = useDispatch();
   const [username, setUsername] = useState("");
@@ -14,8 +14,11 @@ export default function Register({ history }) {
 
   useEffect(() => {
     if (success) {
-      alert("You have successfully register your account !");
-      history.push("/login");
+      alert("You have successfully register your account,Please Login !");
+      dispatch({ type: USER_REGISTER_RESET });
+      setTimeout(() => {
+        history.push("/login");
+      }, 1000);
     }
   }, [success]);
   const handleRegister = () => {

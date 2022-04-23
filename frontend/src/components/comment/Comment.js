@@ -279,7 +279,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   className={
                     edit === index &&
                     displayReply &&
-                    reply.user._id === userInfo._id
+                    reply?.user?._id === userInfo?._id
                       ? "adjustReply active"
                       : "adjustReply"
                   }
@@ -289,7 +289,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   <span
                     className="adjustEditComment"
                     onClick={() => {
-                      handleDeleteComment(reply._id);
+                      handleDeleteComment(reply?._id);
                     }}
                   >
                     Remove
@@ -301,15 +301,15 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   style={{ width: "40px", height: "40px" }}
                   className="commentProfileImg"
                   src={
-                    reply.user.profilePicture ||
+                    reply?.user?.profilePicture ||
                     "../../assets/person/noUser.jpg"
                   }
                   alt=""
                 />
-                <span className="postUsername">{reply.user.username}</span>
+                <span className="postUsername">{reply?.user?.username}</span>
               </div>
               <div className="likeWrapper">
-                <span className="postComment">{reply.content}</span>
+                <span className="postComment">{reply?.content}</span>
                 <div className="commentLike">
                   <span
                     onClick={() => {
@@ -322,7 +322,7 @@ const Comment = ({ comment, commentUser, index, post }) => {
                   <span className="replyComment">Reply</span>
 
                   <span className="timeComment">
-                    {moment(reply.createdAt).fromNow()}
+                    {moment(reply?.createdAt).fromNow()}
                   </span>
                 </div>
               </div>
