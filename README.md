@@ -75,7 +75,7 @@ npm run data:destroy
 ## Sample User Logins
 
 ```
-tamkaka1112@gmail.com.com
+tamkaka1112@gmail.com
 tamkaka
 
 ```
