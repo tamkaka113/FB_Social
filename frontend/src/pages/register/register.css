@@ -140,19 +140,19 @@
     height: 80px;
     font-size: 30px;
 
-}
+  }
 
-.registerBtn{ 
-  height: 80px;
+  .registerBtn{ 
+    height: 80px;
 
-}
-.registerButton {
-  height: 80px;
-}
-.loginButton {
-  height: 80px;
+  }
+  .registerButton {
+    height: 80px;
+  }
+  .loginButton {
+    height: 80px;
 
-}
+  }
 
 }
 

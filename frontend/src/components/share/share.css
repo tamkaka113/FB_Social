@@ -74,20 +74,20 @@ input[type='file']{
   display: flex;
   justify-content: flex-start;
   
-  }
+}
   
-  .shareImageContainer {
+.shareImageContainer {
       position: relative;
       padding: 5px;
-  }
-  .shareImageContainer span {
+}
+.shareImageContainer span {
     color: var(--red-color);
    position: absolute;
    right: 0px;
    top: -10px;
    cursor: pointer;
   
-  }
+}
   
 .shareImageContainer span:hover {
       color: var( --red-color-hover);
@@ -97,11 +97,11 @@ input[type='file']{
       text-align: center;
       background-color:bisque;
       padding-bottom: 8px;
-  }
+}
   
 .shareShowImage {
     margin-bottom: -10px;
-  }
+}
 .shareBottom {
   display: flex;
   align-items: center;

@@ -5,19 +5,19 @@
     cursor: pointer;
   }
   
-  .rightbarProfileImgContainer {
+.rightbarProfileImgContainer {
     margin-right: 10px;
     position: relative;
   }
   
-  .rightbarProfileImg {
+.rightbarProfileImg {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
   }
   
-  .rightbarOnline{
+.rightbarOnline{
       width: 12px;
       height: 12px;
       border-radius: 50%;
@@ -28,10 +28,10 @@
       border: 2px solid var(--white-color);
   }
   
-  .rightbarUsername{
+.rightbarUsername{
       font-weight: 500;
   }
 
-  .rightbarUsername.mobile{
+.rightbarUsername.mobile{
     color: var(--white-color);
 }

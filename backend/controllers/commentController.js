@@ -30,54 +30,41 @@ export const updateComment = asyncHandler(async (req, res) => {
 });
 
 export const likeComment = asyncHandler(async (req, res) => {
-
-
-  const comment = await Comment.findById(req.params.id );
+  const comment = await Comment.findById(req.params.id);
   if (!comment) {
     throw new Error("Comment does not exist");
   }
   if (!comment.likes.includes(req.user._id)) {
-    await comment.updateOne({ $push: {likes: req.user._id } });
+    await comment.updateOne({ $push: { likes: req.user._id } });
     res.status(200).json("You have liked this comment");
   } else {
-
-    await comment.updateOne({ $pull: { likes: req.user._id } })
+    await comment.updateOne({ $pull: { likes: req.user._id } });
 
     res.status(200).json("You have disliked this comment");
   }
-
- 
 });
 
-export const replyComment = asyncHandler(async (req, res) => { 
-
+export const replyComment = asyncHandler(async (req, res) => {
   const newComment = await Comment.create(req.body);
 
   const comment = await Comment.findById(req.params.id);
-  
+
   if (!comment.reply.includes(newComment._id)) {
     await comment.updateOne({ $push: { reply: newComment._id } });
 
     res.status(200).json(newComment);
   }
-
-
- 
 });
 
-
 export const deleteComment = asyncHandler(async (req, res) => {
-
-
   const comment = await Comment.findByIdAndDelete({ _id: req.params.id });
 
-  if(!comment) {
-    throw new Error ('You cannot delete this comment')
+  if (!comment) {
+    throw new Error("You cannot delete this comment");
   }
-  res.status(200).json(' you have deleted this comment')
+  res.status(200).json(" you have deleted this comment");
 
-await Post.findOneAndUpdate({$pull:{comment:req.user._id}})
+  await Post.findOneAndUpdate({ $pull: { comment: req.user._id } });
 
- res.status(200).json('Deleted User Comment')
- 
+  res.status(200).json("Deleted User Comment");
 });

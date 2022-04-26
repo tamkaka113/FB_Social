@@ -13,11 +13,11 @@
     cursor: pointer;
   }
   
-  .followingBtn:hover {
+.followingBtn:hover {
     background-color: var(--clr-primary-1-hover);
   }
   
-  .followingBtn:focus{
+.followingBtn:focus{
     outline: none;
   }
   

@@ -15,6 +15,6 @@ router
   .route("/:id")
   .put(protect, updateComment)
   .delete(protect, deleteComment)
-  .post(protect, likeComment)
-router.post('/:id/reply',protect, replyComment)
+  .post(protect, likeComment);
+router.post("/:id/reply", protect, replyComment);
 export default router;
