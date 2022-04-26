@@ -72,14 +72,10 @@ npm run data:import
 npm run data:destroy
 ```
 
-```
 ## Sample User Logins
-Sample User Logins
-```
 
+```
 tamkaka1112@gmail.com.com
 tamkaka
-
-```
 
 ```
